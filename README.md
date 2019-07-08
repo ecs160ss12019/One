@@ -7,6 +7,6 @@ Recreate the Asteroids game from the Atari-2600, using the processes learned in 
 
 # Members
 ## Brian Coe
-## Jose
-## Martin 
-## Kyle
+## Jose Torres-Vargas
+## Martin Petrov 
+## Kyle Muldoon
