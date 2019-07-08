@@ -11,4 +11,5 @@ as possible."
 4) Through space while keeping track of the score.
 
 
-## Sprints: 
+## Sprints:
+![Sprints Chart](/Sprints.pdf "Sprints") 
