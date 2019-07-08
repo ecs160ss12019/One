@@ -6,7 +6,7 @@ Recreate the Asteroids game from the Atari-2600, using the processes learned in 
 
 
 # Members
-## Brian Coe
-## Jose Torres-Vargas
-## Martin Petrov 
-## Kyle Muldoon
+* Brian Coe
+* Jose Torres-Vargas, a CSE major. He enjoys reading and playing video games. 
+* Martin Petrov 
+* Kyle Muldoon
