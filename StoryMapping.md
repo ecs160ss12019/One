@@ -12,4 +12,4 @@ as possible."
 
 
 ## Sprints:
-![Sprints Chart](/Sprints.pdf "Sprints") 
+![Sprints Chart](Sprints.pdf "Sprints") 
