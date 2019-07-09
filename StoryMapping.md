@@ -12,4 +12,4 @@ as possible."
 
 
 ## Sprints:
-![Sprints Chart](https://github.com/ecs160ss12019/One/blob/master/Chart.JPG) 
+![Sprints Chart](https://github.com/ecs160ss12019/One/blob/master/Chart.png) 
