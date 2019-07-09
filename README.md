@@ -19,3 +19,6 @@ controls a single spaceship in an asteroid field which is periodically traversed
 by flying saucers. The object of the game is to shoot and destroy the asteroids
 and saucers, while not colliding with either, or being hit by the saucers' 
 counter-fire. The game becomes harder as the number of asteroids increases.
+
+[Story Mapping](https://github.com/ecs160ss12019/One/blob/master/StoryMapping.md)
+
