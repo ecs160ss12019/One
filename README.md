@@ -7,7 +7,8 @@ our software engineering class.
 
 
 # Members
-* Brian Coe
+* Brian Coe, a CS major, enjoys video game and table-top RPGs, reading science
+  fiction and fantasy, and cooking.
 * Jose Torres-Vargas, a CSE major. He enjoys reading and playing video games. 
 * Martin Petrov, a CS major in UC Davis. He has a passion for cars as well as 
   his major.In his freetime he enjoys messing around with his Linux server
