@@ -2,6 +2,6 @@ package com.example.asteroids;
 
 
 
-class UFO.java{
+class UFO{
 
 }
