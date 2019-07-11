@@ -1,8 +1,6 @@
 package com.example.asteroids;
 
-
-
-class UFO{
+public class UFO extends MoveableObject {
 
 
 }

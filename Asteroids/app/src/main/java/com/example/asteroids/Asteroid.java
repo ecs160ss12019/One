@@ -1,4 +1,4 @@
 package com.example.asteroids;
 
-public class Asteroid {
+public class Asteroid extends MoveableObject {
 }
