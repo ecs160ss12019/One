@@ -1,4 +1,4 @@
-package asteroids
+package asteroids;
 
 public abstract class moveableObject {
 // Fields

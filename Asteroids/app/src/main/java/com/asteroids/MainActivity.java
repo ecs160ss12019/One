@@ -1,4 +1,4 @@
-package com.asteroids;
+package asteroids;
 
 import androidx.appcompat.app.AppCompatActivity;
 
