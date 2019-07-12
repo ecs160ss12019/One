@@ -12,6 +12,7 @@ public class Projectile extends MoveableObject implements Drawable {
     ///////////////////////////
 
     public Projectile() {
+        // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
     }
 

@@ -12,6 +12,7 @@ public class Spaceship extends MoveableObject implements Drawable {
     ///////////////////////////
 
     public Spaceship() {
+        // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
     }
 

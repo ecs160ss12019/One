@@ -22,6 +22,23 @@ abstract class MoveableObject {
     //      METHODS
     ///////////////////////////
 
+    public MoveableObject() {
+    }
+
+    public MoveableObject(int x, int y, int m, int maxV, int minV, float dir, int[] s) {
+        this.posX = x;
+        this.posY = y;
+        this.mass = m;
+        this.maxVelocity = maxV;
+        this.minVelocity = minV;
+        this.drctnVector = dir;
+        this.shape = s;
+    }
+
+    ///////////////////////////
+    //      METHODS
+    ///////////////////////////
+
     // getters / setters
     public int getPosX() {
         return posX;

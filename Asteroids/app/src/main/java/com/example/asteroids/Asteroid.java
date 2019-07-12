@@ -12,6 +12,7 @@ public class Asteroid extends MoveableObject implements Drawable {
     ///////////////////////////
 
     public Asteroid() {
+        // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
     }
 
