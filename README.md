@@ -12,7 +12,7 @@ our software engineering class.
 * Jose Torres-Vargas, a CSE major. He enjoys reading and playing video games. 
 * Martin Petrov, a CS major in UC Davis. He has a passion for cars as well as 
   his major.In his freetime he enjoys messing around with his Linux server
-* Kyle Muldoon, a CS major, enjoys DJing
+* Kyle Muldoon, a CS major, enjoys DJing and quality time with friends
 
 # Asteroids, Reimagined
 A modern reinterpretation of the classic space shooter, Asteroids. The player 
