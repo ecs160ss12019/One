@@ -11,6 +11,9 @@ public class Env implements Drawable {
     //      CONSTRUCTOR
     ///////////////////////////
 
+    public Env() {
+    }
+
     ///////////////////////////
     //      METHODS
     ///////////////////////////

@@ -11,6 +11,10 @@ public class UFO extends MoveableObject implements Drawable {
     //      CONSTRUCTOR
     ///////////////////////////
 
+    public UFO() {
+        super();
+    }
+
     ///////////////////////////
     //      METHODS
     ///////////////////////////

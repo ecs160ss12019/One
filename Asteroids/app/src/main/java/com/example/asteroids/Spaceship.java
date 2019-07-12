@@ -11,6 +11,10 @@ public class Spaceship extends MoveableObject implements Drawable {
     //      CONSTRUCTOR
     ///////////////////////////
 
+    public Spaceship() {
+        super();
+    }
+
     ///////////////////////////
     //      METHODS
     ///////////////////////////

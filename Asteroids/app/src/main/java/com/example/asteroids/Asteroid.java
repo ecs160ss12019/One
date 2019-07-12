@@ -11,6 +11,10 @@ public class Asteroid extends MoveableObject implements Drawable {
     //      CONSTRUCTOR
     ///////////////////////////
 
+    public Asteroid() {
+        super();
+    }
+
     ///////////////////////////
     //      METHODS
     ///////////////////////////

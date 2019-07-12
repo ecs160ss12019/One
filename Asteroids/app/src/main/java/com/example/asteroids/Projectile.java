@@ -11,6 +11,10 @@ public class Projectile extends MoveableObject implements Drawable {
     //      CONSTRUCTOR
     ///////////////////////////
 
+    public Projectile() {
+        super();
+    }
+
     ///////////////////////////
     //      METHODS
     ///////////////////////////
