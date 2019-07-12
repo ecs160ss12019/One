@@ -2,14 +2,15 @@ package com.example.asteroids;
 
 // Kyle Muldoon
 
-abstract class MoveableObject {
+import android.graphics.Point;
+
+abstract class MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
 
     // position / direction / speed / physics
-    protected int posX;
-    protected int posY;
+    protected Point position;
     protected int mass;
     protected int maxVelocity;
     protected int minVelocity;
@@ -22,12 +23,12 @@ abstract class MoveableObject {
     //      METHODS
     ///////////////////////////
 
-    public MoveableObject() {
+    public MovableObject() {
     }
 
-    public MoveableObject(int x, int y, int m, int maxV, int minV, float dir, int[] s) {
-        posX = x;
-        posY = y;
+    public MovableObject(int x, int y, int m, int maxV, int minV, float dir, int[] s) {
+        position.x = x;
+        position.y = y;
         mass = m;
         maxVelocity = maxV;
         minVelocity = minV;
@@ -41,19 +42,19 @@ abstract class MoveableObject {
 
     // getters / setters
     public int getPosX() {
-        return posX;
+        return position.x;
     }
 
     public void setPosX(int posX) {
-        this.posX = posX;
+        this.position.x = posX;
     }
 
     public int getPosY() {
-        return posY;
+        return position.y;
     }
 
     public void setPosY(int posY) {
-        this.posY = posY;
+        this.position.y = posY;
     }
 
     public int getMass() {

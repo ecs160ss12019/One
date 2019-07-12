@@ -2,7 +2,7 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
-public class UFO extends MoveableObject implements Drawable {
+public class UFO extends MovableObject implements Drawable {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////

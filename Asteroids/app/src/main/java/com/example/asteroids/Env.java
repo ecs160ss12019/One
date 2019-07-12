@@ -105,8 +105,6 @@ public class Env extends SurfaceView implements Runnable {
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
 
-
-
     }
 
 
