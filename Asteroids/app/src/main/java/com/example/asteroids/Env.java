@@ -7,6 +7,7 @@ the constructor which will always be on top */
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.Log;
@@ -21,6 +22,9 @@ public class Env extends SurfaceView implements Runnable {
     //      VARIABLES
     ///////////////////////////
 
+    private final boolean DEBUGGING = true;
+
+
     //Objects that are used for rendering to screen
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
@@ -30,17 +34,25 @@ public class Env extends SurfaceView implements Runnable {
     private long fps;
     private final int MILLIS_IN_SECOND = 1000;
 
-
+    //Resolution and font sizes
     protected Point resolution;
+    private int fontSize;
+    private int fontMargin;
+
 
     //Game objects
     private Spaceship spaceship;
 
     //Here is the thread and two control variables
     private Thread gameThread = null;
-    //This volatile variable can be accessed from inside and outside the thread
-    private volatile boolean mPlaying;
-    private boolean mPaused = true;
+
+    /*isGameOnFocus is true when game is in the foreground,
+    * and false when it is in the background
+    * */
+    private volatile boolean isGameOnFocus;
+    private boolean Paused = true;
+
+
 
     ///////////////////////////
     //     CONSTRUCTOR
@@ -48,12 +60,16 @@ public class Env extends SurfaceView implements Runnable {
     public Env(Context context, Point res) {
         super(context);
 
-        //Pass the resolution to our local variables
+        //Pass the resolution to our local variables, and set our fontsize
         resolution = new Point();
         resolution.x = res.x;
         resolution.y = res.y;
 
-        //Initializer the objects reading for drawing with getHolder, a method of SurfaceView
+
+        fontSize = resolution.x / 20;
+        fontMargin = resolution.x / 75;
+
+        //Initialize the objects reading for drawing with getHolder, a method of SurfaceView
         surfaceHolder = getHolder();
         paint = new Paint();
 
@@ -62,16 +78,40 @@ public class Env extends SurfaceView implements Runnable {
 
     }
 
+
+
     ///////////////////////////
     //      METHODS
     ///////////////////////////
 
+
+    /*
+    *Is responsible for drawing everything to screen
+    */
     public void draw() {
+
+        //If canvas is unlocked and ready to be drawn on, lock it and draw to the screen
+        if(surfaceHolder.getSurface().isValid()) {
+            canvas = surfaceHolder.lockCanvas();
+
+            //Fill the screen with a solid color for now
+            canvas.drawColor(Color.argb(255,0,0,0));
+            canvas.drawText("Testing", 0, 0, paint);
+            if(DEBUGGING) {
+                printDebugging();
+            }
+
+            //Unlock canvas after you are done with it
+            surfaceHolder.unlockCanvasAndPost(canvas);
+        }
+
+
 
     }
 
+
     public void pause() {
-        mPlaying = false;
+        isGameOnFocus = false;
         try {
             //Try stopping the thread
             gameThread.join();
@@ -80,8 +120,24 @@ public class Env extends SurfaceView implements Runnable {
         }
     }
 
+
+    /*
+    Prints the only the FPS currently
+    */
+    private void printDebugging() {
+        int debugSize = fontSize / 2;
+        paint.setTextSize(debugSize);
+
+
+        paint.setColor(Color.argb(255,255,255,255));
+        canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
+        Log.d("FPS", "FPS: " + fps);
+
+    }
+
+
     public void resume() {
-        mPlaying = true;
+        isGameOnFocus = true;
         //Initialize the instance of the thread
         gameThread = new Thread(this);
 
@@ -89,15 +145,39 @@ public class Env extends SurfaceView implements Runnable {
     }
 
 
-    /*this method basically runs entirely on the new thread we created*/
+    /*
+    This method basically runs entirely on the new thread we created
+    */
     @Override
     public void run() {
-        while(mPlaying) {
 
+        while(isGameOnFocus) {
 
+            long frameStartTime = System.currentTimeMillis();
+
+            //Provided the game isn't paused, call the update method
+            if(!Paused) {
+                update();
+            }
+
+            draw();
+
+            //Calculate FPS based on how long this loop took
+            long frameTime = System.currentTimeMillis() - frameStartTime;
+
+            if (frameTime > 0) {
+                fps = MILLIS_IN_SECOND / frameTime;
+            }
 
         }
 
+    }
+
+
+    /*
+    Should update the position of all movable objects here
+    */
+    public void update() {
 
     }
 
