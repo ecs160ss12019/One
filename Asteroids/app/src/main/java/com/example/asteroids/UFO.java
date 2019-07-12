@@ -13,6 +13,7 @@ public class UFO extends MovableObject implements Drawable {
     //      CONSTRUCTOR
     ///////////////////////////
 
+    //Testing
     public UFO() {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
