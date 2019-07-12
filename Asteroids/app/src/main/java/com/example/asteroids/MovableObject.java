@@ -23,7 +23,7 @@ abstract class MovableObject {
     //      METHODS
     ///////////////////////////
 
-    public MovableObject() {
+    MovableObject() {
     }
 
     public MovableObject(int x, int y, int m, int maxV, int minV, float dir, int[] s) {
@@ -96,4 +96,7 @@ abstract class MovableObject {
     public void setShape(int[] shape) {
         this.shape = shape;
     }
+
+    // abstract methodes (same as using interface)
+    public abstract void draw();
 }

@@ -85,29 +85,6 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
 
 
-    /*
-    *Is responsible for drawing everything to screen
-    */
-    public void draw() {
-
-        //If canvas is unlocked and ready to be drawn on, lock it and draw to the screen
-        if(surfaceHolder.getSurface().isValid()) {
-            canvas = surfaceHolder.lockCanvas();
-
-            //Fill the screen with a solid color for now
-            canvas.drawColor(Color.argb(255,0,0,0));
-            canvas.drawText("Testing", 0, 0, paint);
-            if(DEBUGGING) {
-                printDebugging();
-            }
-
-            //Unlock canvas after you are done with it
-            surfaceHolder.unlockCanvasAndPost(canvas);
-        }
-
-    }
-
-
     public void pause() {
         isGameOnFocus = false;
         try {
@@ -176,6 +153,28 @@ public class Env extends SurfaceView implements Runnable {
     Should update the position of all movable objects here
     */
     public void update() {
+
+    }
+
+    /*
+     *Is responsible for drawing everything to screen
+     */
+    public void draw() {
+
+        //If canvas is unlocked and ready to be drawn on, lock it and draw to the screen
+        if (surfaceHolder.getSurface().isValid()) {
+            canvas = surfaceHolder.lockCanvas();
+
+            //Fill the screen with a solid color for now
+            canvas.drawColor(Color.argb(255, 0, 0, 0));
+            canvas.drawText("Testing", 0, 0, paint);
+            if (DEBUGGING) {
+                printDebugging();
+            }
+
+            //Unlock canvas after you are done with it
+            surfaceHolder.unlockCanvasAndPost(canvas);
+        }
 
     }
 

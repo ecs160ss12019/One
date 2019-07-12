@@ -2,7 +2,7 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
-public class Asteroid extends MovableObject implements Drawable {
+public class Asteroid extends MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
