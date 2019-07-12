@@ -1,4 +1,13 @@
 package com.example.asteroids;
 
-public abstract class MoveableObject {
+// AUTHOR NAME HERE
+
+abstract class MoveableObject {
+
+    // VARIABLES
+
+    // CONSTRUCTOR
+
+    // METHODS
+
 }

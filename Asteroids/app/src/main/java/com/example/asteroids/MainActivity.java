@@ -1,8 +1,9 @@
 package com.example.asteroids;
 
-
 import android.app.Activity;
 import android.os.Bundle;
+
+// AUTHOR NAME HERE
 
 public class MainActivity extends Activity {
 
