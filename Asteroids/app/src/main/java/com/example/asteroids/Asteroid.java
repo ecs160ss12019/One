@@ -2,10 +2,14 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
+import android.graphics.Path;
+
 public class Asteroid extends MovableObject implements Drawable {
+
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
+
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -14,13 +18,15 @@ public class Asteroid extends MovableObject implements Drawable {
     public Asteroid() {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
+
+
     }
 
     ///////////////////////////
     //      METHODS
     ///////////////////////////
 
-    public void draw() {
-
+    public Path draw() {
+        return shape;
     }
 }

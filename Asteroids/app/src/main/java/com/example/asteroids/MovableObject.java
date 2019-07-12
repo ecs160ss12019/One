@@ -2,6 +2,7 @@ package com.example.asteroids;
 
 // Kyle Muldoon
 
+import android.graphics.Path;
 import android.graphics.Point;
 
 abstract class MovableObject {
@@ -16,26 +17,35 @@ abstract class MovableObject {
     protected int minVelocity;
     protected float drctnVector;
 
-    // shape
-    protected int[] shape;
+    // Shape of the object needs to be a path which can form any polygon
+    protected Path shape;
 
     ///////////////////////////
     //      METHODS
     ///////////////////////////
 
     public MovableObject() {
+        //Initialize our shape
+        shape = new Path();
+        shape.reset(); //TODO: Might not be needed
+
     }
 
-    public MovableObject(int x, int y, int m, int maxV, int minV, float dir, int[] s) {
+
+    /*
+
+    TODO: For now I'm gonna create an empty constructor, though maybe all we need is an empty constructor and have default positions for the ship and asteroids
+    public MovableObject(int x, int y, int m, int maxV, int minV, float dir) {
         position.x = x;
         position.y = y;
         mass = m;
         maxVelocity = maxV;
         minVelocity = minV;
         drctnVector = dir;
-        shape = s;
-    }
 
+
+    }
+    */
     ///////////////////////////
     //      METHODS
     ///////////////////////////
@@ -89,11 +99,4 @@ abstract class MovableObject {
         this.drctnVector = drctnVector;
     }
 
-    public int[] getShape() {
-        return shape;
-    }
-
-    public void setShape(int[] shape) {
-        this.shape = shape;
-    }
 }

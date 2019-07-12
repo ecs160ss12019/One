@@ -2,6 +2,8 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
+import android.graphics.Path;
+
 public class Projectile extends MovableObject implements Drawable {
     ///////////////////////////
     //      VARIABLES
@@ -20,7 +22,7 @@ public class Projectile extends MovableObject implements Drawable {
     //      METHODS
     ///////////////////////////
 
-    public void draw() {
-
+    public Path draw() {
+        return shape;
     }
 }

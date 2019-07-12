@@ -94,9 +94,17 @@ public class Env extends SurfaceView implements Runnable {
         if(surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockCanvas();
 
-            //Fill the screen with a solid color for now
+            //Fill the screen with a solid black for now
             canvas.drawColor(Color.argb(255,0,0,0));
-            canvas.drawText("Testing", 0, 0, paint);
+
+            paint.setColor(Color.argb(255,255,255,255));
+
+            //Draw our objects
+            canvas.drawRect(100,300, 300, 600, paint);
+
+            canvas.drawPath(spaceship.draw(), paint);
+
+
             if(DEBUGGING) {
                 printDebugging();
             }
