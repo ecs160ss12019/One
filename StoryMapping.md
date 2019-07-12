@@ -13,3 +13,6 @@ as possible."
 
 ## Sprints:
 ![Sprints Chart](https://github.com/ecs160ss12019/One/blob/master/Chart.png) 
+
+## Acceptance Criteria:
+![Acceptance Criteria Chart](https://github.com/ecs160ss12019/One/blob/master/acceptance-criteria.png) 
