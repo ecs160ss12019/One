@@ -2,7 +2,7 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
-public class Env {
+public class Env implements Drawable {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
@@ -14,4 +14,8 @@ public class Env {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+
+    public void draw() {
+
+    }
 }

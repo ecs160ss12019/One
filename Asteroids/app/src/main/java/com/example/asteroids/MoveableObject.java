@@ -1,6 +1,6 @@
 package com.example.asteroids;
 
-// AUTHOR NAME HERE
+// Kyle Muldoon
 
 abstract class MoveableObject {
     ///////////////////////////

@@ -2,7 +2,7 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
-public class Projectile extends MoveableObject {
+public class Projectile extends MoveableObject implements Drawable {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
@@ -14,4 +14,8 @@ public class Projectile extends MoveableObject {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+
+    public void draw() {
+
+    }
 }
