@@ -3,10 +3,15 @@ package com.example.asteroids;
 // AUTHOR NAME HERE
 
 public class UFO extends MoveableObject {
-    // VARIABLES
+    ///////////////////////////
+    //      VARIABLES
+    ///////////////////////////
 
-    // CONSTRUCTOR
+    ///////////////////////////
+    //      CONSTRUCTOR
+    ///////////////////////////
 
-    // METHODS
-
+    ///////////////////////////
+    //      METHODS
+    ///////////////////////////
 }
