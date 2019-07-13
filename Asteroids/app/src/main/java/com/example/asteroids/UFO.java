@@ -19,9 +19,14 @@ public class UFO extends MovableObject implements Drawable {
         super();
     }
 
+
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+    public void update(){
+
+    }
+
 
     public Path draw() {
         return shape;
