@@ -29,4 +29,8 @@ public class HUD {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+
+    public JoyStick getJoyStick() {
+        return this.joyStick;
+    }
 }

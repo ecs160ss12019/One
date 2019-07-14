@@ -117,9 +117,7 @@ public class Env extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(150,255,255,255));
 
 
-
-
-            canvas.drawPath(hud.joyStick.draw(), paint);
+            canvas.drawPath(hud.getJoyStick().draw(), paint);
 
             if(DEBUGGING) {
                 printDebugging();
