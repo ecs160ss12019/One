@@ -3,9 +3,9 @@ package com.example.asteroids;
 // AUTHOR NAME HERE
 
 import android.graphics.Path;
-import android.view.SurfaceHolder;
 
-public class Spaceship extends MovableObject implements Drawable {
+
+public class Spaceship extends MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
@@ -27,11 +27,12 @@ public class Spaceship extends MovableObject implements Drawable {
 
 
 
-    public Path draw() {
+    public Path updatePos() {
 
         shape.moveTo(100,100);
-        shape.lineTo(200,150);
-        shape.lineTo(100, 200);
+        shape.lineTo(200,125);
+        shape.lineTo(100, 150);
+        shape.lineTo(125,125);
         shape.lineTo(100,100);
 
         return shape;

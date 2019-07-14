@@ -5,7 +5,7 @@ package com.example.asteroids;
 import android.graphics.Path;
 import android.graphics.Point;
 
-public class Asteroid extends MovableObject implements Drawable {
+public class Asteroid extends MovableObject {
 
     ///////////////////////////
     //      VARIABLES

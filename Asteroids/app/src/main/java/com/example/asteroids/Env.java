@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -41,6 +42,7 @@ public class Env extends SurfaceView implements Runnable {
 
 
     //Game objects
+    private HUD hud;
     private Spaceship spaceship;
 
     //Here is the thread and two control variables
@@ -50,7 +52,7 @@ public class Env extends SurfaceView implements Runnable {
     * and false when it is in the background
     * */
     private volatile boolean isGameOnFocus;
-    private boolean Paused = true;
+    private boolean paused = true;
 
 
 
@@ -74,6 +76,7 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize our game objects
+        hud = new HUD(resolution);
         spaceship = new Spaceship();
 
     }
@@ -100,9 +103,9 @@ public class Env extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(255,255,255,255));
 
             //Draw our objects
-            canvas.drawRect(100,300, 300, 600, paint);
+            canvas.drawPath(spaceship.updatePos(), paint);
 
-            canvas.drawPath(spaceship.draw(), paint);
+            canvas.drawPath(hud.joyStick.draw(), paint);
 
 
             if(DEBUGGING) {
@@ -115,6 +118,23 @@ public class Env extends SurfaceView implements Runnable {
 
     }
 
+    
+    @Override
+    public  boolean onTouchEvent(MotionEvent motionEvent) {
+        
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            
+            case MotionEvent.ACTION_DOWN:
+                
+                paused = false;
+
+
+            
+        }
+        
+        return true;
+    }
+    
 
     public void pause() {
         isGameOnFocus = false;
@@ -162,7 +182,7 @@ public class Env extends SurfaceView implements Runnable {
             long frameStartTime = System.currentTimeMillis();
 
             //Provided the game isn't paused, call the update method
-            if(!Paused) {
+            if(!paused) {
                 update();
             }
 

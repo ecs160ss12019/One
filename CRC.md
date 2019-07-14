@@ -56,10 +56,14 @@
 | Keep track of score | Spaceship
 | Must display on the screen| -
 
-## Moveable Objects
+## MoveableObjects.java
 | Resonsibilites | Interacts with |
 | --- | --- |
 | Keep track of position | Every moveable object
 | Keep track of velocity | Environment
 | Draw Self | HUD
 
+## AsteroidsActivity.java
+| Resonsibilites | Interacts with |
+| --- | --- |
+| Manage the Android Game Life Cycle | -
