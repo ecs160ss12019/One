@@ -42,7 +42,7 @@ public class Env extends SurfaceView implements Runnable {
 
     //Using dp to make a consistent ui that scales resolutions
     //It is a scaled screen resolution with domain of 0-100
-    private Point dp;
+    private Point blockSize;
 
 
     //Game objects
@@ -71,10 +71,10 @@ public class Env extends SurfaceView implements Runnable {
         resolution.x = res.x;
         resolution.y = res.y;
 
-        //Set 1 dp to be 1/100 of the screen
-        dp = new Point();
-        dp.x = resolution.x / 100;
-        dp.y = resolution.y / 100;
+        //1 value in blockSize = 1/100th of the screen
+        blockSize = new Point();
+        blockSize.x = resolution.x / 100;
+        blockSize.y = resolution.y / 100;
 
         fontSize = resolution.x / 20;
         fontMargin = resolution.x / 75;
@@ -84,8 +84,8 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize our game objects
-        hud = new HUD(dp);
-        spaceship = new Spaceship(dp);
+        hud = new HUD(blockSize);
+        spaceship = new Spaceship(blockSize);
 
     }
 
