@@ -28,12 +28,17 @@ public class Asteroid extends MovableObject {
     public Asteroid() {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
+        populate();
 
     }
 
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+
+    public Path draw() {
+        return shape;
+    }
 
     private void populate() {
         ab1[0] = new Point(0,0);
@@ -96,8 +101,5 @@ public class Asteroid extends MovableObject {
         as3[3] = new Point(2,2);
         as3[4] = new Point(1,3);
         as3[5] = new Point(1,2);
-    }
-    public Path draw() {
-        return shape;
     }
 }
