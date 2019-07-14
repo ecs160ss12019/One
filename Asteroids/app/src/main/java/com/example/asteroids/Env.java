@@ -131,18 +131,15 @@ public class Env extends SurfaceView implements Runnable {
 
     
     @Override
-    public  boolean onTouchEvent(MotionEvent motionEvent) {
-        
-        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-            
-            case MotionEvent.ACTION_DOWN:
-                
-                paused = false;
+    public boolean onTouchEvent(MotionEvent e) {
 
-
-            
+        if (e.getAction() != e.ACTION_UP) {
+            hud.getJoyStick().setTouchStatus(true);
+            hud.getJoyStick().updateStick(e.getX(), e.getY());
+        } else {
+            hud.getJoyStick().setTouchStatus(false);
         }
-        
+
         return true;
     }
     

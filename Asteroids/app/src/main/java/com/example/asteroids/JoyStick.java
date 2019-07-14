@@ -3,7 +3,6 @@ package com.example.asteroids;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.view.MotionEvent;
 
 public class JoyStick {
 
@@ -17,7 +16,7 @@ public class JoyStick {
     private PointF blockSize;
     private float baseRadius;
     private float hatRadius;
-
+    private boolean beingTouched;
     private Path base = new Path();
     private Path hat = new Path();
 
@@ -37,7 +36,7 @@ public class JoyStick {
         this.hatRadius = (int) (8 * blockSize.x);
         this.stickPosition.x = 0;
         this.stickPosition.y = 0;
-
+        this.beingTouched = false;
         this.base.addCircle(baseCenter.x, baseCenter.y, baseRadius, Path.Direction.CW);
         this.hat.addCircle(hatCenter.x, hatCenter.y, hatRadius, Path.Direction.CW);
     }
@@ -54,12 +53,16 @@ public class JoyStick {
         return null;
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent e) {
-        if (e.getAction() != e.ACTION_UP) {
+    public void setTouchStatus(boolean temp) {
+        this.beingTouched = temp;
+    }
+
+
+    public void updateStick(float x, float y) {
+        if (beingTouched) {
             // read the stick's current position
-            stickPosition.x = e.getX();
-            stickPosition.y = e.getX();
+            stickPosition.x = x;
+            stickPosition.y = y;
 
             // find magnitude of displacement from center of base circle
             float displacement = (float) Math.sqrt(Math.pow((stickPosition.x - baseCenter.x), 2) + Math.pow((stickPosition.y - baseCenter.y), 2));
@@ -76,7 +79,6 @@ public class JoyStick {
                 stickPosition.y = constrainedY;
             }
         }
-        return true;
     }
 
     /*
@@ -112,8 +114,13 @@ public class JoyStick {
 
     */
     public Path[] draw() {
-        //get current positions, then move circles to them.
+        //get current position of hat, then move it
 
+        if (beingTouched) {
+            hat.moveTo(baseCenter.x, baseCenter.y);
+        } else {
+            hat.moveTo(stickPosition.x, stickPosition.y);
+        }
 
         Path[] joyStick = new Path[2];
         joyStick[0] = base;
