@@ -3,7 +3,7 @@ package com.example.asteroids;
 // AUTHOR NAME HERE
 
 import android.graphics.Path;
-import android.graphics.Point;
+import android.graphics.PointF;
 
 public class UFO extends MovableObject {
     ///////////////////////////
@@ -15,9 +15,11 @@ public class UFO extends MovableObject {
     ///////////////////////////
 
     //Testing
-    public UFO(Point dp) {
-        // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
-        super(dp);
+    public UFO(PointF blockSize) {
+        // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
+        super(blockSize);
+
+
     }
 
 

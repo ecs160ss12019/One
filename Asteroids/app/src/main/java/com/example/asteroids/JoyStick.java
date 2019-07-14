@@ -55,7 +55,7 @@ public class JoyStick {
         return true;
     }
 
-    private void drawJoystick(float newX, float newY) {
+    private void draw(float newX, float newY) {
         if (getHolder().getSurface().isValid()) {
             Canvas myCanvas = this.getHolder().lockCanvas(); //Stuff to draw
             Paint colors = new Paint();

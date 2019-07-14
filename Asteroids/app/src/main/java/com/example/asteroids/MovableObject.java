@@ -4,6 +4,7 @@ package com.example.asteroids;
 
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.PointF;
 
 abstract class MovableObject {
     ///////////////////////////
@@ -11,7 +12,7 @@ abstract class MovableObject {
     ///////////////////////////
 
     //scaled screen resolution with domain of 0-100
-    protected Point dp;
+    protected PointF blockSize;
 
     // position / direction / speed / physics
     protected Point position;
@@ -27,9 +28,9 @@ abstract class MovableObject {
     //      METHODS
     ///////////////////////////
 
-    public MovableObject(Point dp) {
+    public MovableObject(PointF blockSize) {
 
-        this.dp = dp;
+        this.blockSize = blockSize;
 
         //Initialize our shape
         shape = new Path();

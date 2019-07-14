@@ -2,7 +2,7 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
-import android.graphics.Point;
+import android.graphics.PointF;
 
 public class HUD {
     ///////////////////////////
@@ -16,9 +16,13 @@ public class HUD {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public HUD(Point res) {
+    public HUD(HUD temp) {
+        new HUD(this);
+    }
 
-        joyStick = new JoyStick(res);
+    public HUD(PointF blockSize) {
+
+        //joyStick = new JoyStick(res);
 
     }
 

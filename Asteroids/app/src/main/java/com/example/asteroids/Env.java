@@ -9,14 +9,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-
 /*TODO: since we can't implement both runnable and drawable, maybe we should rethink the drawable interface*/
+
 public class Env extends SurfaceView implements Runnable {
 
     ///////////////////////////
@@ -36,13 +36,13 @@ public class Env extends SurfaceView implements Runnable {
     private final int MILLIS_IN_SECOND = 1000;
 
     //Resolution and font sizes
-    protected Point resolution;
-    private int fontSize;
-    private int fontMargin;
+    protected PointF resolution;
+    private float fontSize;
+    private float fontMargin;
 
-    //Using dp to make a consistent ui that scales resolutions
+    //Using blockSize to make a consistent ui that scales resolutions
     //It is a scaled screen resolution with domain of 0-100
-    private Point blockSize;
+    private PointF blockSize;
 
 
     //Game objects
@@ -59,20 +59,19 @@ public class Env extends SurfaceView implements Runnable {
     private boolean paused = true;
 
 
-
     ///////////////////////////
     //     CONSTRUCTOR
     ///////////////////////////
-    public Env(Context context, Point res) {
+    public Env(Context context, PointF res) {
         super(context);
 
         //Pass the resolution to our local variables, and set our fontsize
-        resolution = new Point();
+        resolution = new PointF();
         resolution.x = res.x;
         resolution.y = res.y;
 
         //1 value in blockSize = 1/100th of the screen
-        blockSize = new Point();
+        blockSize = new PointF();
         blockSize.x = resolution.x / 100;
         blockSize.y = resolution.y / 100;
 
@@ -86,6 +85,7 @@ public class Env extends SurfaceView implements Runnable {
         //Initialize our game objects
         hud = new HUD(blockSize);
         spaceship = new Spaceship(blockSize);
+
 
     }
 
@@ -164,7 +164,7 @@ public class Env extends SurfaceView implements Runnable {
     Prints the only the FPS currently
     */
     private void printDebugging() {
-        int debugSize = fontSize / 2;
+        float debugSize = fontSize / 2;
         paint.setTextSize(debugSize);
 
 

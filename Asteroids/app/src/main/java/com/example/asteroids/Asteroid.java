@@ -3,7 +3,7 @@ package com.example.asteroids;
 // AUTHOR NAME HERE
 
 import android.graphics.Path;
-import android.graphics.Point;
+import android.graphics.PointF;
 
 public class Asteroid extends MovableObject {
 
@@ -16,9 +16,9 @@ public class Asteroid extends MovableObject {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Asteroid(Point dp) {
-        // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
-        super(dp);
+    public Asteroid(PointF blockSize) {
+        // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
+        super(blockSize);
 
 
     }
