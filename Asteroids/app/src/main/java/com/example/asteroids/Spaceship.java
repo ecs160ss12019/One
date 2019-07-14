@@ -3,6 +3,7 @@ package com.example.asteroids;
 // AUTHOR NAME HERE
 
 import android.graphics.Path;
+import android.graphics.Point;
 
 
 public class Spaceship extends MovableObject {
@@ -14,9 +15,9 @@ public class Spaceship extends MovableObject {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Spaceship() {
+    public Spaceship(Point dp) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
-        super();
+        super(dp);
 
 
     }
@@ -26,14 +27,13 @@ public class Spaceship extends MovableObject {
     ///////////////////////////
 
 
+    public Path draw() {
 
-    public Path updatePos() {
-
-        shape.moveTo(100,100);
-        shape.lineTo(200,125);
-        shape.lineTo(100, 150);
-        shape.lineTo(125,125);
-        shape.lineTo(100,100);
+        shape.moveTo(10 * dp.x,10 * dp.x );
+        shape.lineTo(20 * dp.x,(float) 12.5 * dp.x);
+        shape.lineTo(10 * dp.x, (float) 15 * dp.x);
+        shape.lineTo((float) 12.5 * dp.x,(float) 12.5 * dp.x);
+        shape.lineTo(10 * dp.x,10 * dp.x);
 
         return shape;
 

@@ -40,6 +40,10 @@ public class Env extends SurfaceView implements Runnable {
     private int fontSize;
     private int fontMargin;
 
+    //Using dp to make a consistent ui that scales resolutions
+    //It is a scaled screen resolution with domain of 0-100
+    private Point dp;
+
 
     //Game objects
     private HUD hud;
@@ -67,6 +71,10 @@ public class Env extends SurfaceView implements Runnable {
         resolution.x = res.x;
         resolution.y = res.y;
 
+        //Set 1 dp to be 1/100 of the screen
+        dp = new Point();
+        dp.x = resolution.x / 100;
+        dp.y = resolution.y / 100;
 
         fontSize = resolution.x / 20;
         fontMargin = resolution.x / 75;
@@ -76,8 +84,8 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize our game objects
-        hud = new HUD(resolution);
-        spaceship = new Spaceship();
+        hud = new HUD(dp);
+        spaceship = new Spaceship(dp);
 
     }
 
@@ -103,10 +111,15 @@ public class Env extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(255,255,255,255));
 
             //Draw our objects
-            canvas.drawPath(spaceship.updatePos(), paint);
+            canvas.drawPath(spaceship.draw(), paint);
+
+
+            paint.setColor(Color.argb(150,255,255,255));
+
+
+
 
             canvas.drawPath(hud.joyStick.draw(), paint);
-
 
             if(DEBUGGING) {
                 printDebugging();
@@ -158,6 +171,8 @@ public class Env extends SurfaceView implements Runnable {
         paint.setColor(Color.argb(255,255,255,255));
         canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
         Log.d("FPS", "FPS: " + fps);
+
+        Log.d("canvas dims", "canvas.x:" + canvas.getWidth());
 
     }
 

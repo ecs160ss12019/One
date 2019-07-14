@@ -10,6 +10,9 @@ abstract class MovableObject {
     //      VARIABLES
     ///////////////////////////
 
+    //scaled screen resolution with domain of 0-100
+    protected Point dp;
+
     // position / direction / speed / physics
     protected Point position;
     protected int mass;
@@ -24,7 +27,10 @@ abstract class MovableObject {
     //      METHODS
     ///////////////////////////
 
-    public MovableObject() {
+    public MovableObject(Point dp) {
+
+        this.dp = dp;
+
         //Initialize our shape
         shape = new Path();
         shape.reset(); //TODO: Might not be needed

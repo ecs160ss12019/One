@@ -16,15 +16,16 @@ public class JoyStick {
     Path outerCircle;
 
     Paint paint;
-
+    Point dp;
 
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public JoyStick(Point res) {
+    public JoyStick(Point screenDimensions) {
          innerCircle = new Path();
          outerCircle = new Path();
+         dp = screenDimensions;
 
 
     }
@@ -36,9 +37,7 @@ public class JoyStick {
     public Path draw() {
 
 
-
-
-        outerCircle.addCircle(500,500, 100, Path.Direction.CCW);
+        outerCircle.addCircle(5 * dp.x, 80 * dp.y, 20 * dp.x, Path.Direction.CCW);
 
         return outerCircle;
 
