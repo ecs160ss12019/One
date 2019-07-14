@@ -12,13 +12,14 @@ public class JoyStick {
     ///////////////////////////
     private PointF baseCenter = new PointF();
     private PointF hatCenter = new PointF();
-    ;
     private PointF stickPosition = new PointF();
-    ;
     private Point resolution;
     private PointF blockSize;
     private float baseRadius;
     private float hatRadius;
+
+    private Path base = new Path();
+    private Path hat = new Path();
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -34,34 +35,45 @@ public class JoyStick {
         this.resolution.y = (int) blockSize.y * 100;
         this.baseRadius = (int) (20 * blockSize.x);
         this.hatRadius = (int) (8 * blockSize.x);
-
         this.stickPosition.x = 0;
         this.stickPosition.y = 0;
+
+        this.base.addCircle(baseCenter.x, baseCenter.y, baseRadius, Path.Direction.CW);
+        this.hat.addCircle(hatCenter.x, hatCenter.y, hatRadius, Path.Direction.CW);
     }
 
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+    public PointF getStickPosition() {
+        return this.stickPosition;
+    }
+
+    // TODO: make mapped stick functionality.
+    public PointF getScaledStickPosition() {
+        return null;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         if (e.getAction() != e.ACTION_UP) {
             // read the stick's current position
             stickPosition.x = e.getX();
             stickPosition.y = e.getX();
+
+            // find magnitude of displacement from center of base circle
             float displacement = (float) Math.sqrt(Math.pow((stickPosition.x - baseCenter.x), 2) + Math.pow((stickPosition.y - baseCenter.y), 2));
 
             if (displacement < baseRadius) {
-                // TODO: case for drawing when hat does't need constraining to base radius
+                // when hat does't need constraining to base radius
                 hatCenter = stickPosition;
-                draw();
             } else {
-                // TODO: case for drawing when hat needs constraining to base radius
+                // when hat needs constraining to base radius
                 float ratio = baseRadius / displacement;
                 float constrainedX = baseCenter.x + (stickPosition.x - baseCenter.x) * ratio;
                 float constrainedY = baseCenter.y + (stickPosition.y - baseCenter.y) * ratio;
                 stickPosition.x = constrainedX;
                 stickPosition.y = constrainedY;
-                draw();
             }
         }
         return true;
@@ -99,9 +111,14 @@ public class JoyStick {
         }
 
     */
-    public Path draw() {
+    public Path[] draw() {
+        //get current positions, then move circles to them.
 
-        return null;
+
+        Path[] joyStick = new Path[2];
+        joyStick[0] = base;
+        joyStick[1] = hat;
+        return joyStick;
     }
 
 
