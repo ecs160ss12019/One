@@ -10,13 +10,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-
 /*TODO: since we can't implement both runnable and drawable, maybe we should rethink the drawable interface*/
+
 public class Env extends SurfaceView implements Runnable {
 
     ///////////////////////////
@@ -37,8 +38,12 @@ public class Env extends SurfaceView implements Runnable {
 
     //Resolution and font sizes
     protected Point resolution;
-    private int fontSize;
-    private int fontMargin;
+    private float fontSize;
+    private float fontMargin;
+
+    //Using blockSize to make a consistent ui that scales resolutions
+    //It is a scaled screen resolution with domain of 0-100
+    private PointF blockSize;
 
 
     //Game objects
@@ -59,7 +64,6 @@ public class Env extends SurfaceView implements Runnable {
     private boolean paused = true;
 
 
-
     ///////////////////////////
     //     CONSTRUCTOR
     ///////////////////////////
@@ -71,6 +75,10 @@ public class Env extends SurfaceView implements Runnable {
         resolution.x = res.x;
         resolution.y = res.y;
 
+        //1 value in blockSize = 1/100th of the screen
+        blockSize = new PointF();
+        blockSize.x =  (float)resolution.x / 100;
+        blockSize.y = (float) resolution.y / 100;
 
         fontSize = resolution.x / 20;
         fontMargin = resolution.x / 75;
@@ -80,14 +88,15 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize our game objects
-        hud = new HUD(resolution);
-        spaceship = new Spaceship();
+        hud = new HUD(blockSize);
+        spaceship = new Spaceship(blockSize);
+
 
 
         //ufoManager = new UFOManager(maxUFO,resolution.x, resolution.y);
-        ufo = new UFO(resolution.x, resolution.y);
+        ufo = new UFO(resolution.x, resolution.y, blockSize);
         for(int i = 0; i < 10; i++) {
-            asteroid[i] = new Asteroid(resolution);
+            asteroid[i] = new Asteroid(resolution, blockSize);
         }
 
 
@@ -115,7 +124,7 @@ public class Env extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(255,255,255,255));
 
             //Draw Space ship
-            canvas.drawPath(spaceship.updatePos(), paint);
+            canvas.drawPath(spaceship.draw(), paint);
 
             //Draw UFO
             paint.setColor(Color.argb(255, 0, 255, 90));
@@ -126,12 +135,18 @@ public class Env extends SurfaceView implements Runnable {
             for(int i = 0; i <10; i++){
                 canvas.drawPath(asteroid[i].draw(), paint);
             }
-            canvas.drawPath(hud.joyStick.draw(), paint);
 
+            paint.setColor(Color.argb(100,255,255,255));
+
+            //Draw Joystick
+            canvas.drawPath(hud.joyStick.draw()[0], paint);
+            paint.setColor(Color.argb(255,255,0,0));
+            canvas.drawPath(hud.joyStick.draw()[1], paint);
 
             if(DEBUGGING) {
                 printDebugging();
             }
+
 
             //Unlock canvas after you are done with it
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -141,19 +156,19 @@ public class Env extends SurfaceView implements Runnable {
 
     
     @Override
-    public  boolean onTouchEvent(MotionEvent motionEvent) {
-        
-        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-            
-            case MotionEvent.ACTION_DOWN:
-                
-                paused = false;
+    public boolean onTouchEvent(MotionEvent e) {
 
+        //Touch coordinates are scaled to be values between 0-100
+        float scaledX = e.getX() / blockSize.x;
+        float scaledY = e.getY() / blockSize.x;
 
-            
-        }
-        
+        if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
+            hud.joyStick.updateStick(scaledX, scaledY);
+        } else
+            hud.joyStick.resetJoyStick();
+
         return true;
+
     }
     
 
@@ -172,13 +187,19 @@ public class Env extends SurfaceView implements Runnable {
     Prints the only the FPS currently
     */
     private void printDebugging() {
-        int debugSize = fontSize / 2;
+        float debugSize = fontSize / 2;
         paint.setTextSize(debugSize);
 
-
+        //FPS
         paint.setColor(Color.argb(255,255,255,255));
         canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
+
+        //Joystick Output
+        canvas.drawText("X-Thrust: " + hud.joyStick.getScaledStickPosition().x, 10, 200 + debugSize, paint);
+        canvas.drawText("Y-Thrust: " + hud.joyStick.getScaledStickPosition().y, 10, 250 + debugSize, paint);
         Log.d("FPS", "FPS: " + fps);
+
+
 
     }
 
