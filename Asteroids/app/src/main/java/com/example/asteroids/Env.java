@@ -44,7 +44,7 @@ public class Env extends SurfaceView implements Runnable {
     //Game objects
     private HUD hud;
     private Spaceship spaceship;
-    private Asteroid asteroid;
+    private Asteroid[] asteroid = new Asteroid[10];
 
     //Here is the thread and two control variables
     private Thread gameThread = null;
@@ -79,7 +79,10 @@ public class Env extends SurfaceView implements Runnable {
         //Initialize our game objects
         hud = new HUD(resolution);
         spaceship = new Spaceship();
-        asteroid = new Asteroid(resolution);
+        for(int i = 0; i < 10; i++) {
+            asteroid[i] = new Asteroid(resolution);
+        }
+
 
     }
 
@@ -106,7 +109,9 @@ public class Env extends SurfaceView implements Runnable {
 
             //Draw our objects
             canvas.drawPath(spaceship.updatePos(), paint);
-            canvas.drawPath(asteroid.draw(), paint);
+            for(int i = 0; i <10; i++){
+                canvas.drawPath(asteroid[i].draw(), paint);
+            }
             canvas.drawPath(hud.joyStick.draw(), paint);
 
 
