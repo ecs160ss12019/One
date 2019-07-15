@@ -26,6 +26,7 @@ abstract class MovableObject {
 
     public MovableObject() {
         //Initialize our shape
+
         shape = new Path();
         shape.reset(); //TODO: Might not be needed
 

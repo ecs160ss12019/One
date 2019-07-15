@@ -45,6 +45,8 @@ public class Env extends SurfaceView implements Runnable {
     private HUD hud;
     private Spaceship spaceship;
     private Asteroid[] asteroid = new Asteroid[10];
+    private UFO ufo;
+
 
     //Here is the thread and two control variables
     private Thread gameThread = null;
@@ -79,6 +81,8 @@ public class Env extends SurfaceView implements Runnable {
         //Initialize our game objects
         hud = new HUD(resolution);
         spaceship = new Spaceship();
+
+        ufo = new UFO(resolution.x, resolution.y);
         for(int i = 0; i < 10; i++) {
             asteroid[i] = new Asteroid(resolution);
         }
@@ -107,8 +111,15 @@ public class Env extends SurfaceView implements Runnable {
 
             paint.setColor(Color.argb(255,255,255,255));
 
-            //Draw our objects
+            //Draw Space ship
             canvas.drawPath(spaceship.updatePos(), paint);
+
+            //Draw UFO
+            paint.setColor(Color.argb(255, 0, 255, 90));
+            canvas.drawPath(ufo.draw(), paint);
+
+            paint.setColor(Color.argb(255,255,255,255));
+            //Draw asteroids
             for(int i = 0; i <10; i++){
                 canvas.drawPath(asteroid[i].draw(), paint);
             }
@@ -211,7 +222,7 @@ public class Env extends SurfaceView implements Runnable {
     Should update the position of all movable objects here
     */
     public void update() {
-
+        ufo.update(resolution.x, resolution.y, fps);
     }
 
 }
