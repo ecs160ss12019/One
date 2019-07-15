@@ -96,7 +96,7 @@ public class Env extends SurfaceView implements Runnable {
         //ufoManager = new UFOManager(maxUFO,resolution.x, resolution.y);
         ufo = new UFO(resolution.x, resolution.y, blockSize);
         for(int i = 0; i < 10; i++) {
-            asteroid[i] = new Asteroid(resolution, blockSize);
+            asteroid[i] = new Asteroid(blockSize);
         }
 
 
