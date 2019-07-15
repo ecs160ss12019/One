@@ -25,7 +25,7 @@ public class JoyStick {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public JoyStick(Point position,PointF blockSize) {
+    public JoyStick(Point position, int baseRadius, int hatRadius, PointF blockSize) {
 
         //NOTE: Just trust that base center must have (blockSize.y / blockSize.x). Long story. . .
         baseCenter = new PointF(position.x, position.y * blockSize.y / blockSize.x);
@@ -35,8 +35,8 @@ public class JoyStick {
         hat = new Path();
 
         this.blockSize = blockSize;
-        baseRadius = 20;
-        hatRadius = 8;
+        this.baseRadius = baseRadius;
+        this.hatRadius = hatRadius;
 
         base.addCircle(baseCenter.x * blockSize.x, baseCenter.y * blockSize.x, baseRadius * blockSize.x, Path.Direction.CW);
         hat.addCircle(baseCenter.x * blockSize.x, baseCenter.y * blockSize.x, hatRadius * blockSize.x, Path.Direction.CW);

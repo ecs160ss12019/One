@@ -20,8 +20,8 @@ public class HUD {
     public HUD(PointF blockSize) {
 
         //Setting JoyStick to 50% of screen, with baseRad of 20% of screen, and hatRadius of 8% of screen
-        Point position = new Point(50,50);
-        joyStick = new JoyStick(position, 20, 8, blockSize);
+        Point joyStickPos = new Point(20,80);
+        joyStick = new JoyStick(joyStickPos, 14, 5, blockSize);
 
     }
 
@@ -29,7 +29,4 @@ public class HUD {
     //      METHODS
     ///////////////////////////
 
-    public JoyStick getJoyStick() {
-        return this.joyStick;
-    }
 }

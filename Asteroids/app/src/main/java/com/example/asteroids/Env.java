@@ -142,9 +142,9 @@ public class Env extends SurfaceView implements Runnable {
         float scaledY = e.getY() / blockSize.x;
 
         if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
-            hud.getJoyStick().updateStick(scaledX, scaledY);
+            hud.joyStick.updateStick(scaledX, scaledY);
         } else
-            hud.getJoyStick().resetJoyStick();
+            hud.joyStick.resetJoyStick();
 
         return true;
 
@@ -174,8 +174,8 @@ public class Env extends SurfaceView implements Runnable {
         canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
 
         //Joystick Output
-        canvas.drawText("X-Thrust: " + hud.getJoyStick().getScaledStickPosition().x, 10, 200 + debugSize, paint);
-        canvas.drawText("Y-Thrust: " + hud.getJoyStick().getScaledStickPosition().y, 10, 250 + debugSize, paint);
+        canvas.drawText("X-Thrust: " + hud.joyStick.getScaledStickPosition().x, 10, 200 + debugSize, paint);
+        canvas.drawText("Y-Thrust: " + hud.joyStick.getScaledStickPosition().y, 10, 250 + debugSize, paint);
         Log.d("FPS", "FPS: " + fps);
 
 
