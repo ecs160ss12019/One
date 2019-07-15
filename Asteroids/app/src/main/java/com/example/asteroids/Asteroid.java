@@ -62,18 +62,18 @@ public class Asteroid extends MovableObject {
     private void randOffset(PointF blockSize){
         // pick where to generate
         if(random.nextInt(2) == 1){
-            xOffSet = random.nextInt(blockSize.x);
+            xOffSet = random.nextInt((int) (100 * blockSize.y));
             if(random.nextInt(2) == 1){
                 yOffSet = scalar;
             }else{
-                yOffSet = res.y - scalar;
+                yOffSet = (int) (100 * blockSize.y - scalar);
             }
         }else{
-            yOffSet = random.nextInt(res.y);
+            yOffSet = random.nextInt((int) (100 * blockSize.x));
             if(random.nextInt(2) == 1){
                 xOffSet = scalar;
             }else{
-                xOffSet = res.x - scalar;
+                xOffSet = (int)  (100 * blockSize.x - scalar);
             }
         }
     }

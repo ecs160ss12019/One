@@ -131,6 +131,7 @@ public class Env extends SurfaceView implements Runnable {
             canvas.drawPath(ufo.draw(), paint);
 
             paint.setColor(Color.argb(255,255,255,255));
+
             //Draw asteroids
             for(int i = 0; i <10; i++){
                 canvas.drawPath(asteroid[i].draw(), paint);
