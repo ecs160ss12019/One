@@ -1,6 +1,6 @@
 package com.example.asteroids;
 
-// AUTHOR NAME HERE
+// Brian Coe
 
 import android.graphics.Path;
 import android.graphics.Point;
