@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -36,7 +37,7 @@ public class Env extends SurfaceView implements Runnable {
     private final int MILLIS_IN_SECOND = 1000;
 
     //Resolution and font sizes
-    protected PointF resolution;
+    protected Point resolution;
     private float fontSize;
     private float fontMargin;
 
@@ -62,18 +63,18 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
     //     CONSTRUCTOR
     ///////////////////////////
-    public Env(Context context, PointF res) {
+    public Env(Context context, Point res) {
         super(context);
 
         //Pass the resolution to our local variables, and set our fontsize
-        resolution = new PointF();
+        resolution = new Point();
         resolution.x = res.x;
         resolution.y = res.y;
 
         //1 value in blockSize = 1/100th of the screen
         blockSize = new PointF();
-        blockSize.x = resolution.x / 100;
-        blockSize.y = resolution.y / 100;
+        blockSize.x =  (float)resolution.x / 100;
+        blockSize.y = (float) resolution.y / 100;
 
         fontSize = resolution.x / 20;
         fontMargin = resolution.x / 75;
@@ -114,14 +115,25 @@ public class Env extends SurfaceView implements Runnable {
             canvas.drawPath(spaceship.draw(), paint);
 
 
-            paint.setColor(Color.argb(150,255,255,255));
+            paint.setColor(Color.argb(100,255,255,255));
 
 
-            canvas.drawPath(hud.getJoyStick().draw(), paint);
+            canvas.drawPath(hud.getJoyStick().draw()[0], paint);
+
+            paint.setColor(Color.argb(255,255,0,0));
+
+            canvas.drawPath(hud.getJoyStick().draw()[1], paint);
 
             if(DEBUGGING) {
                 printDebugging();
             }
+
+            PointF output;
+
+            output = hud.getJoyStick().getScaledStickPosition();
+
+            Log.d("output", "X: " + output.x);
+            Log.d("output", "Y: " + output.y);
 
             //Unlock canvas after you are done with it
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -133,12 +145,16 @@ public class Env extends SurfaceView implements Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent e) {
 
-        if (e.getAction() != e.ACTION_UP) {
-            hud.getJoyStick().setTouchStatus(true);
-            hud.getJoyStick().updateStick(e.getX(), e.getY());
-        } else {
-            hud.getJoyStick().setTouchStatus(false);
-        }
+        //Touch coordinates are scaled to be values between 0-100
+        float scaledX = e.getX() / blockSize.x;
+        float scaledY = e.getY() / blockSize.x;
+
+
+        if (e.getAction() == e.ACTION_MOVE)
+            hud.getJoyStick().updateStick(scaledX, scaledY);
+        else
+            hud.getJoyStick().resetJoyStick();
+
 
         return true;
     }
@@ -167,7 +183,7 @@ public class Env extends SurfaceView implements Runnable {
         canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
         Log.d("FPS", "FPS: " + fps);
 
-        Log.d("canvas dims", "canvas.x:" + canvas.getWidth());
+
 
     }
 

@@ -16,13 +16,9 @@ public class HUD {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public HUD(HUD temp) {
-        new HUD(this);
-    }
-
     public HUD(PointF blockSize) {
 
-        //joyStick = new JoyStick(res);
+        joyStick = new JoyStick(blockSize);
 
     }
 

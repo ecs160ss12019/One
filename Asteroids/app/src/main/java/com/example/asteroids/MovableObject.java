@@ -57,6 +57,24 @@ abstract class MovableObject {
     //      METHODS
     ///////////////////////////
 
+
+    public void update(long fps) {
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     // getters / setters
     public int getPosX() {
         return position.x;
