@@ -25,10 +25,10 @@ public class JoyStick {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public JoyStick(PointF blockSize) {
+    public JoyStick(Point position,PointF blockSize) {
 
-        //NOTE: Just trust that base center must have blockSize.y / blockSize.x. Long story
-        baseCenter = new PointF(70, 40 * blockSize.y / blockSize.x);
+        //NOTE: Just trust that base center must have (blockSize.y / blockSize.x). Long story. . .
+        baseCenter = new PointF(position.x, position.y * blockSize.y / blockSize.x);
         stickPosition = new PointF(0,0);
 
         base = new Path();
@@ -53,8 +53,7 @@ public class JoyStick {
         // %100% engaged on the axis.
 
         float xEngaged = (stickPosition.x - baseCenter.x ) / (baseRadius);
-        float yEngaged = (stickPosition.y - baseCenter.y ) / (baseRadius);
-
+        float yEngaged = -1 * (stickPosition.y - baseCenter.y ) / (baseRadius);
 
         PointF scaledOutput = new PointF(xEngaged, yEngaged);
         return scaledOutput;
@@ -83,12 +82,14 @@ public class JoyStick {
             stickPosition.y = y;
 
         } else { // when hat needs constraining to base radius
+
             float ratio = baseRadius / distanceFromCenter ;
 
             float constrainedX = baseCenter.x + (xCentered) * ratio;
             float constrainedY = baseCenter.y + (yCentered) * ratio;
             stickPosition.x = constrainedX;
             stickPosition.y = constrainedY;
+
         }
 
         //Reset path, add a new circle with the new coordinates
@@ -104,6 +105,5 @@ public class JoyStick {
         joyStick[1] = hat;
         return joyStick;
     }
-
 
 }

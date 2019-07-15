@@ -111,18 +111,16 @@ public class Env extends SurfaceView implements Runnable {
 
             paint.setColor(Color.argb(255,255,255,255));
 
-            //Draw our objects
+            //Draw spaceship
             canvas.drawPath(spaceship.draw(), paint);
 
 
             paint.setColor(Color.argb(100,255,255,255));
 
-
-            canvas.drawPath(hud.getJoyStick().draw()[0], paint);
-
+            //Draw Joystick
+            canvas.drawPath(hud.joyStick.draw()[0], paint);
             paint.setColor(Color.argb(255,255,0,0));
-
-            canvas.drawPath(hud.getJoyStick().draw()[1], paint);
+            canvas.drawPath(hud.joyStick.draw()[1], paint);
 
             if(DEBUGGING) {
                 printDebugging();
@@ -143,22 +141,13 @@ public class Env extends SurfaceView implements Runnable {
         float scaledX = e.getX() / blockSize.x;
         float scaledY = e.getY() / blockSize.x;
 
-
-        if (e.getAction() == e.ACTION_MOVE) {
+        if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
             hud.getJoyStick().updateStick(scaledX, scaledY);
-
-
-            PointF output;
-
-            output = hud.getJoyStick().getScaledStickPosition();
-
-            Log.d("output", "X: " + output.x);
-            Log.d("output", "Y: " + output.y);
         } else
             hud.getJoyStick().resetJoyStick();
 
-
         return true;
+
     }
     
 
@@ -180,9 +169,13 @@ public class Env extends SurfaceView implements Runnable {
         float debugSize = fontSize / 2;
         paint.setTextSize(debugSize);
 
-
+        //FPS
         paint.setColor(Color.argb(255,255,255,255));
         canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
+
+        //Joystick Output
+        canvas.drawText("X-Thrust: " + hud.getJoyStick().getScaledStickPosition().x, 10, 200 + debugSize, paint);
+        canvas.drawText("Y-Thrust: " + hud.getJoyStick().getScaledStickPosition().y, 10, 250 + debugSize, paint);
         Log.d("FPS", "FPS: " + fps);
 
 
