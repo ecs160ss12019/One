@@ -33,12 +33,12 @@ public class Asteroid extends MovableObject {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Asteroid(Point res, PointF blockSize) {
+    public Asteroid( PointF blockSize) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super(blockSize);
         populate();
         asteroidType = random.nextInt(9) + 1;
-        randOffset(res);
+        randOffset(blockSize);
         currentAsteroid = which();
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
 
@@ -59,10 +59,10 @@ public class Asteroid extends MovableObject {
         return shape;
     }
 
-    private void randOffset(Point res){
+    private void randOffset(PointF blockSize){
         // pick where to generate
         if(random.nextInt(2) == 1){
-            xOffSet = random.nextInt(res.x);
+            xOffSet = random.nextInt(blockSize.x);
             if(random.nextInt(2) == 1){
                 yOffSet = scalar;
             }else{
