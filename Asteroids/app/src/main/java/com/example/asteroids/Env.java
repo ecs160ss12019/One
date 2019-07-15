@@ -40,15 +40,15 @@ public class Env extends SurfaceView implements Runnable {
     private int fontSize;
     private int fontMargin;
 
-    //Using dp to make a consistent ui that scales resolutions
-    //It is a scaled screen resolution with domain of 0-100
-    private Point dp;
-
 
     //Game objects
     private HUD hud;
     private Spaceship spaceship;
+    private Asteroid[] asteroid = new Asteroid[10];
 
+//    private UFOManager ufoManager;
+//    private int maxUFO = 3;
+    private UFO ufo;
     //Here is the thread and two control variables
     private Thread gameThread = null;
 
@@ -71,10 +71,6 @@ public class Env extends SurfaceView implements Runnable {
         resolution.x = res.x;
         resolution.y = res.y;
 
-        //Set 1 dp to be 1/100 of the screen
-        dp = new Point();
-        dp.x = resolution.x / 100;
-        dp.y = resolution.y / 100;
 
         fontSize = resolution.x / 20;
         fontMargin = resolution.x / 75;
@@ -84,8 +80,16 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize our game objects
-        hud = new HUD(dp);
-        spaceship = new Spaceship(dp);
+        hud = new HUD(resolution);
+        spaceship = new Spaceship();
+
+
+        //ufoManager = new UFOManager(maxUFO,resolution.x, resolution.y);
+        ufo = new UFO(resolution.x, resolution.y);
+        for(int i = 0; i < 10; i++) {
+            asteroid[i] = new Asteroid(resolution);
+        }
+
 
     }
 
@@ -110,16 +114,20 @@ public class Env extends SurfaceView implements Runnable {
 
             paint.setColor(Color.argb(255,255,255,255));
 
-            //Draw our objects
-            canvas.drawPath(spaceship.draw(), paint);
+            //Draw Space ship
+            canvas.drawPath(spaceship.updatePos(), paint);
 
+            //Draw UFO
+            paint.setColor(Color.argb(255, 0, 255, 90));
+            canvas.drawPath(ufo.draw(), paint);
 
-            paint.setColor(Color.argb(150,255,255,255));
-
-
-
-
+            paint.setColor(Color.argb(255,255,255,255));
+            //Draw asteroids
+            for(int i = 0; i <10; i++){
+                canvas.drawPath(asteroid[i].draw(), paint);
+            }
             canvas.drawPath(hud.joyStick.draw(), paint);
+
 
             if(DEBUGGING) {
                 printDebugging();
@@ -172,8 +180,6 @@ public class Env extends SurfaceView implements Runnable {
         canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
         Log.d("FPS", "FPS: " + fps);
 
-        Log.d("canvas dims", "canvas.x:" + canvas.getWidth());
-
     }
 
 
@@ -219,7 +225,7 @@ public class Env extends SurfaceView implements Runnable {
     Should update the position of all movable objects here
     */
     public void update() {
-
+        ufo.update(resolution.x, resolution.y, fps);
     }
 
 }

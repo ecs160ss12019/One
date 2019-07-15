@@ -32,6 +32,7 @@ abstract class MovableObject {
         this.dp = dp;
 
         //Initialize our shape
+
         shape = new Path();
         shape.reset(); //TODO: Might not be needed
 

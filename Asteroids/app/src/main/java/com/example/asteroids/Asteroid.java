@@ -1,35 +1,44 @@
 package com.example.asteroids;
 
-// AUTHOR NAME HERE
+// Brian Coe
 
 import android.graphics.Path;
 import android.graphics.Point;
+import java.util.Random;
 
 public class Asteroid extends MovableObject {
 
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-    private int scalar;
-    private Point[] ab1;
-    private Point[] ab2;
-    private Point[] ab3;
-    private Point[] am1;
-    private Point[] am2;
-    private Point[] am3;
-    private Point[] as1;
-    private Point[] as2;
-    private Point[] as3;
+    private int scalar = 25;
+    private int xOffSet = 400;
+    private int yOffSet = 600;
+    Random random = new Random();
+    private Point[] ab1 = new Point[7];
+    private Point[] ab2 = new Point[8];
+    private Point[] ab3 = new Point[5];
+    private Point[] am1 = new Point[7];
+    private Point[] am2 = new Point[5];
+    private Point[] am3 = new Point[5];
+    private Point[] as1 = new Point[4];
+    private Point[] as2 = new Point[5];
+    private Point[] as3 = new Point[6];
+    private Point[] currentAsteroid;
+    private int numHits;
+    private int asteroidType;
 
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Asteroid() {
+    public Asteroid(Point res) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
         populate();
-
+        asteroidType = random.nextInt(9) + 1;
+        randOffset(res);
+        currentAsteroid = which();
     }
 
     ///////////////////////////
@@ -37,8 +46,57 @@ public class Asteroid extends MovableObject {
     ///////////////////////////
 
     public Path draw() {
+        if(currentAsteroid != null) {
+            shape.moveTo(currentAsteroid[0].x * scalar + xOffSet, currentAsteroid[0].y * scalar + yOffSet);
+            for (int i = 1; i < currentAsteroid.length; i++) {
+                shape.lineTo(currentAsteroid[i].x * scalar + xOffSet, currentAsteroid[i].y * scalar + yOffSet);
+            }
+        }
         return shape;
     }
+
+    private void randOffset(Point res){
+        // pick where to generate
+        if(random.nextInt(2) == 1){
+            xOffSet = random.nextInt(res.x);
+            if(random.nextInt(2) == 1){
+                yOffSet = scalar;
+            }else{
+                yOffSet = res.y - scalar;
+            }
+        }else{
+            yOffSet = random.nextInt(res.y);
+            if(random.nextInt(2) == 1){
+                xOffSet = scalar;
+            }else{
+                xOffSet = res.x - scalar;
+            }
+        }
+    }
+
+
+    private Point[] which(){
+        switch(asteroidType){
+            case 1:
+                return ab1;
+            case 2:
+                return ab2;
+            case 3:
+                return ab3;
+            case 4:
+                return am1;
+            case 5:
+                return am2;
+            case 6:
+                return am3;
+            case 7:
+                return as1;
+            case 8:
+                return as2;
+            default:
+                return as3;
+    }
+}
 
     private void populate() {
         ab1[0] = new Point(0,0);
