@@ -4,22 +4,25 @@ package com.example.asteroids;
 
 import android.graphics.Path;
 import android.graphics.Point;
+import java.util.Random;
 
 public class Asteroid extends MovableObject {
 
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-    private int scalar;
-    private Point[] ab1;
-    private Point[] ab2;
-    private Point[] ab3;
-    private Point[] am1;
-    private Point[] am2;
-    private Point[] am3;
-    private Point[] as1;
-    private Point[] as2;
-    private Point[] as3;
+    private int scalar = 10;
+    private Point[] ab1 = new Point[7];
+    private Point[] ab2 = new Point[8];
+    private Point[] ab3 = new Point[5];
+    private Point[] am1 = new Point[7];
+    private Point[] am2 = new Point[5];
+    private Point[] am3 = new Point[5];
+    private Point[] as1 = new Point[4];
+    private Point[] as2 = new Point[5];
+    private Point[] as3 = new Point[6];
+    private int numHits;
+    private int asteroidType;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -29,7 +32,8 @@ public class Asteroid extends MovableObject {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
         populate();
-
+        Random random = new Random();
+        asteroidType = random.nextInt(9) + 1;
     }
 
     ///////////////////////////
@@ -37,6 +41,63 @@ public class Asteroid extends MovableObject {
     ///////////////////////////
 
     public Path draw() {
+
+        switch(asteroidType){
+            case 1:
+                shape.moveTo(ab1[0].x*scalar+300,ab1[0].y*scalar+400);
+                for(int i = 1; i < ab1.length; i++){
+                    shape.lineTo(ab1[i].x*scalar+300,ab1[i].y*scalar+400);
+                }
+                break;
+            case 2:
+                shape.moveTo(ab2[0].x*scalar+300,ab2[0].y*scalar+400);
+                for(int i = 1; i < ab2.length; i++){
+                    shape.lineTo(ab2[i].x*scalar+300,ab2[i].y*scalar+400);
+                }
+                break;
+            case 3:
+                shape.moveTo(ab3[0].x*scalar+300,ab3[0].y*scalar+400);
+                for(int i = 1; i < ab3.length; i++){
+                    shape.lineTo(ab3[i].x*scalar+300,ab3[i].y*scalar+400);
+                }
+                break;
+            case 4:
+                shape.moveTo(am1[0].x*scalar+300,am1[0].y*scalar+400);
+                for(int i = 1; i < am1.length; i++){
+                    shape.lineTo(am1[i].x*scalar+300,am1[i].y*scalar+400);
+                }
+                break;
+            case 5:
+                shape.moveTo(am2[0].x*scalar+300,am2[0].y*scalar+400);
+                for(int i = 1; i < am2.length; i++){
+                    shape.lineTo(am2[i].x*scalar+300,am2[i].y*scalar+400);
+                }
+                break;
+            case 6:
+                shape.moveTo(am3[0].x*scalar+300,am3[0].y*scalar+400);
+                for(int i = 1; i < am3.length; i++){
+                    shape.lineTo(am3[i].x*scalar+300,am3[i].y*scalar+400);
+                }
+                break;
+            case 7:
+                shape.moveTo(as1[0].x*scalar+300,as1[0].y*scalar+400);
+                for(int i = 1; i < as1.length; i++){
+                    shape.lineTo(as1[i].x*scalar+300,as1[i].y*scalar+400);
+                }
+                break;
+            case 8:
+                shape.moveTo(as2[0].x*scalar+300,as2[0].y*scalar+400);
+                for(int i = 1; i < as2.length; i++){
+                    shape.lineTo(as2[i].x*scalar+300,as2[i].y*scalar+400);
+                }
+                break;
+            case 9:
+                shape.moveTo(as3[0].x*scalar+300,as3[0].y*scalar+400);
+                for(int i = 1; i < as3.length; i++){
+                    shape.lineTo(as3[i].x*scalar+300,as3[i].y*scalar+400);
+                }
+                break;
+        }
         return shape;
     }
 
