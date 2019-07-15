@@ -29,7 +29,7 @@ public class JoyStick {
 
         //NOTE: Just trust that base center must have (blockSize.y / blockSize.x). Long story. . .
         baseCenter = new PointF(position.x, position.y * blockSize.y / blockSize.x);
-        stickPosition = new PointF(0,0);
+        stickPosition = new PointF(baseCenter.x, baseCenter.y);
 
         base = new Path();
         hat = new Path();
@@ -55,6 +55,7 @@ public class JoyStick {
         float xEngaged = (stickPosition.x - baseCenter.x ) / (baseRadius);
         float yEngaged = -1 * (stickPosition.y - baseCenter.y ) / (baseRadius);
 
+        //Points are reversed for landscape orientation
         PointF scaledOutput = new PointF(xEngaged, yEngaged);
         return scaledOutput;
     }
@@ -62,6 +63,8 @@ public class JoyStick {
     public void resetJoyStick() {
         hat.reset();
         hat.addCircle(baseCenter.x * blockSize.x, baseCenter.y * blockSize.x, hatRadius * blockSize.x, Path.Direction.CW);
+        stickPosition.x = baseCenter.x;
+        stickPosition.y = baseCenter.y;
     }
 
     //X and Y have values of 0-100 mapped to domain of screen
