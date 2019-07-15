@@ -51,8 +51,8 @@ public class Env extends SurfaceView implements Runnable {
     private Spaceship spaceship;
     private Asteroid[] asteroid = new Asteroid[10];
 
-//    private UFOManager ufoManager;
-//    private int maxUFO = 3;
+    //private UFOManager ufoManager;
+    private int maxUFO = 3;
     private UFO ufo;
     //Here is the thread and two control variables
     private Thread gameThread = null;
@@ -134,7 +134,7 @@ public class Env extends SurfaceView implements Runnable {
 
             //Draw asteroids
             for(int i = 0; i <10; i++){
-                canvas.drawPath(asteroid[i].draw(), paint);
+                //canvas.drawPath(asteroid[i].draw(), paint);
             }
 
             paint.setColor(Color.argb(100,255,255,255));

@@ -11,6 +11,7 @@ public class Spaceship extends MovableObject {
     //      VARIABLES
     ///////////////////////////
 
+
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
