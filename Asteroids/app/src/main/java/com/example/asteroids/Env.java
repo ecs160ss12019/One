@@ -45,9 +45,10 @@ public class Env extends SurfaceView implements Runnable {
     private HUD hud;
     private Spaceship spaceship;
     private Asteroid[] asteroid = new Asteroid[10];
+
+//    private UFOManager ufoManager;
+//    private int maxUFO = 3;
     private UFO ufo;
-
-
     //Here is the thread and two control variables
     private Thread gameThread = null;
 
@@ -82,6 +83,8 @@ public class Env extends SurfaceView implements Runnable {
         hud = new HUD(resolution);
         spaceship = new Spaceship();
 
+
+        //ufoManager = new UFOManager(maxUFO,resolution.x, resolution.y);
         ufo = new UFO(resolution.x, resolution.y);
         for(int i = 0; i < 10; i++) {
             asteroid[i] = new Asteroid(resolution);

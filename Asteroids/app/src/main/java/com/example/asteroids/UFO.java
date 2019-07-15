@@ -9,6 +9,13 @@ import android.graphics.RectF;
  * Spawn UFO's
  * Set UFO "Difficulty"
  */
+
+
+
+enum UFO_State{
+    READY, ENTERING, LEAVING, INSIDE, DEAD;
+}
+
 public class UFO extends MovableObject {
 
     //UFO body
@@ -21,6 +28,8 @@ public class UFO extends MovableObject {
     private final float xLBound, xRBound;
     private final float yTBound, yBBound;
 
+    //UFO State Variable
+    UFO_State state;
     public UFO(int x, int y) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
@@ -41,6 +50,7 @@ public class UFO extends MovableObject {
         xRBound = x;
         yTBound = 0;
         yBBound = y;
+        state = UFO_State.READY;
     }
 
 
