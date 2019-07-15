@@ -57,16 +57,16 @@ public class Asteroid extends MovableObject {
 
     private void randOffset(Point res){
         // pick where to generate
-        if(random.nextInt(1) == 1){
+        if(random.nextInt(2) == 1){
             xOffSet = random.nextInt(res.x);
-            if(random.nextInt(1) == 1){
+            if(random.nextInt(2) == 1){
                 yOffSet = scalar;
             }else{
                 yOffSet = res.y - scalar;
             }
         }else{
             yOffSet = random.nextInt(res.y);
-            if(random.nextInt(1) == 1){
+            if(random.nextInt(2) == 1){
                 xOffSet = scalar;
             }else{
                 xOffSet = res.x - scalar;
