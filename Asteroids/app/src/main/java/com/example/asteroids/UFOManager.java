@@ -1,5 +1,7 @@
 package com.example.asteroids;
 
+import android.graphics.PointF;
+
 /*
  * TODO: ADD "timer" that keeps track of how long UFO has been alive
  */
@@ -11,12 +13,12 @@ public class UFOManager {
     private int maxUFO;
     private int alive;
 
-    UFOManager(int maxUFO, int x, int y){
+    UFOManager(int maxUFO, int x, int y, PointF blockSize){
         this.maxUFO = maxUFO;
         ufoArray = new UFO[this.maxUFO];
 
         for(int i = 0; i < this.maxUFO; i++){
-            ufoArray[i] = new UFO(x, y);
+            ufoArray[i] = new UFO(x, y, blockSize);
         }
 
         alive = 0;

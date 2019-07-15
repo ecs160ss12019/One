@@ -5,6 +5,7 @@ package com.example.asteroids;
 import android.graphics.Path;
 import android.graphics.Point;
 import java.util.Random;
+import android.graphics.PointF;
 
 public class Asteroid extends MovableObject {
 
@@ -32,13 +33,16 @@ public class Asteroid extends MovableObject {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Asteroid(Point res) {
+    public Asteroid(Point res, PointF blockSize) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
-        super();
+        super(blockSize);
         populate();
         asteroidType = random.nextInt(9) + 1;
         randOffset(res);
         currentAsteroid = which();
+        // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
+
+
     }
 
     ///////////////////////////

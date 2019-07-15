@@ -2,6 +2,7 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.graphics.RectF;
 
 /*TODO: create class to manage UFO objects.
@@ -30,9 +31,9 @@ public class UFO extends MovableObject {
 
     //UFO State Variable
     UFO_State state;
-    public UFO(int x, int y) {
-        // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
-        super();
+    public UFO(int x, int y, PointF blockSize) {
+        // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
+        super(blockSize);
 
         //UFO BODY
         body = new RectF(900, 300, 1000, 340);
@@ -51,6 +52,9 @@ public class UFO extends MovableObject {
         yTBound = 0;
         yBBound = y;
         state = UFO_State.READY;
+    //Testing
+
+
     }
 
 
