@@ -13,8 +13,8 @@ public class JoyStick {
 
     private PointF blockSize;
     private PointF baseCenter;
-    private PointF hatCenter;
     private PointF stickPosition;
+
     private float baseRadius;
     private float hatRadius;
 
@@ -27,28 +27,18 @@ public class JoyStick {
 
     public JoyStick(PointF blockSize) {
 
-        baseCenter = new PointF();
-        hatCenter = new PointF();
-        stickPosition = new PointF();
+        baseCenter = new PointF(50 * blockSize.x, 50  * blockSize.y);
+        stickPosition = new PointF(0,0);
 
         base = new Path();
         hat = new Path();
 
-
         this.blockSize = blockSize;
-        baseCenter.x = (50 * blockSize.x);
-        baseCenter.y = (50 * blockSize.y);
-        hatCenter.x = (50 * blockSize.x);
-        hatCenter.y = (50 * blockSize.y);
         baseRadius = (int) (20 * blockSize.x);
         hatRadius = (int) (8 * blockSize.x);
-        stickPosition.x = 0;
-        stickPosition.y = 0;
 
         base.addCircle(baseCenter.x, baseCenter.y, baseRadius, Path.Direction.CW);
-        hat.addCircle(hatCenter.x, hatCenter.y, hatRadius, Path.Direction.CW);
-
-
+        hat.addCircle(baseCenter.x, baseCenter.y, hatRadius, Path.Direction.CW);
 
     }
 
@@ -62,27 +52,31 @@ public class JoyStick {
         // bounds are [-100f - +100f], where -100f means -100% engaged on the axis and +100f means
         // %100% engaged on the axis.
 
-        float xEngaged = 100 * (stickPosition.x / baseRadius);
-        float yEngaged = 100 * (stickPosition.y / baseRadius);
+
+        float xEngaged = (stickPosition.x - baseCenter.x / blockSize.x ) / (baseRadius / blockSize.x);
+        float yEngaged = (stickPosition.y - baseCenter.y / blockSize.x ) / (baseRadius  / blockSize.x);
+
+
         PointF scaledOutput = new PointF(xEngaged, yEngaged);
         return scaledOutput;
     }
 
     public void resetJoyStick() {
         hat.reset();
-        hat.addCircle(hatCenter.x, hatCenter.y, hatRadius, Path.Direction.CW);
+        hat.addCircle(baseCenter.x, baseCenter.y, hatRadius, Path.Direction.CW);
     }
 
-    //X and Y have values of 0-100
+    //X and Y have values of 0-100 mapped to domain of screen
     public void updateStick(float x, float y) {
 
         //distance of touch from joystick
         float xCentered = x - baseCenter.x / blockSize.x;
         float yCentered = y - baseCenter.y / blockSize.x;
 
+        //TODO: add bound on where you can touch joystick from w/ simple if statement
+
         //distance from the center of joystick
         float distanceFromCenter = (float) Math.sqrt(Math.pow(xCentered, 2 ) + Math.pow(yCentered, 2));
-
 
         if (distanceFromCenter < baseRadius / blockSize.x) { //If the touch is in bounds of joystick
 
@@ -96,17 +90,11 @@ public class JoyStick {
             float constrainedY = baseCenter.y / blockSize.x + (yCentered) * ratio;
             stickPosition.x = constrainedX;
             stickPosition.y = constrainedY;
-
         }
 
+        //Reset path, add a new circle with the new coordinates
         hat.reset();
         hat.addCircle(stickPosition.x * blockSize.x ,stickPosition.y * blockSize.x, hatRadius, Path.Direction.CW);
-
-
-        //Log.d("bs", "blockSize: "+ blockSize.x);
-        //Log.d("displacement", "distanceFromCenter: " + distanceFromCenter);
-        //Log.d("displacement", "stickDisplacement: " + stickDisplacement);
-        //Log.d("hat", "stickPosition: (" + stickPosition.x + "," + stickPosition.y + ")");
 
     }
 

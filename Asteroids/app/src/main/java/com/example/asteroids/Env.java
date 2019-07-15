@@ -128,12 +128,6 @@ public class Env extends SurfaceView implements Runnable {
                 printDebugging();
             }
 
-            PointF output;
-
-            output = hud.getJoyStick().getScaledStickPosition();
-
-            Log.d("output", "X: " + output.x);
-            Log.d("output", "Y: " + output.y);
 
             //Unlock canvas after you are done with it
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -150,9 +144,17 @@ public class Env extends SurfaceView implements Runnable {
         float scaledY = e.getY() / blockSize.x;
 
 
-        if (e.getAction() == e.ACTION_MOVE)
+        if (e.getAction() == e.ACTION_MOVE) {
             hud.getJoyStick().updateStick(scaledX, scaledY);
-        else
+
+
+            PointF output;
+
+            output = hud.getJoyStick().getScaledStickPosition();
+
+            Log.d("output", "X: " + output.x);
+            Log.d("output", "Y: " + output.y);
+        } else
             hud.getJoyStick().resetJoyStick();
 
 
