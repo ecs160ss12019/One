@@ -79,7 +79,7 @@ public class Env extends SurfaceView implements Runnable {
         //Initialize our game objects
         hud = new HUD(resolution);
         spaceship = new Spaceship();
-        asteroid = new Asteroid();
+        asteroid = new Asteroid(resolution);
 
     }
 

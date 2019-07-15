@@ -11,9 +11,10 @@ public class Asteroid extends MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-    private int scalar = 10;
+    private int scalar = 25;
     private int xOffSet = 400;
     private int yOffSet = 600;
+    Random random = new Random();
     private Point[] ab1 = new Point[7];
     private Point[] ab2 = new Point[8];
     private Point[] ab3 = new Point[5];
@@ -31,12 +32,12 @@ public class Asteroid extends MovableObject {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Asteroid() {
+    public Asteroid(Point res) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super();
         populate();
-        Random random = new Random();
         asteroidType = random.nextInt(9) + 1;
+        randOffset(res);
         currentAsteroid = which();
     }
 
@@ -54,26 +55,46 @@ public class Asteroid extends MovableObject {
         return shape;
     }
 
-private Point[] which(){
-    switch(asteroidType){
-        case 1:
-            return ab1;
-        case 2:
-            return ab2;
-        case 3:
-            return ab3;
-        case 4:
-            return am1;
-        case 5:
-            return am2;
-        case 6:
-            return am3;
-        case 7:
-            return as1;
-        case 8:
-            return as2;
-        default:
-            return as3;
+    private void randOffset(Point res){
+        // pick where to generate
+        if(random.nextInt(1) == 1){
+            xOffSet = random.nextInt(res.x);
+            if(random.nextInt(1) == 1){
+                yOffSet = scalar;
+            }else{
+                yOffSet = res.y - scalar;
+            }
+        }else{
+            yOffSet = random.nextInt(res.y);
+            if(random.nextInt(1) == 1){
+                xOffSet = scalar;
+            }else{
+                xOffSet = res.x - scalar;
+            }
+        }
+    }
+
+
+    private Point[] which(){
+        switch(asteroidType){
+            case 1:
+                return ab1;
+            case 2:
+                return ab2;
+            case 3:
+                return ab3;
+            case 4:
+                return am1;
+            case 5:
+                return am2;
+            case 6:
+                return am3;
+            case 7:
+                return as1;
+            case 8:
+                return as2;
+            default:
+                return as3;
     }
 }
 
