@@ -49,11 +49,15 @@ public class Env extends SurfaceView implements Runnable {
     //Game objects
     private HUD hud;
     private Spaceship spaceship;
-    private Asteroid[] asteroid = new Asteroid[10];
+//    private Asteroid[] asteroid = new Asteroid[10];
 
-//    private UFOManager ufoManager;
-//    private int maxUFO = 3;
-    private UFO ufo;
+    private UFOManager ufoManager;
+    private int maxUFO = 3;
+//    private UFO[] ufoArr = new UFO[maxUFO];
+      private UFO[] ufoArr;
+
+    // private UFO ufo;
+
     //Here is the thread and two control variables
     private Thread gameThread = null;
 
@@ -93,11 +97,15 @@ public class Env extends SurfaceView implements Runnable {
 
 
 
-        //ufoManager = new UFOManager(maxUFO,resolution.x, resolution.y);
-        ufo = new UFO(resolution.x, resolution.y, blockSize);
-        for(int i = 0; i < 10; i++) {
-            asteroid[i] = new Asteroid(blockSize);
+        ufoManager = new UFOManager(maxUFO, resolution, blockSize);
+        for(int i = 0; i < maxUFO; i++){
+            if(ufoManager.spawnUFO() == -1){
+                Log.e("spawnUFO", "could not spawn UFO");
+            }
         }
+//        for(int i = 0; i < 10; i++) {
+//            asteroid[i] = new Asteroid(blockSize);
+//        }
 
 
     }
@@ -126,16 +134,22 @@ public class Env extends SurfaceView implements Runnable {
             //Draw Space ship
             canvas.drawPath(spaceship.draw(), paint);
 
-            //Draw UFO
+            //Draw UFO's
             paint.setColor(Color.argb(255, 0, 255, 90));
-            canvas.drawPath(ufo.draw(), paint);
+            ufoArr = ufoManager.getUFOS();
+            for(int i = 0; i < maxUFO; i++){
+                if(ufoArr[i].state == UFO_State.INSIDE){
+                    canvas.drawPath(ufoArr[i].draw(), paint);
+                }
+            }
+
 
             paint.setColor(Color.argb(255,255,255,255));
 
             //Draw asteroids
-            for(int i = 0; i <10; i++){
-                canvas.drawPath(asteroid[i].draw(), paint);
-            }
+//            for(int i = 0; i <10; i++){
+//                canvas.drawPath(asteroid[i].draw(), paint);
+//            }
 
             paint.setColor(Color.argb(100,255,255,255));
 
@@ -159,6 +173,7 @@ public class Env extends SurfaceView implements Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent e) {
 
+        paused = false;
         //Touch coordinates are scaled to be values between 0-100
         float scaledX = e.getX() / blockSize.x;
         float scaledY = e.getY() / blockSize.x;
@@ -199,8 +214,6 @@ public class Env extends SurfaceView implements Runnable {
         canvas.drawText("X-Thrust: " + hud.joyStick.getScaledStickPosition().x, 10, 200 + debugSize, paint);
         canvas.drawText("Y-Thrust: " + hud.joyStick.getScaledStickPosition().y, 10, 250 + debugSize, paint);
         Log.d("FPS", "FPS: " + fps);
-
-
 
     }
 
@@ -247,7 +260,7 @@ public class Env extends SurfaceView implements Runnable {
     Should update the position of all movable objects here
     */
     public void update() {
-        ufo.update(resolution.x, resolution.y, fps);
+        ufoManager.update(fps);
     }
 
 }
