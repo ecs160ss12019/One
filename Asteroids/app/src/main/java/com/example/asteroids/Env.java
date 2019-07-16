@@ -49,14 +49,12 @@ public class Env extends SurfaceView implements Runnable {
     //Game objects
     private HUD hud;
     private Spaceship spaceship;
-//    private Asteroid[] asteroid = new Asteroid[10];
+    private Asteroid[] asteroid = new Asteroid[10];
 
     private UFOManager ufoManager;
     private int maxUFO = 3;
-//    private UFO[] ufoArr = new UFO[maxUFO];
-      private UFO[] ufoArr;
+    private UFO[] ufoArr;
 
-    // private UFO ufo;
 
     //Here is the thread and two control variables
     private Thread gameThread = null;
@@ -103,9 +101,9 @@ public class Env extends SurfaceView implements Runnable {
                 Log.e("spawnUFO", "could not spawn UFO");
             }
         }
-//        for(int i = 0; i < 10; i++) {
-//            asteroid[i] = new Asteroid(blockSize);
-//        }
+        for(int i = 0; i < 10; i++) {
+            asteroid[i] = new Asteroid(blockSize);
+        }
 
 
     }
@@ -147,9 +145,9 @@ public class Env extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(255,255,255,255));
 
             //Draw asteroids
-//            for(int i = 0; i <10; i++){
-//                canvas.drawPath(asteroid[i].draw(), paint);
-//            }
+            for(int i = 0; i <10; i++){
+                canvas.drawPath(asteroid[i].draw(), paint);
+            }
 
             paint.setColor(Color.argb(100,255,255,255));
 
