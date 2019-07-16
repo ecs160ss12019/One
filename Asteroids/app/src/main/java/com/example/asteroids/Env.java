@@ -248,6 +248,7 @@ public class Env extends SurfaceView implements Runnable {
     */
     public void update() {
         ufo.update(resolution.x, resolution.y, fps);
+        spaceship.update(hud.joyStick.getScaledStickPosition());
     }
 
 }

@@ -14,6 +14,7 @@ public class JoyStick {
     private PointF blockSize;
     private PointF baseCenter;
     private PointF stickPosition;
+    private PointF scaledOutput;
 
     private float baseRadius;
     private float hatRadius;
@@ -31,6 +32,8 @@ public class JoyStick {
         //NOTE: Just trust that base center must have (blockSize.y / blockSize.x). Long story. . .
         baseCenter = new PointF(position.x, position.y * blockSize.y / blockSize.x);
         stickPosition = new PointF(baseCenter.x, baseCenter.y);
+        scaledOutput = new PointF(baseCenter.x, baseCenter.y);
+
 
         base = new Path();
         hat = new Path();
@@ -53,12 +56,11 @@ public class JoyStick {
         // bounds are [-100f - +100f], where -100f means -100% engaged on the axis and +100f means
         // %100% engaged on the axis.
 
-        float xEngaged = (stickPosition.x - baseCenter.x ) / (baseRadius);
-        float yEngaged = -1 * (stickPosition.y - baseCenter.y ) / (baseRadius);
+        scaledOutput.x = (stickPosition.x - baseCenter.x ) / (baseRadius);
+        scaledOutput.y = -1 * (stickPosition.y - baseCenter.y ) / (baseRadius);
 
-        //Points are reversed for landscape orientation
-        PointF scaledOutput = new PointF(xEngaged, yEngaged);
         return scaledOutput;
+
     }
 
     public void resetJoyStick() {

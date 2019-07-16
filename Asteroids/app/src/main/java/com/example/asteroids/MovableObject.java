@@ -17,6 +17,8 @@ abstract class MovableObject {
     // position / direction / speed / physics
     protected Point position;
     protected int mass;
+
+    protected int currVelocity;
     protected int maxVelocity;
     protected int minVelocity;
     protected float drctnVector;
@@ -49,7 +51,7 @@ abstract class MovableObject {
     ///////////////////////////
 
     public Path draw() {
-
+        shape.rewind();
         for(int i = 0; i < shapeCoords.length; ++i) {
             shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.y);
         }
