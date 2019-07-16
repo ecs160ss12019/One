@@ -43,7 +43,7 @@ public class Asteroid extends MovableObject {
             asteroidTracker[i] = random.nextInt(9) + 1;
             offSet[i] = randOffset(blockSize);
             dVect[i] = randDirection(offSet[i]);
-            time[i] = curTime - startTime;
+            time[i] = 0;
         }
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
     }
@@ -59,9 +59,9 @@ public class Asteroid extends MovableObject {
             time[j] = curTime - startTime;
             currentAsteroid = aGen.which(asteroidTracker[j]);
             if(currentAsteroid != null) {
-                shape.moveTo(currentAsteroid[0].x * scalar + offSet[j].x + dVect[j].x *time[j], currentAsteroid[0].y * scalar + offSet[j].y + dVect[j].y *time[j]);
+                shape.moveTo(currentAsteroid[0].x * scalar + offSet[j].x + dVect[j].x *time[j]/100, currentAsteroid[0].y * scalar + offSet[j].y + dVect[j].y *time[j]/100);
                 for (int i = 1; i < currentAsteroid.length; i++) {
-                    shape.lineTo(currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j], currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].x *time[j]);
+                    shape.lineTo(currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j]/100, currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].y *time[j]/100);
                 }
             }
         }
@@ -92,20 +92,28 @@ public class Asteroid extends MovableObject {
     private Point randDirection(Point oSet){
         // pick where to generate
         Point tempVect = new Point();
-        if(oSet.x >= (int)  (100 * blockSize.x - scalar) || oSet.y >= (int) (100 * blockSize.y - scalar)){
-            if( oSet.x >= (int)  (100 * blockSize.x - scalar)){
-                tempVect.x = -random.nextInt(scalar);
+        if(oSet.x == (int)  (100 * blockSize.x - scalar) || oSet.x == 0){
+            if( oSet.x == (int)  (100 * blockSize.x - scalar)){
+                tempVect.x = -random.nextInt(scalar) - 1;
             }else{
-                tempVect.x = random.nextInt(scalar);
+                tempVect.x = random.nextInt(scalar) + 1;
             }
-            if( oSet.x >= (int)  (100 * blockSize.x - scalar)){
-                tempVect.y = -random.nextInt(scalar);
+            if(oSet.y > (100 * blockSize.y - scalar)/2){
+                tempVect.y = -random.nextInt(scalar) - 1;
             }else{
-                tempVect.y = random.nextInt(scalar);
+                tempVect.y = random.nextInt(scalar) + 1;
             }
         }else{
-            tempVect.x = random.nextInt(scalar);
-            tempVect.y = random.nextInt(scalar);
+            if( oSet.y == (int)  (100 * blockSize.y - scalar)){
+                tempVect.y = -random.nextInt(scalar) - 1;
+            }else{
+                tempVect.y = random.nextInt(scalar) + 1;
+            }
+            if(oSet.x > (100 * blockSize.x - scalar)/2){
+                tempVect.x = -random.nextInt(scalar) - 1;
+            }else {
+                tempVect.x = random.nextInt(scalar) + 1;
+            }
         }
         return tempVect;
     }
