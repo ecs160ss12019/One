@@ -93,7 +93,7 @@ public class UFO extends MovableObject {
      */
 
     public Path draw(){
-        shape.reset();
+        shape.rewind();
         shape.addOval(body, Path.Direction.CW);
         shape.addCircle(circleX, circleY, radius, Path.Direction.CW );
         return shape;

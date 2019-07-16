@@ -20,6 +20,7 @@ public class JoyStick {
 
     private Path base;
     private Path hat;
+    private Path[] joyStick = new Path[2];
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -96,14 +97,13 @@ public class JoyStick {
         }
 
         //Reset path, add a new circle with the new coordinates
-        hat.reset();
+        hat.rewind();
         hat.addCircle(stickPosition.x * blockSize.x ,stickPosition.y * blockSize.x, hatRadius * blockSize.x, Path.Direction.CW);
 
     }
 
 
     public Path[] draw() {
-        Path[] joyStick = new Path[2];
         joyStick[0] = base;
         joyStick[1] = hat;
         return joyStick;

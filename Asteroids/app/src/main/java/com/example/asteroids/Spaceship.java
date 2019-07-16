@@ -28,7 +28,7 @@ public class Spaceship extends MovableObject {
 
 
     public Path draw() {
-
+        shape.rewind();
         shape.moveTo(10 * blockSize.x, 10 * blockSize.x);
         shape.lineTo(20 * blockSize.x, (float) 12.5 * blockSize.x);
         shape.lineTo(10 * blockSize.x, (float) 15 * blockSize.x);
