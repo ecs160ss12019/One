@@ -18,7 +18,7 @@ abstract class MovableObject {
     protected Point position;
     protected int mass;
 
-    protected int currVelocity;
+    protected PointF currVelocity;
     protected int maxVelocity;
     protected int minVelocity;
     protected float drctnVector;
@@ -37,6 +37,9 @@ abstract class MovableObject {
     public MovableObject(PointF blockSize) {
 
         this.blockSize = blockSize;
+
+        currVelocity = new PointF(0,0);
+
 
         //Initialize our shape
 

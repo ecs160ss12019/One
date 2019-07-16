@@ -127,9 +127,16 @@ public class Env extends SurfaceView implements Runnable {
             //Fill the screen with a solid black for now
             canvas.drawColor(Color.argb(255,0,0,0));
 
-            paint.setColor(Color.argb(255,255,255,255));
+
+            //JoyStick should be drawn first to be below all other objects
+            paint.setColor(Color.argb(100,255,255,255));
+            canvas.drawPath(hud.joyStick.draw()[0], paint);
+            paint.setColor(Color.argb(255,255,0,0));
+            canvas.drawPath(hud.joyStick.draw()[1], paint);
+
 
             //Draw Space ship
+            paint.setColor(Color.argb(255,255,255,255));
             canvas.drawPath(spaceship.draw(), paint);
 
             //Draw UFO's
@@ -141,20 +148,14 @@ public class Env extends SurfaceView implements Runnable {
                 }
             }
 
-
-            paint.setColor(Color.argb(255,255,255,255));
-
             //Draw asteroids
+            paint.setColor(Color.argb(255,255,255,255));
             for(int i = 0; i <10; i++){
                 canvas.drawPath(asteroid[i].draw(), paint);
             }
 
-            paint.setColor(Color.argb(100,255,255,255));
 
-            //Draw Joystick
-            canvas.drawPath(hud.joyStick.draw()[0], paint);
-            paint.setColor(Color.argb(255,255,0,0));
-            canvas.drawPath(hud.joyStick.draw()[1], paint);
+
 
             if(DEBUGGING) {
                 printDebugging();
@@ -259,7 +260,7 @@ public class Env extends SurfaceView implements Runnable {
     */
     public void update() {
         ufoManager.update(fps);
-        ufo.update(resolution.x, resolution.y, fps);
+        //ufo.update(resolution.x, resolution.y, fps);
         spaceship.update(hud.joyStick.getScaledStickPosition());
     }
 

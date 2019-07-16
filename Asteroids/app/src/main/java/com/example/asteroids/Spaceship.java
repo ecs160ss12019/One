@@ -3,6 +3,7 @@ package com.example.asteroids;
 // AUTHOR NAME HERE
 
 import android.graphics.PointF;
+import android.util.Log;
 
 
 public class Spaceship extends MovableObject {
@@ -39,7 +40,26 @@ public class Spaceship extends MovableObject {
     }
 
     public void update(PointF joyStickPos) {
-        thrust = joyStickPos;
+
+        Log.d("js", "JoyStick: (" + joyStickPos.x + "," + joyStickPos.y);
+        Log.d("shape", "ShapeCoords: (" + shapeCoords[0].x + "," + shapeCoords[0].y);
+
+        thrust.x = joyStickPos.x;
+        thrust.y = joyStickPos.y;
+
+        currVelocity.x = thrust.x;
+        currVelocity.y = thrust.y;
+
+
+        for (int i = 0; i < shapeCoords.length; ++i) {
+
+
+
+            shapeCoords[i].x += blockSize.x * currVelocity.x * .1;
+            shapeCoords[i].y -= blockSize.x * currVelocity.y * .1;
+
+        }
+
 
     }
 
