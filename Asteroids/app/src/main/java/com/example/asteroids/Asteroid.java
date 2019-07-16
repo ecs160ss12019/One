@@ -82,10 +82,10 @@ public class Asteroid extends MovableObject {
                 currentAsteroid = aGen.which(asteroidTracker[j]);
                 for (int i = 0; i < currentAsteroid.length; i++) {
                     if(
-                            (int) (currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j]/100) < 0
-                            || (int) (currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].y *time[j]/100) < 0
-                            || (int) (currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j]/100) > 100 * blockSize.x
-                            || (int) (currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].y *time[j]/100) > 100*blockSize.y)
+                            (int) (currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j]/100) < -25
+                            || (int) (currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].y *time[j]/100) < -25
+                            || (int) (currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j]/100) > 100 * blockSize.x + 25
+                            || (int) (currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].y *time[j]/100) > 100*blockSize.y + 25)
                         reDraw = true;
                 }
             }
@@ -105,14 +105,14 @@ public class Asteroid extends MovableObject {
         // pick where to generate
         Point tempOffSet = new Point();
         if(random.nextInt(2) == 1){
-            tempOffSet.x = random.nextInt((int) (100 * blockSize.y));
+            tempOffSet.x = random.nextInt((int) (100 * blockSize.x));
             if(random.nextInt(2) == 1){
                 tempOffSet.y = scalar;
             }else{
                 tempOffSet.y = (int) (100 * blockSize.y - scalar);
             }
         }else{
-            tempOffSet.y = random.nextInt((int) (100 * blockSize.x));
+            tempOffSet.y = random.nextInt((int) (100 * blockSize.y));
             if(random.nextInt(2) == 1){
                 tempOffSet.x = scalar;
             }else{
