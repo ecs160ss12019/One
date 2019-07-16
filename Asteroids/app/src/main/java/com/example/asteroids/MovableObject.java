@@ -24,6 +24,10 @@ abstract class MovableObject {
     // Shape of the object needs to be a path which can form any polygon
     protected Path shape;
 
+    //defaultShapeCoords will store the default shape starting from (0,0)
+    PointF[] defaultShapeCoords;
+
+
     ///////////////////////////
     //      METHODS
     ///////////////////////////
@@ -40,89 +44,18 @@ abstract class MovableObject {
     }
 
 
-    /*
-
-    TODO: For now I'm gonna create an empty constructor, though maybe all we need is an empty constructor and have default positions for the ship and asteroids
-    public MovableObject(int x, int y, int m, int maxV, int minV, float dir) {
-        position.x = x;
-        position.y = y;
-        mass = m;
-        maxVelocity = maxV;
-        minVelocity = minV;
-        drctnVector = dir;
-
-
-    }
-    */
     ///////////////////////////
-    //      METHODS
+    //      Constructor
     ///////////////////////////
 
+    public Path draw() {
 
-    public void update(long fps) {
+        for(int i = 0; i < defaultShapeCoords.length; ++i) {
+            shape.lineTo(defaultShapeCoords[i].x * blockSize.x, defaultShapeCoords[i].y * blockSize.y);
+        }
 
-
-
-
+        return shape;
     }
 
-
-
-
-
-
-
-
-
-
-
-    // getters / setters
-    public int getPosX() {
-        return position.x;
-    }
-
-    public void setPosX(int posX) {
-        this.position.x = posX;
-    }
-
-    public int getPosY() {
-        return position.y;
-    }
-
-    public void setPosY(int posY) {
-        this.position.y = posY;
-    }
-
-    public int getMass() {
-        return mass;
-    }
-
-    public void setMass(int mass) {
-        this.mass = mass;
-    }
-
-    public int getMaxVelocity() {
-        return maxVelocity;
-    }
-
-    public void setMaxVelocity(int maxVelocity) {
-        this.maxVelocity = maxVelocity;
-    }
-
-    public int getMinVelocity() {
-        return minVelocity;
-    }
-
-    public void setMinVelocity(int minVelocity) {
-        this.minVelocity = minVelocity;
-    }
-
-    public float getDrctnVector() {
-        return drctnVector;
-    }
-
-    public void setDrctnVector(float drctnVector) {
-        this.drctnVector = drctnVector;
-    }
 
 }
