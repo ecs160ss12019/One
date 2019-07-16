@@ -49,11 +49,12 @@ public class Env extends SurfaceView implements Runnable {
     //Game objects
     private HUD hud;
     private Spaceship spaceship;
-    private Asteroid[] asteroid = new Asteroid[10];
+    //private Asteroid[] asteroid = new Asteroid[10];
 
     //private UFOManager ufoManager;
-    private int maxUFO = 3;
-    private UFO ufo;
+    //private int maxUFO = 3;
+    //private UFO ufo;
+
     //Here is the thread and two control variables
     private Thread gameThread = null;
 
@@ -92,13 +93,14 @@ public class Env extends SurfaceView implements Runnable {
         spaceship = new Spaceship(blockSize);
 
 
-
+/*
         //ufoManager = new UFOManager(maxUFO,resolution.x, resolution.y);
         ufo = new UFO(resolution.x, resolution.y, blockSize);
+
         for(int i = 0; i < 10; i++) {
             asteroid[i] = new Asteroid(blockSize);
         }
-
+        */
 
     }
 
@@ -126,26 +128,30 @@ public class Env extends SurfaceView implements Runnable {
             //Draw Space ship
             canvas.drawPath(spaceship.draw(), paint);
 
+            /*
             //Draw UFO
             paint.setColor(Color.argb(255, 0, 255, 90));
             canvas.drawPath(ufo.draw(), paint);
+            */
 
             paint.setColor(Color.argb(255,255,255,255));
 
+            /*
             //Draw asteroids
             for(int i = 0; i <10; i++){
-                //canvas.drawPath(asteroid[i].draw(), paint);
+                //TODO: rename back to draw
+                canvas.drawPath(asteroid[i].draaw(), paint);
             }
-
+            */
             paint.setColor(Color.argb(100,255,255,255));
 
             //Draw Joystick
-            canvas.drawPath(hud.joyStick.draw()[0], paint);
+            canvas.drawPath(hud.joyStick.drawBase(), paint);
             paint.setColor(Color.argb(255,255,0,0));
-            canvas.drawPath(hud.joyStick.draw()[1], paint);
+            canvas.drawPath(hud.joyStick.drawHat(), paint);
 
             if(DEBUGGING) {
-                printDebugging();
+                //printDebugging();
             }
 
 
@@ -179,7 +185,7 @@ public class Env extends SurfaceView implements Runnable {
             //Try stopping the thread
             gameThread.join();
         } catch (InterruptedException e) {
-            Log.e("Error", "Joining Thread");
+            //Log.e("Error", "Joining Thread");
         }
     }
 
@@ -192,13 +198,13 @@ public class Env extends SurfaceView implements Runnable {
         paint.setTextSize(debugSize);
 
         //FPS
-        paint.setColor(Color.argb(255,255,255,255));
-        canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
+        //paint.setColor(Color.argb(255,255,255,255));
+        //canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
 
         //Joystick Output
-        canvas.drawText("X-Thrust: " + hud.joyStick.getScaledStickPosition().x, 10, 200 + debugSize, paint);
-        canvas.drawText("Y-Thrust: " + hud.joyStick.getScaledStickPosition().y, 10, 250 + debugSize, paint);
-        Log.d("FPS", "FPS: " + fps);
+        //canvas.drawText("X-Thrust: " + hud.joyStick.getScaledStickPosition().x, 10, 200 + debugSize, paint);
+        //canvas.drawText("Y-Thrust: " + hud.joyStick.getScaledStickPosition().y, 10, 250 + debugSize, paint);
+        //Log.d("FPS", "FPS: " + fps);
 
 
 
@@ -247,7 +253,8 @@ public class Env extends SurfaceView implements Runnable {
     Should update the position of all movable objects here
     */
     public void update() {
-        ufo.update(resolution.x, resolution.y, fps);
+        //ufo.update(resolution.x, resolution.y, fps);
+
     }
 
 }

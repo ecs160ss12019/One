@@ -49,7 +49,8 @@ public class Asteroid extends MovableObject {
     //      METHODS
     ///////////////////////////
 
-    public Path draw() {
+    //TODO: Move into default movableobject draw
+    public Path draaw() {
         if(currentAsteroid != null) {
             shape.moveTo(currentAsteroid[0].x * scalar + xOffSet, currentAsteroid[0].y * scalar + yOffSet);
             for (int i = 1; i < currentAsteroid.length; i++) {

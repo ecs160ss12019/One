@@ -20,6 +20,8 @@ public class Spaceship extends MovableObject {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
 
+        defaultShapeCoords = new PointF[5];
+        genShape();
 
     }
 
@@ -27,16 +29,12 @@ public class Spaceship extends MovableObject {
     //      METHODS
     ///////////////////////////
 
-
-    public Path draw() {
-
-        shape.moveTo(10 * blockSize.x, 10 * blockSize.x);
-        shape.lineTo(20 * blockSize.x, (float) 12.5 * blockSize.x);
-        shape.lineTo(10 * blockSize.x, (float) 15 * blockSize.x);
-        shape.lineTo((float) 12.5 * blockSize.x, (float) 12.5 * blockSize.x);
-        shape.lineTo(10 * blockSize.x, 10 * blockSize.x);
-
-        return shape;
+    public void genShape() {
+        defaultShapeCoords[0] = new PointF(0, 0);
+        defaultShapeCoords[1] = new PointF(10, 3);
+        defaultShapeCoords[2] = new PointF(0, 6);
+        defaultShapeCoords[3] = new PointF(3, 3);
+        defaultShapeCoords[4] = new PointF(0, 0);
 
     }
 }

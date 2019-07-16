@@ -4,6 +4,7 @@ package com.example.asteroids;
 
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.drawable.shapes.Shape;
 
 abstract class MovableObject {
     ///////////////////////////
@@ -23,8 +24,11 @@ abstract class MovableObject {
     // Shape of the object needs to be a path which can form any polygon
     protected Path shape;
 
+    //defaultShapeCoords will store the default shape starting from (0,0)
+    PointF[] defaultShapeCoords;
+
     ///////////////////////////
-    //      METHODS
+    //      Constructor
     ///////////////////////////
 
     public MovableObject(PointF blockSize) {
@@ -38,24 +42,20 @@ abstract class MovableObject {
 
     }
 
-
-    /*
-
-    TODO: For now I'm gonna create an empty constructor, though maybe all we need is an empty constructor and have default positions for the ship and asteroids
-    public MovableObject(int x, int y, int m, int maxV, int minV, float dir) {
-        position.x = x;
-        position.y = y;
-        mass = m;
-        maxVelocity = maxV;
-        minVelocity = minV;
-        drctnVector = dir;
-
-
-    }
-    */
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+
+    public Path draw() {
+
+        for(int i = 0; i < defaultShapeCoords.length; ++i) {
+            shape.lineTo(defaultShapeCoords[i].x * blockSize.x, defaultShapeCoords[i].y * blockSize.y);
+        }
+
+        return shape;
+    }
+
+
 
 
     public void update(long fps) {

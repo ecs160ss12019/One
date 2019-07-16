@@ -14,12 +14,15 @@ public class JoyStick {
     private PointF blockSize;
     private PointF baseCenter;
     private PointF stickPosition;
+    private PointF thrust;
 
     private float baseRadius;
     private float hatRadius;
 
     private Path base;
     private Path hat;
+
+
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -30,6 +33,8 @@ public class JoyStick {
         //NOTE: Just trust that base center must have (blockSize.y / blockSize.x). Long story. . .
         baseCenter = new PointF(position.x, position.y * blockSize.y / blockSize.x);
         stickPosition = new PointF(baseCenter.x, baseCenter.y);
+
+        thrust = new PointF();
 
         base = new Path();
         hat = new Path();
@@ -52,12 +57,13 @@ public class JoyStick {
         // bounds are [-100f - +100f], where -100f means -100% engaged on the axis and +100f means
         // %100% engaged on the axis.
 
-        float xEngaged = (stickPosition.x - baseCenter.x ) / (baseRadius);
-        float yEngaged = -1 * (stickPosition.y - baseCenter.y ) / (baseRadius);
+
+        thrust.x = (stickPosition.x - baseCenter.x ) / (baseRadius);
+        thrust.y = -1 * (stickPosition.y - baseCenter.y ) / (baseRadius);
 
         //Points are reversed for landscape orientation
-        PointF scaledOutput = new PointF(xEngaged, yEngaged);
-        return scaledOutput;
+
+        return thrust;
     }
 
     public void resetJoyStick() {
@@ -96,17 +102,23 @@ public class JoyStick {
         }
 
         //Reset path, add a new circle with the new coordinates
-        hat.reset();
+        hat.rewind();
         hat.addCircle(stickPosition.x * blockSize.x ,stickPosition.y * blockSize.x, hatRadius * blockSize.x, Path.Direction.CW);
 
     }
 
 
-    public Path[] draw() {
-        Path[] joyStick = new Path[2];
-        joyStick[0] = base;
-        joyStick[1] = hat;
-        return joyStick;
+    public Path drawHat() {
+        //Path[] joyStick = new Path[2];
+        //joyStick[0] = base;
+        //joyStick[1] = hat;
+        //return joyStick;
+        return hat;
     }
+    public Path drawBase() {
+        return base;
+    }
+
+
 
 }
