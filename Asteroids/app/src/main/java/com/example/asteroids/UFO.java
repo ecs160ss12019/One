@@ -2,15 +2,12 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.util.Log;
 
-/*TODO: create class to manage UFO objects.
- * Keep track of how long has UFO been alive
- * Spawn UFO's
- * Set UFO "Difficulty"
- */
-
+import java.util.Random;
 
 
 enum UFO_State{
@@ -24,19 +21,27 @@ public class UFO extends MovableObject {
     private float bodyWidth, bodyHeight;
     private float circleX, circleY, radius;
     private float mXVelocity, mYVelocity;
+    private float bodyL, bodyT, bodyR, bodyB;
 
-    //Max Boundry for UFO
+    //Max Boundary for UFO
     private final float xLBound, xRBound;
     private final float yTBound, yBBound;
 
     //UFO State Variable
     UFO_State state;
-    public UFO(int x, int y, PointF blockSize) {
-        // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
+
+    Random random = new Random();
+
+    public UFO(Point res, PointF blockSize) {
         super(blockSize);
 
-        //UFO BODY
-        body = new RectF(900, 300, 1000, 340);
+        //UFO BODY(Center of Display)
+        bodyL = 900;
+        bodyT = 300;
+        bodyR = 1000;
+        bodyB = 340;
+
+        body = new RectF(bodyL, bodyT, bodyR, bodyB);
         bodyWidth = body.right - body.left;
         bodyHeight = body.bottom - body.top;
 
@@ -45,58 +50,128 @@ public class UFO extends MovableObject {
         circleY = 310;
         radius = 30;
 
-        mXVelocity = y / 3;
-        mYVelocity = y / 3;
-        xLBound = 0 - radius;
-        xRBound = x;
+        mXVelocity = res.x / 10;
+        mYVelocity = res.x / 10;
+        xLBound = 0;
+        xRBound = res.x;
         yTBound = 0;
-        yBBound = y;
+        yBBound = res.y;
         state = UFO_State.READY;
-    //Testing
+    }
 
+
+    private void positionUFO(){
 
     }
 
 
-    /*
-     * Update the UFO's position.
-     */
-    public void update(int x, int y, long fps){
-        //Update relative to X-axis
-        body.left = body.left + (mXVelocity / fps);
-        body.right = body.left + bodyWidth;
-        circleX = circleX + (mXVelocity / fps);
+    public void update(long fps){
+        Log.d("UFO::update: ", "entering fcn");
+        switch(state){
+            case READY:
+                //Do Ready stuff here
+                Log.d("UFO::update: ", "entering ufoReady");
+                ufoReady();
+                break;
+            case ENTERING:
+                //Do Entering stuff here
+                Log.d("UFO::update: ", "entering ufoEnter");
+                ufoEnter(fps);
+                break;
+            case INSIDE:
+                // Do inside stuff here
+                Log.d("UFO::update: ", "entering ufoInside");
+                ufoInside(fps);
+                break;
+            case LEAVING:
+                //DO leaving stuff here
+                break;
+            case DEAD:
+                // Do dead stuff here
+                break;
+            default:
+                //Do default stuff here
+                break;
+        }
 
-
-        //Update relative to Y-axis
-        body.top = body.top + (mYVelocity / fps);
-        body.bottom = body.top + bodyHeight;
-        circleY = circleY + (mYVelocity / fps);
-
-        //Check Bounds
-        if(body.right > xRBound){
-            reverseXVelocity();
-        }
-        if(body.left < xLBound){
-            reverseXVelocity();
-        }
-        if(body.top < yTBound){
-            reverseYVelocity();
-        }
-        if(body.bottom > yBBound){
-            reverseYVelocity();
-        }
+        Log.d("In update(): ", "END");
     }
 
-    /*
-     * Retruns the path of the UFO that will be drawn.
-     */
 
+    /*
+     * Returns the path of the UFO that will be drawn.
+     */
     public Path draw(){
         shape.rewind();
         shape.addOval(body, Path.Direction.CW);
         shape.addCircle(circleX, circleY, radius, Path.Direction.CW );
         return shape;
+    }
+
+
+
+    int ufoReady(){
+
+        int rand = random.nextInt(3) + 1;
+        //set UFO outside of screen so it can enter
+        if(rand == 1){
+            body.set(bodyL - 1000, bodyT, bodyL + bodyWidth, bodyB );
+            circleX = circleX - 1000;
+            state = UFO_State.ENTERING;
+        }else if(rand == 2){
+            body.set(bodyL - 1000, bodyT - 100, bodyL + bodyWidth, bodyT + bodyHeight );
+            circleX = circleX - 1000;
+            circleY = circleY - 100;
+            state = UFO_State.ENTERING;
+        }else{
+            body.set(bodyL - 1000 , bodyT + 100, bodyL + bodyWidth, bodyT + bodyHeight );
+            circleX = circleX - 1000;
+            circleY = circleY + 100;
+            state = UFO_State.ENTERING;
+        }
+
+
+        return 0;
+    }
+
+    void ufoEnter(long fps){
+        ufoUpdateX(fps);
+        if(body.left > 10){
+            state = UFO_State.INSIDE;
+        }
+    }
+
+    void ufoInside(long fps){
+        ufoUpdateX(fps);
+        ufoUpdateY(fps);
+        checkBounds();
+    }
+
+    void ufoUpdateX(long fps){
+        body.left = body.left + (mXVelocity / fps);
+        body.right = body.left + bodyWidth;
+        circleX = circleX + (mXVelocity / fps);
+    }
+
+    void ufoUpdateY(long fps){
+        body.top = body.top + (mYVelocity / fps);
+        body.bottom = body.top + bodyHeight;
+        circleY = circleY + (mYVelocity / fps);
+    }
+
+    void checkBounds(){
+        if(body.right >= xRBound){
+            reverseXVelocity();
+        }
+        if(body.left <= xLBound){
+            reverseXVelocity();
+        }
+        if(body.top <= yTBound){
+            reverseYVelocity();
+        }
+        if(body.bottom >= yBBound){
+            reverseYVelocity();
+        }
     }
 
     void reverseXVelocity(){
@@ -106,4 +181,10 @@ public class UFO extends MovableObject {
     void reverseYVelocity(){
         mYVelocity = -mYVelocity;
     }
+
+
+
+
+
+
 }
