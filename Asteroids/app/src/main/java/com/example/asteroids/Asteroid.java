@@ -12,7 +12,7 @@ public class Asteroid extends MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-    private int scalar = 25;
+    private int scalar = 15;
     private int xOffSet = 400;
     private int yOffSet = 600;
     Random random = new Random();
@@ -50,6 +50,7 @@ public class Asteroid extends MovableObject {
     ///////////////////////////
 
     public Path draw() {
+        shape.rewind();
         if(currentAsteroid != null) {
             shape.moveTo(currentAsteroid[0].x * scalar + xOffSet, currentAsteroid[0].y * scalar + yOffSet);
             for (int i = 1; i < currentAsteroid.length; i++) {
