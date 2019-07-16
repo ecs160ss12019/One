@@ -24,8 +24,8 @@ abstract class MovableObject {
     // Shape of the object needs to be a path which can form any polygon
     protected Path shape;
 
-    //defaultShapeCoords will store the default shape starting from (0,0)
-    PointF[] defaultShapeCoords;
+    //shapeCoords will store the default shape starting from (0,0)
+    PointF[] shapeCoords;
 
 
     ///////////////////////////
@@ -50,8 +50,8 @@ abstract class MovableObject {
 
     public Path draw() {
 
-        for(int i = 0; i < defaultShapeCoords.length; ++i) {
-            shape.lineTo(defaultShapeCoords[i].x * blockSize.x, defaultShapeCoords[i].y * blockSize.y);
+        for(int i = 0; i < shapeCoords.length; ++i) {
+            shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.y);
         }
 
         return shape;
