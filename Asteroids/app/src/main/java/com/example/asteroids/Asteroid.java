@@ -26,6 +26,7 @@ public class Asteroid extends MovableObject {
     private Point[] as2 = new Point[5];
     private Point[] as3 = new Point[6];
     private Point[] currentAsteroid;
+    private int numAsteroids = 10;
     private int numHits;
     private int asteroidType;
 

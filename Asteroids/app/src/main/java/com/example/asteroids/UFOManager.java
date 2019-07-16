@@ -76,3 +76,5 @@ public class UFOManager {
     }
 
 }
+
+//    entering ufoInside
