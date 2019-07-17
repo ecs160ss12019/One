@@ -20,7 +20,7 @@ as possible."
 ## Sprint 2 Update: 
 ![Sprints Chart 2](https://github.com/ecs160ss12019/One/blob/master/Chart_Sprint2.PNG)
 
-
+![Acceptance Criteria Chart 2](https://github.com/ecs160ss12019/One/blob/master/acceptance-criteria2.png)
 
 
 
