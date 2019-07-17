@@ -8,6 +8,17 @@
 | - | Projectile
 | - | HUD
 
+## AsteroidGenerator.java
+| Responsibilites | Interacts with |
+| --- | --- |
+| Holds cordinates for actual drawings with the asteroid. | Asteroid
+| - | -
+| - | - 
+
+## JoyStick.java
+| Responsibilites | Interacts with |
+| --- | --- |
+
 
 ## UFO.java:
 | Responsibilites | Interacts with |
@@ -17,6 +28,18 @@
 | Must explode when hit. | Space ship
 | Know location | Projectile
 | - | HUD
+
+## UFOManager.java:
+| Responsibilites | Interacts with |
+| --- | --- |
+| Spawns UFO's into the screen | UFO |
+| Keeps track of UFO State | Timers |
+
+## Timers.java:
+| Responsibilities | Interacts with |
+| --- | ---|
+| Keeps track of how long an object has been alive| UFOManager
+ 
 
 ## Projectile.java:
 | Responsibilites | Interacts with |
