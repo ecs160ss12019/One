@@ -116,20 +116,18 @@ public class Env extends SurfaceView implements Runnable {
         if(surfaceHolder.getSurface().isValid()) {
             canvas = surfaceHolder.lockHardwareCanvas();
 
+            // Antialiasing
+            paint.setAntiAlias(true);
+
             //Fill the screen with a solid black for now
             canvas.drawColor(Color.argb(255,0,0,0));
 
-
-            //JoyStick should be drawn first to be below all other objects
-            paint.setColor(Color.argb(100,255,255,255));
-            canvas.drawPath(hud.joyStick.draw()[0], paint);
-            paint.setColor(Color.argb(255,255,0,0));
-            canvas.drawPath(hud.joyStick.draw()[1], paint);
-
-
             //Draw Space ship
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(3);
             paint.setColor(Color.argb(255,255,255,255));
             canvas.drawPath(spaceship.draw(), paint);
+            paint.setStyle(Paint.Style.FILL);
 
             //Draw UFO's
             paint.setColor(Color.argb(255, 0, 255, 90));
@@ -145,6 +143,14 @@ public class Env extends SurfaceView implements Runnable {
                 canvas.drawPath(asteroidManager.draw(), paint);
 
 
+            //JoyStick should be drawn last to be below all other objects
+            paint.setColor(Color.argb(255,255,255,255));
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(3);
+            canvas.drawPath(hud.joyStick.draw()[0], paint);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.argb(200,255,0,0));
+            canvas.drawPath(hud.joyStick.draw()[1], paint);
 
 
             if(DEBUGGING) {
