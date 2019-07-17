@@ -18,7 +18,7 @@ public class Spaceship extends MovableObject {
     public Spaceship(PointF blockSize) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
-        setMass(100);
+        setMass(50);
         shapeCoords = new PointF[5];
         thrust = new PointF(0,0);
         genShape();
@@ -32,15 +32,22 @@ public class Spaceship extends MovableObject {
 
     public void genShape() {
         shapeCoords[0] = new PointF(0, 0);
-        shapeCoords[1] = new PointF(10, 3);
+        shapeCoords[1] = new PointF(1, 3);
         shapeCoords[2] = new PointF(0, 6);
         shapeCoords[3] = new PointF(3, 3);
         shapeCoords[4] = new PointF(0, 0);
 
     }
 
-    public void update(PointF joyStickPos) {
+    public void update(long fps, PointF joyStickPos) {
 
+
+        setThrust(joyStickPos);
+        calcVelocity(fps);
+        calcPos(fps);
+        outOfBounds();
+
+        /*
         Log.d("js", "JoyStick: (" + joyStickPos.x + "," + joyStickPos.y);
         Log.d("shape", "ShapeCoords: (" + shapeCoords[0].x + "," + shapeCoords[0].y);
 
@@ -58,16 +65,11 @@ public class Spaceship extends MovableObject {
             shapeCoords[i].x +=  currVelocity.x * .1;
             shapeCoords[i].y -=  currVelocity.y * .1;
 
-        }
-        outOfBounds();
-       // setThrust(joyStickPos);
-       // calcVelocity();
-        //calcPos();
+        } */
+
 
 
     }
-
-    /*Looks like a lot of for loops, but it ends up just being */
 
     public void outOfBounds() {
 

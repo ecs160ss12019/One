@@ -15,7 +15,6 @@ abstract class MovableObject {
     //scaled screen resolution with domain of 0-100
     protected PointF blockSize;
 
-    protected long fps;
     // position / direction / speed / physics
     protected Point position;
     protected int mass;
@@ -50,20 +49,6 @@ abstract class MovableObject {
         shape.reset(); //TODO: Might not be needed
 
     }
-    /*TODO: update moveableobject constructor with fps*/
-    public MovableObject(long fps, PointF blockSize) {
-        this.blockSize = blockSize;
-        this.fps = fps;
-
-        currThrust = new PointF(0,0);
-        currVelocity = new PointF(0,0);
-        position = new Point();
-
-        //Initialize our shape
-        shape = new Path();
-        shape.reset(); //TODO: Might not be needed
-
-    }
 
     ///////////////////////////
     //      METHODS
@@ -81,26 +66,25 @@ abstract class MovableObject {
 
     public void setMass(int m) {
         mass = m;
+
     }
 
 
     public void setThrust(PointF thrust) {
         currThrust = thrust;
-        Log.d("Thrust", "Thrust: " + currThrust);
     }
 
 
-    public void calcVelocity() {
+    public void calcVelocity(long fps) {
         currVelocity.x += (currThrust.x) / (mass * fps);
-        Log.d("currVel", "currVel: " + currVelocity.x);
 
     }
 
-    public void calcPos() {
+    public void calcPos(long fps) {
 
         for(PointF i : shapeCoords) {
 
-            i.x += currVelocity.x + 1/2 * (currThrust.x / mass) * Math.pow((currThrust.x / mass), 2);
+            i.x += currVelocity.x + 1/2 * (currThrust.x / mass) * (currThrust.x / mass) * Math.pow(1/ fps, 2);
             Log.d("ship-poss", "ship currPoss: " + i.x);
 
         }
