@@ -16,9 +16,8 @@ public class AsteroidManager extends MovableObject {
     ///////////////////////////
     private int scalar = 15;
     Random random = new Random();
-    private AsteroidGenerator aGen;
     private Vector<Asteroid> asteroidTracker;
-    private Point[] currentAsteroid;
+    private Asteroid currentAsteroid;
     private int numAsteroids = 10;
     private int numHits;
     private int asteroidType;
@@ -35,15 +34,13 @@ public class AsteroidManager extends MovableObject {
         super(blockSize);
         resY = (int) (100 * blockSize.y);
         resX = (int) (100 * blockSize.x);
-        aGen = new AsteroidGenerator();
         for(int i = 0; i < numAsteroids; i++){
-                newPos[i] = new Point();
             asteroidTracker.add(new Asteroid());
         }
         for(Asteroid ast:asteroidTracker){
             for(int i = 0; i < numAsteroids; i++){
-                newPos[i] = new Point();}
-        }
+                ast.newPos[i] = new Point();
+            }
             ast.newPos = new Point[numAsteroids];
             ast.offSet = new Point();
             ast.dVect = new Point();
@@ -65,15 +62,14 @@ public class AsteroidManager extends MovableObject {
         for(Asteroid ast:asteroidTracker){
             ast.curTime = System.nanoTime() / 1000000;
             ast.time = ast.curTime - ast.startTime;
-            currentAsteroid = aGen.which(ast.asteroidType);
             if(currentAsteroid != null) {
-                newPos[0].x = (int) (currentAsteroid[0].x * scalar + offSet[j].x + dVect[j].x *time[j]/100);
-                newPos[0].y = (int) (currentAsteroid[0].y * scalar + offSet[j].y + dVect[j].y *time[j]/100);
-                shape.moveTo(newPos[0].x, newPos[0].y);
-                for (int i = 1; i < currentAsteroid.length; i++) {
-                    newPos[i].x = (int) (currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j]/100);
-                    newPos[i].y = (int) (currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].y *time[j]/100);
-                    shape.lineTo(newPos[i].x, newPos[i].y);
+                ast.newPos[0].x = (int) (ast.image[0].x * scalar + ast.offSet.x + ast.dVect.x *ast.time/100);
+                ast.newPos[0].y = (int) (ast.image[0].y * scalar + ast.offSet.y + ast.dVect.y *ast.time/100);
+                shape.moveTo(ast.newPos[0].x, ast.newPos[0].y);
+                for (int i = 1; i < ast.image.length; i++) {
+                    ast.newPos[i].x = (int) (ast.image[i].x * scalar + ast.offSet.x + ast.dVect.x *ast.time/100);
+                    ast.newPos[i].y = (int) (ast.image[i].y * scalar + ast.offSet.y + ast.dVect.y *ast.time/100);
+                    shape.lineTo(ast.newPos[i].x, ast.newPos[i].y);
                 }
             }
         }
@@ -81,26 +77,25 @@ public class AsteroidManager extends MovableObject {
     }
 
     private void genAsteroid(){
-        for(int j = 0; j < numAsteroids; j++){
+        for(Asteroid ast: asteroidTracker){
             boolean reDraw = false;
             if(!firstRun || currentAsteroid != null) {
-                currentAsteroid = aGen.which(asteroidTracker[j]);
-                for (int i = 0; i < currentAsteroid.length; i++) {
+                for (int i = 0; i < ast.image.length; i++) {
                     if(
-                            (int) (currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j]/100) < -resX/4
-                            || (int) (currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].y *time[j]/100) < -resY/4
-                            || (int) (currentAsteroid[i].x * scalar + offSet[j].x + dVect[j].x *time[j]/100) > resX + resX/4
-                            || (int) (currentAsteroid[i].y * scalar + offSet[j].y + dVect[j].y *time[j]/100) > resY + resY/4)
+                            (int) (ast.image[i].x * scalar + ast.offSet.x + ast.dVect.x * ast.time/100) < -resX/4
+                            || (int) (ast.image[i].y * scalar + ast.offSet.y + ast.dVect.y * ast.time/100) < -resY/4
+                            || (int) (ast.image[i].x * scalar + ast.offSet.x + ast.dVect.x * ast.time/100) > resX + resX/4
+                            || (int) (ast.image[i].y * scalar + ast.offSet.y + ast.dVect.y * ast.time/100) > resY + resY/4)
                         reDraw = true;
                 }
             }
             if(firstRun || reDraw){
-                startTime[j] = System.nanoTime() / 1000000;
-                curTime[j] = startTime[j];
-                asteroidTracker[j] = random.nextInt(9) + 1;
-                offSet[j] = randOffset();
-                dVect[j] = randDirection(offSet[j]);
-                time[j] = 0;
+                ast.startTime = System.nanoTime() / 1000000;
+                ast.curTime = ast.startTime;
+                ast.setAsteroid(random.nextInt(9) + 1);
+                ast.offSet = randOffset();
+                ast.dVect = randDirection(ast.offSet);
+                ast.time = 0;
             }
         }
         firstRun = false;
