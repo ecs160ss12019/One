@@ -32,16 +32,15 @@ public class UFOManager {
     //return 0 on success, else failed
     public int spawnUFO(){
         Log.d("spawnUFO: ", "Entering fcn");
-        int index;
+        int ret;
         if(alive >= maxUFO){
             return -1;
         }
-        //Update number of UFO's active
         alive++;
 
-        index = findAvailableUFO();
+        ret = findAvailableUFO();
 
-        if(index == -1){
+        if(ret == -1){
             return -1;
         }
 
