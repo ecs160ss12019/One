@@ -7,7 +7,7 @@ import android.graphics.Point;
 import java.util.Random;
 import android.graphics.PointF;
 
-public class Asteroid extends MovableObject {
+public class AsteroidManager extends MovableObject {
 
     ///////////////////////////
     //      VARIABLES
@@ -33,7 +33,7 @@ public class Asteroid extends MovableObject {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Asteroid( PointF blockSize) {
+    public AsteroidManager(PointF blockSize) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         super(blockSize);
         resY = (int) (100 * blockSize.y);
