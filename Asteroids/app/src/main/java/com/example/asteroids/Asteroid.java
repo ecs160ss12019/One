@@ -10,13 +10,13 @@ public class Asteroid {
     public long curTime;
     public Point offSet;
     public int asteroidType;
+    private int maxVertices = 10;
     public Point[] image;
-    public Point[] newPos;
+    public Point[] newPos = new Point[maxVertices];
 
     public void setAsteroid(int asteroidType){
         this.asteroidType = asteroidType;
         this.image = aGen.which(this.asteroidType);
-        this.newPos = this.image;
     }
 
 }

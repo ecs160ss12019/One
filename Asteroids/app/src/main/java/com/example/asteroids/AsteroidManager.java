@@ -17,10 +17,10 @@ public class AsteroidManager extends MovableObject {
     private int scalar = 15;
     Random random = new Random();
     private Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
-    private Asteroid currentAsteroid;
+//    private Asteroid currentAsteroid;
     private int numAsteroids = 10;
-    private int numHits;
-    private int asteroidType;
+ //   private int numHits;
+ //   private int asteroidType;
     private static int resY;
     private static int resX;
     private boolean firstRun = true;
@@ -38,10 +38,10 @@ public class AsteroidManager extends MovableObject {
             asteroidTracker.add(new Asteroid());
         }
         for(Asteroid ast:asteroidTracker){
- //           for(int i = 0; i < numAsteroids; i++){
- //               ast.newPos[i] = new Point();
- //           }
- //           ast.newPos = new Point[numAsteroids];
+            for(int i = 0; i < ast.newPos.length; i++){
+                ast.newPos[i] = new Point();
+            }
+//            ast.newPos = new Point[numAsteroids];
             ast.offSet = new Point();
             ast.dVect = new Point();
             ast.time = 0;
@@ -62,7 +62,7 @@ public class AsteroidManager extends MovableObject {
         for(Asteroid ast:asteroidTracker){
             ast.curTime = System.nanoTime() / 1000000;
             ast.time = ast.curTime - ast.startTime;
-            if(currentAsteroid != null) {
+            if(ast.image != null) {
                 ast.newPos[0].x = (int) (ast.image[0].x * scalar + ast.offSet.x + ast.dVect.x *ast.time/100);
                 ast.newPos[0].y = (int) (ast.image[0].y * scalar + ast.offSet.y + ast.dVect.y *ast.time/100);
                 shape.moveTo(ast.newPos[0].x, ast.newPos[0].y);
@@ -79,7 +79,7 @@ public class AsteroidManager extends MovableObject {
     private void genAsteroid(){
         for(Asteroid ast: asteroidTracker){
             boolean reDraw = false;
-            if(!firstRun || currentAsteroid != null) {
+            if(!firstRun || ast.image != null) {
                 for (int i = 0; i < ast.image.length; i++) {
                     if(
                             (int) (ast.image[i].x * scalar + ast.offSet.x + ast.dVect.x * ast.time/100) < -resX/4
