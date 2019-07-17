@@ -3,7 +3,7 @@ package com.example.asteroids;
 import android.graphics.Point;
 
 public class Asteroid {
-    private AsteroidGenerator aGen;
+    private AsteroidGenerator aGen = new AsteroidGenerator();
     public Point dVect;
     public long  time;
     public long startTime;
@@ -16,6 +16,7 @@ public class Asteroid {
     public void setAsteroid(int asteroidType){
         this.asteroidType = asteroidType;
         this.image = aGen.which(this.asteroidType);
+        this.newPos = this.image;
     }
 
 }
