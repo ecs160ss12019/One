@@ -114,7 +114,7 @@ public class Env extends SurfaceView implements Runnable {
 
         //If canvas is unlocked and ready to be drawn on, lock it and draw to the screen
         if(surfaceHolder.getSurface().isValid()) {
-            canvas = surfaceHolder.lockHardwareCanvas();
+            canvas = surfaceHolder.lockCanvas();
 
             // Antialiasing
             paint.setAntiAlias(true);
