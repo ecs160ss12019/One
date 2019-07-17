@@ -27,6 +27,7 @@ public class UFO extends MovableObject {
     private float mXVelocity, mYVelocity;
 
     private UFO_Origin enterFrom;
+
     //Max Boundary for UFO
     private float xLBound, xRBound;
     private float yTBound, yBBound;
@@ -36,28 +37,14 @@ public class UFO extends MovableObject {
     //UFO State Variable
     UFO_State state;
 
-
     private Random random = new Random();
 
     UFO(Point res, PointF blockSize) {
         super(blockSize);
-        //From parent class
-        //describe center of the screen
-        position.set(res.x/2, res.y/2);
-        Log.d("UFO: ", "center: " + position);
-        //UFO BODY(Center of Display)
-        float bodyL = 900;
-        float bodyT = 300;
-        float bodyR = 1000;
-        float bodyB = 340;
 
-        body = new RectF(bodyL, bodyT, bodyR, bodyB);
-        bodyWidth = body.right - body.left;
-        bodyHeight = body.bottom - body.top;
-
-        //UFO HEAD
-        circleX = 950;
-        circleY = 310;
+        body = new RectF();
+        bodyWidth = 100;
+        bodyHeight = 40;
         radius = 30;
         circleXOffset = 50;
         circleYOffset = 10;
@@ -105,7 +92,8 @@ public class UFO extends MovableObject {
                 ufoInside(fps);
                 break;
             case LEAVING:
-                //DO leaving stuff here
+                Log.d("UFO::leaving: ", "entering ufoLeaving");
+                ufoLeaving(fps);
                 break;
             case DEAD:
                 // Do dead stuff here
@@ -148,8 +136,6 @@ public class UFO extends MovableObject {
 
 
     private void ufoSetPosition(int side){
-        //1 = Top
-        //3 = Bottom
         int xPosition, yPosition;
 
         if( (side % 2) == 0 ){
@@ -200,6 +186,37 @@ public class UFO extends MovableObject {
             }
         }
 
+    }
+
+    private void ufoLeaving(long fps){
+        ufoUpdateX(fps);
+        ufoUpdateY(fps);
+        isOut();
+    }
+
+    void isOut(){
+        //Top
+        if(body.bottom < yTBound){
+
+            state = UFO_State.WAITING;
+            Log.d("isOut: ", "changing state to " + state);
+        }
+        //Right
+        else if(body.left > xRBound){
+            state = UFO_State.WAITING;
+            Log.d("isOut: ", "changing state to " + state);
+        }
+        //Bottom
+        else if((body.top - radius) > yBBound ){
+            state = UFO_State.WAITING;
+            Log.d("isOut: ", "changing state to " + state);
+        }
+        //Left
+        else if(body.right < xLBound){
+            state = UFO_State.WAITING;
+            Log.d("isOut: ", "changing state to " + state);
+        }
+        else{}
     }
 
     private void ufoInside(long fps){

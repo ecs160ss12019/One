@@ -52,9 +52,9 @@ public class Env extends SurfaceView implements Runnable {
     private Asteroid asteroid;
 
     private UFOManager ufoManager;
-    private int maxUFO = 3;
+    private int maxUFO = 5;
     private UFO[] ufoArr;
-
+    private long timeOut = 15000;
 
     //Here is the thread and two control variables
     private Thread gameThread = null;
@@ -93,20 +93,9 @@ public class Env extends SurfaceView implements Runnable {
         hud = new HUD(blockSize);
         spaceship = new Spaceship(blockSize);
 
+        ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut);
 
-
-        ufoManager = new UFOManager(maxUFO, resolution, blockSize);
-        ufoManager.spawnUFO();
-        ufoManager.spawnUFO();
-        ufoManager.spawnUFO();
-
-        //This should fail(add to unit test later)
-        int err = ufoManager.spawnUFO();
-        if(err == -1){
-            Log.e("Spawn: ", "Can't spawn ufo");
-        }
-
-            asteroid = new Asteroid(blockSize);
+        asteroid = new Asteroid(blockSize);
 
 
     }
@@ -146,7 +135,7 @@ public class Env extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(255, 0, 255, 90));
             ufoArr = ufoManager.getUFOS();
             for(int i = 0; i < maxUFO; i++){
-                if(ufoArr[i].state == UFO_State.INSIDE){
+                if(ufoArr[i].state == UFO_State.INSIDE || (ufoArr[i].state ==UFO_State.LEAVING) ){
                     canvas.drawPath(ufoArr[i].draw(), paint);
                 }
             }
@@ -177,6 +166,7 @@ public class Env extends SurfaceView implements Runnable {
         //Touch coordinates are scaled to be values between 0-100
         float scaledX = e.getX() / blockSize.x;
         float scaledY = e.getY() / blockSize.x;
+        ufoManager.spawnUFO();
 
         if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
             hud.joyStick.updateStick(scaledX, scaledY);

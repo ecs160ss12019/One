@@ -1,9 +1,10 @@
 package com.example.asteroids;
 
-import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Point;
 import android.util.Log;
+
+
 
 /*
  * TODO: ADD "timer" that keeps track of how long UFO has been alive
@@ -12,21 +13,26 @@ public class UFOManager {
 
     //Will hold all of the UFO's to be managed
     private UFO[] ufoArray;
-
     //Number of MAX UFO's on screen
     private int maxUFO;
     private int alive;
+    private Timers timers;
 
-    UFOManager(int maxUFO, Point res, PointF blockSize){
+
+    UFOManager(int maxUFO, Point res, PointF blockSize, long timeOut){
         this.maxUFO = maxUFO;
         ufoArray = new UFO[this.maxUFO];
+        timers = new Timers(maxUFO, timeOut);
+
         for(int i = 0; i < this.maxUFO; i++){
             //Log.d("UFOManager: ", "calling UFO()");
             ufoArray[i] = new UFO(res, blockSize);
         }
 
         alive = 0;
+
     }
+
 
     //Spawn UFO onto screen
     //return 0 on success, else failed
@@ -39,6 +45,7 @@ public class UFOManager {
         alive++;
 
         ret = findAvailableUFO();
+        timers.startTimer(ret);
 
         if(ret == -1){
             return -1;
@@ -51,13 +58,31 @@ public class UFOManager {
 
 
     int update(long fps){
+
+        //Update Timers
+        timers.updateTimers();
+        //Check Timers
+        timers.checkTimers();
+        for(int i = 0; i < maxUFO; i++){
+
+            if(timers.doneTimers[i]){
+                Log.d("update: " , "timer " + i + " : set to Leaving");
+                ufoArray[i].state = UFO_State.LEAVING;
+                timers.resetTimer(i);
+            }
+        }
+
         //update all of the UFO's
         if(alive <= 0){return -1;}
         for(int i = 0; i < maxUFO; i++){
-            ufoArray[i].update(fps);
+            if(ufoArray[i].state != UFO_State.WAITING) {
+                ufoArray[i].update(fps);
+                if(ufoArray[i].state == UFO_State.WAITING){alive--;};
+            }
         }
         return 0;
     }
+
 
     private int findAvailableUFO(){
         Log.d("findAvailableUFO: ", "entering");
@@ -74,6 +99,10 @@ public class UFOManager {
 
     public UFO[] getUFOS(){
         return ufoArray;
+    }
+
+    void killUFO(){
+        alive--;
     }
 
 }
