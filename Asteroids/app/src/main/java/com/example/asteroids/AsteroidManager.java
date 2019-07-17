@@ -16,7 +16,7 @@ public class AsteroidManager extends MovableObject {
     ///////////////////////////
     private int scalar = 15;
     Random random = new Random();
-    private Vector<Asteroid> asteroidTracker;
+    private Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
     private Asteroid currentAsteroid;
     private int numAsteroids = 10;
     private int numHits;
@@ -38,10 +38,10 @@ public class AsteroidManager extends MovableObject {
             asteroidTracker.add(new Asteroid());
         }
         for(Asteroid ast:asteroidTracker){
-            for(int i = 0; i < numAsteroids; i++){
-                ast.newPos[i] = new Point();
-            }
-            ast.newPos = new Point[numAsteroids];
+ //           for(int i = 0; i < numAsteroids; i++){
+ //               ast.newPos[i] = new Point();
+ //           }
+ //           ast.newPos = new Point[numAsteroids];
             ast.offSet = new Point();
             ast.dVect = new Point();
             ast.time = 0;
