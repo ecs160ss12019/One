@@ -10,7 +10,7 @@ public class Spaceship extends MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-    private PointF thrust;
+   private PointF thrust;
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
@@ -18,7 +18,7 @@ public class Spaceship extends MovableObject {
     public Spaceship(PointF blockSize) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
-
+        setMass(100);
         shapeCoords = new PointF[5];
         thrust = new PointF(0,0);
         genShape();
@@ -55,13 +55,41 @@ public class Spaceship extends MovableObject {
 
 
 
-            shapeCoords[i].x += blockSize.x * currVelocity.x * .1;
-            shapeCoords[i].y -= blockSize.x * currVelocity.y * .1;
+            shapeCoords[i].x +=  currVelocity.x * .1;
+            shapeCoords[i].y -=  currVelocity.y * .1;
 
         }
+        outOfBounds();
+       // setThrust(joyStickPos);
+       // calcVelocity();
+        //calcPos();
 
 
     }
 
+    /*Looks like a lot of for loops, but it ends up just being */
+
+    public void outOfBounds() {
+
+        for(PointF i: shapeCoords) {
+            if (i.x > 110) {
+                for (PointF j : shapeCoords)
+                    j.x -= 100;
+            }
+            if (i.x < -10) {
+                for (PointF j : shapeCoords)
+                    j.x += 100;
+            }
+            if (i.y > 110) {
+                for (PointF j : shapeCoords)
+                    j.y -= 100;
+            }
+            if (i.y < -10) {
+                for (PointF j : shapeCoords)
+                    j.x += 100;
+            }
+        }
+
+    }
 
 }

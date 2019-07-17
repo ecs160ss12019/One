@@ -56,8 +56,8 @@ public class JoyStick {
         // bounds are [-100f - +100f], where -100f means -100% engaged on the axis and +100f means
         // %100% engaged on the axis.
 
-        scaledOutput.x = (stickPosition.x - baseCenter.x ) / (baseRadius);
-        scaledOutput.y = -1 * (stickPosition.y - baseCenter.y ) / (baseRadius);
+        scaledOutput.x = 100 * (stickPosition.x - baseCenter.x ) / (baseRadius);
+        scaledOutput.y = -100 * (stickPosition.y - baseCenter.y ) / (baseRadius);
 
         return scaledOutput;
 
