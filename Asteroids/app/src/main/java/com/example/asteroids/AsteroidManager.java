@@ -5,6 +5,8 @@ package com.example.asteroids;
 import android.graphics.Path;
 import android.graphics.Point;
 import java.util.Random;
+import java.util.Vector;
+
 import android.graphics.PointF;
 
 public class AsteroidManager extends MovableObject {
@@ -13,10 +15,9 @@ public class AsteroidManager extends MovableObject {
     //      VARIABLES
     ///////////////////////////
     private int scalar = 15;
-    private Point[] offSet;
     Random random = new Random();
     private AsteroidGenerator aGen;
-    private int[] asteroidTracker;
+    private Vector<Asteroid> asteroidTracker;
     private Point[] currentAsteroid;
     private int numAsteroids = 10;
     private int numHits;
@@ -24,11 +25,7 @@ public class AsteroidManager extends MovableObject {
     private static int resY;
     private static int resX;
     private boolean firstRun = true;
-    private Point[] dVect;
-    private Point[] newPos;
-    private long[]  time;
-    private long[] startTime;
-    private long[] curTime;
+
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
@@ -39,18 +36,22 @@ public class AsteroidManager extends MovableObject {
         resY = (int) (100 * blockSize.y);
         resX = (int) (100 * blockSize.x);
         aGen = new AsteroidGenerator();
-        newPos = new Point[numAsteroids];
         for(int i = 0; i < numAsteroids; i++){
                 newPos[i] = new Point();
+            asteroidTracker.add(new Asteroid());
         }
-        asteroidTracker = new int[numAsteroids];
-        offSet = new Point[numAsteroids];
-        dVect = new Point[numAsteroids];
-        time = new long[numAsteroids];
-        startTime = new long[numAsteroids];
-        curTime = new long[numAsteroids];
+        for(Asteroid ast:asteroidTracker){
+            for(int i = 0; i < numAsteroids; i++){
+                newPos[i] = new Point();}
+        }
+            ast.newPos = new Point[numAsteroids];
+            ast.offSet = new Point();
+            ast.dVect = new Point();
+            ast.time = 0;
+            ast.startTime = 0;
+            ast.curTime = 0;
+        }
         genAsteroid();
-
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
     }
 
@@ -61,10 +62,10 @@ public class AsteroidManager extends MovableObject {
     public Path draw() {
         shape.rewind();
         genAsteroid();
-        for(int j = 0; j < numAsteroids; j++){
-            curTime[j] = System.nanoTime() / 1000000;
-            time[j] = curTime[j] - startTime[j];
-            currentAsteroid = aGen.which(asteroidTracker[j]);
+        for(Asteroid ast:asteroidTracker){
+            ast.curTime = System.nanoTime() / 1000000;
+            ast.time = ast.curTime - ast.startTime;
+            currentAsteroid = aGen.which(ast.asteroidType);
             if(currentAsteroid != null) {
                 newPos[0].x = (int) (currentAsteroid[0].x * scalar + offSet[j].x + dVect[j].x *time[j]/100);
                 newPos[0].y = (int) (currentAsteroid[0].y * scalar + offSet[j].y + dVect[j].y *time[j]/100);
