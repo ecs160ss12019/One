@@ -96,11 +96,16 @@ public class Env extends SurfaceView implements Runnable {
 
 
         ufoManager = new UFOManager(maxUFO, resolution, blockSize);
-        for(int i = 0; i < maxUFO; i++){
-            if(ufoManager.spawnUFO() == -1){
-                Log.e("spawnUFO", "could not spawn UFO");
-            }
+        ufoManager.spawnUFO();
+        ufoManager.spawnUFO();
+        ufoManager.spawnUFO();
+
+        //This should fail(add to unit test later)
+        int err = ufoManager.spawnUFO();
+        if(err == -1){
+            Log.e("Spawn: ", "Can't spawn ufo");
         }
+
             asteroid = new Asteroid(blockSize);
 
 

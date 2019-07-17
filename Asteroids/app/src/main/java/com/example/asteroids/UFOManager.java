@@ -21,6 +21,7 @@ public class UFOManager {
         this.maxUFO = maxUFO;
         ufoArray = new UFO[this.maxUFO];
         for(int i = 0; i < this.maxUFO; i++){
+            //Log.d("UFOManager: ", "calling UFO()");
             ufoArray[i] = new UFO(res, blockSize);
         }
 
@@ -32,7 +33,7 @@ public class UFOManager {
     public int spawnUFO(){
         Log.d("spawnUFO: ", "Entering fcn");
         int index;
-        if(alive >= 10){
+        if(alive >= maxUFO){
             return -1;
         }
         //Update number of UFO's active
@@ -62,8 +63,9 @@ public class UFOManager {
     private int findAvailableUFO(){
         Log.d("findAvailableUFO: ", "entering");
         for(int i = 0; i < maxUFO; i++){
-            if(ufoArray[i].state == UFO_State.READY){
+            if(ufoArray[i].state == UFO_State.WAITING){
                 Log.d("findAvailableUFO: ", "found at " + i);
+                ufoArray[i].state = UFO_State.READY;
                 return i;
             }
         }

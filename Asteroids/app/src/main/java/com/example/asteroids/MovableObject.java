@@ -39,7 +39,7 @@ abstract class MovableObject {
         this.blockSize = blockSize;
 
         currVelocity = new PointF(0,0);
-
+        position = new Point();
 
         //Initialize our shape
 

@@ -11,7 +11,7 @@ import java.util.Random;
 
 
 enum UFO_State{
-    READY, ENTERING, LEAVING, INSIDE, DEAD;
+    WAITING, READY, ENTERING, LEAVING, INSIDE, DEAD;
 }
 
 public class UFO extends MovableObject {
@@ -20,21 +20,28 @@ public class UFO extends MovableObject {
     RectF body;
     private float bodyWidth, bodyHeight;
     private float circleX, circleY, radius;
+    private float circleXOffset, circleYOffset;
     private float mXVelocity, mYVelocity;
     private float bodyL, bodyT, bodyR, bodyB;
-
+    private int enterFrom;
     //Max Boundary for UFO
-    private final float xLBound, xRBound;
-    private final float yTBound, yBBound;
+    private float xLBound, xRBound;
+    private float yTBound, yBBound;
+    //Screen has four sides
+    private int[] ufoEntry = new int[4];
 
     //UFO State Variable
     UFO_State state;
+
 
     Random random = new Random();
 
     public UFO(Point res, PointF blockSize) {
         super(blockSize);
-
+        //From parent class
+        //describe center of the screen
+        position.set(res.x/2, res.y/2);
+        Log.d("UFO: ", "center: " + position);
         //UFO BODY(Center of Display)
         bodyL = 900;
         bodyT = 300;
@@ -49,14 +56,26 @@ public class UFO extends MovableObject {
         circleX = 950;
         circleY = 310;
         radius = 30;
+        circleXOffset = 50;
+        circleYOffset = 10;
 
         mXVelocity = res.x / 10;
         mYVelocity = res.x / 10;
+
         xLBound = 0;
         xRBound = res.x;
         yTBound = 0;
         yBBound = res.y;
-        state = UFO_State.READY;
+
+        //Left
+        ufoEntry[0] = (int)xLBound - (int)bodyWidth;
+        //Top
+        ufoEntry[1] = (int)yTBound - (int)bodyHeight;
+        //Right
+        ufoEntry[2] = (int)xRBound + (int)bodyWidth;
+        //Bottom
+        ufoEntry[3] = (int)yBBound + (int)bodyHeight;
+        state = UFO_State.WAITING;
     }
 
 
@@ -68,6 +87,9 @@ public class UFO extends MovableObject {
     public void update(long fps){
         Log.d("UFO::update: ", "entering fcn");
         switch(state){
+            case WAITING:
+                //Do waiting stuff here
+                break;
             case READY:
                 //Do Ready stuff here
                 Log.d("UFO::update: ", "entering ufoReady");
@@ -112,33 +134,114 @@ public class UFO extends MovableObject {
 
     int ufoReady(){
 
-        int rand = random.nextInt(3) + 1;
-        //set UFO outside of screen so it can enter
-        if(rand == 1){
-            body.set(bodyL - 1000, bodyT, bodyL + bodyWidth, bodyB );
-            circleX = circleX - 1000;
-            state = UFO_State.ENTERING;
-        }else if(rand == 2){
-            body.set(bodyL - 1000, bodyT - 100, bodyL + bodyWidth, bodyT + bodyHeight );
-            circleX = circleX - 1000;
-            circleY = circleY - 100;
-            state = UFO_State.ENTERING;
-        }else{
-            body.set(bodyL - 1000 , bodyT + 100, bodyL + bodyWidth, bodyT + bodyHeight );
-            circleX = circleX - 1000;
-            circleY = circleY + 100;
-            state = UFO_State.ENTERING;
+        int rand = random.nextInt(4);
+        //UFO Will enter from the sides
+        if(rand % 2 == 0){
+            ufoPositionSide(rand);
         }
-
-
+        else{
+            ufoPositionVertical(rand);
+        }
+        state = UFO_State.ENTERING;
+        enterFrom = rand;
         return 0;
     }
 
-    void ufoEnter(long fps){
-        ufoUpdateX(fps);
-        if(body.left > 10){
-            state = UFO_State.INSIDE;
+
+
+    void ufoPositionSide(int r){
+        //0 = Left
+        //2 = Right
+        int yPosition = random.nextInt((int)yBBound);
+        int xPosition;
+        //Left side
+        if(r == 0){
+            xPosition = ufoEntry[r];
+            body.set(xPosition, yPosition, xPosition + bodyWidth, yPosition + bodyHeight);
+            circleX = xPosition + circleXOffset;
+            circleY = yPosition + circleYOffset;
         }
+        //Right side
+        else{
+            xPosition = ufoEntry[r];
+            body.set(xPosition, yPosition, xPosition + bodyWidth, yPosition + bodyHeight );
+            circleX = xPosition + circleXOffset;
+            circleY = yPosition + circleYOffset;
+        }
+    }
+
+
+    void ufoPositionVertical(int r){
+        //1 = Top
+        //3 = Bottom
+        int xPosition = random.nextInt((int)xRBound);
+        int yPosition;
+        //Top side
+        if(r == 1){
+            yPosition = ufoEntry[r];
+            body.set(xPosition, yPosition, xPosition + bodyWidth, yPosition + bodyHeight);
+            circleX = xPosition + circleXOffset;
+            circleY = yPosition + circleYOffset;
+        }
+        //Bottom side
+        else{
+            yPosition = ufoEntry[r];
+            body.set(xPosition, yPosition, xPosition + bodyWidth, yPosition + bodyHeight);
+            circleX = xPosition + circleXOffset;
+            circleY = yPosition + circleYOffset;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    void ufoEnter(long fps){
+
+        //Left
+        if(enterFrom == 0){
+            ufoUpdateX(fps);
+            if(body.left > 0){
+                state = UFO_State.INSIDE;
+            }
+        }
+        //Top
+        else if(enterFrom == 1){
+            ufoUpdateY(fps);
+            if(body.top > 0){
+                state = UFO_State.INSIDE;
+            }
+        }
+        //Right
+        else if(enterFrom == 2){
+            mXVelocity = -1 * Math.abs(mXVelocity);
+            ufoUpdateX(fps);
+            if(body.right  < xRBound){
+                state = UFO_State.INSIDE;
+            }
+        }
+        //Bottom
+        else{
+            mYVelocity = -1 * Math.abs(mYVelocity);
+            ufoUpdateY(fps);
+            if(body.bottom < yBBound){
+                state = UFO_State.INSIDE;
+            }
+        }
+
     }
 
     void ufoInside(long fps){
@@ -160,16 +263,16 @@ public class UFO extends MovableObject {
     }
 
     void checkBounds(){
-        if(body.right >= xRBound){
+        if(body.right > xRBound){
             reverseXVelocity();
         }
-        if(body.left <= xLBound){
+        if(body.left < xLBound){
             reverseXVelocity();
         }
-        if(body.top <= yTBound){
+        if(body.top < (yTBound + radius) ){
             reverseYVelocity();
         }
-        if(body.bottom >= yBBound){
+        if(body.bottom > yBBound){
             reverseYVelocity();
         }
     }
