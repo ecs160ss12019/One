@@ -27,9 +27,8 @@
 ## JoyStick.java
 | Responsibilites | Interacts with |
 | --- | --- |
-| Takes Player's touch input | HUD
-| Normalize input from -100 to 100 |
-| Draw Player's touch |
+| Takes Player's touch input & Normalize input from -100 to 100 | HUD
+| Draw Player's touch | Space Ship
 
 ## UFO.java:
 | Responsibilites | Interacts with |
@@ -68,7 +67,7 @@
 | Collision Detection | Asteroid
 | - | Projectile
 | - | HUD
-| - | Moveable object
+| - | Movable object
 
 ## Environment.java:
 | Responsibilites | Interacts with |
@@ -77,13 +76,14 @@
 | Play music | UFO
 | Collision Detection | Asteroid
 | - | Moveable Object
+| - | HUD 
 
 
 ## HUD.java:
 | Responsibilites | Intracts with |
 | --- | --- |
 | Keep track of score | Spaceship
-| Must display on the screen| -
+| Must display on the screen| Joystick
 
 ## MoveableObjects.java
 | Resonsibilites | Interacts with |
