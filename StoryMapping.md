@@ -17,7 +17,17 @@ as possible."
 ## Acceptance Criteria:
 ![Acceptance Criteria Chart](https://github.com/ecs160ss12019/One/blob/master/acceptance-criteria.png)  
 
-## Sprint 2 Update: 
+## Sprint 2 Update:
+
+### Changes To Design
+* Added AsteroidManager.java class
+* Added AsteroidGenerator.java class
+* Added UFOManager.java class
+* Added Joystick.java class
+* Changed how our `draw()` method would be implemented.
+* Added blockSize variable for universal scaling.
+
+### Sprints Chart
 ![Sprints Chart 2](https://github.com/ecs160ss12019/One/blob/master/Chart_Sprint2.PNG)
 
 ### Acceptance Critera
