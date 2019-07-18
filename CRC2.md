@@ -27,7 +27,9 @@
 ## JoyStick.java
 | Responsibilites | Interacts with |
 | --- | --- |
-
+| Takes Player's touch input | HUD
+| Normalize input from -100 to 100 |
+| Draw Player's touch |
 
 ## UFO.java:
 | Responsibilites | Interacts with |
@@ -76,11 +78,6 @@
 | Collision Detection | Asteroid
 | - | Moveable Object
 
-## Grid.java:
-| Responsibilites | Interacts with |
-| --- | --- |
-| Keep track of grid | -
-| Return pixels that are occupied| - 
 
 ## HUD.java:
 | Responsibilites | Intracts with |
