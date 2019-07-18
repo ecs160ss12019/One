@@ -11,9 +11,18 @@
 ## AsteroidGenerator.java
 | Responsibilites | Interacts with |
 | --- | --- |
-| Holds cordinates for actual drawings with the asteroid. | Asteroid
-| - | -
+| On initialization generate the coordinate array for each asteroid type. | Asteroid
+| Return corresponding asteroid when passed an asteroid type. | -
 | - | - 
+
+## AsteroidManager.java
+| Responsibilites | Interacts with |
+| --- | --- |
+| Initialize Asteroids. | Asteroid
+| Send drawn paths for each Asteroid to Env. | Env
+| Apply the Direction Vector over time to the Asteroid. | - 
+| Regenerate Asteroids when they leave the screen. | - 
+| Apply random start points and direction vectors to each Asteroid. | - 
 
 ## JoyStick.java
 | Responsibilites | Interacts with |
