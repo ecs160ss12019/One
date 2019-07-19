@@ -3,13 +3,17 @@ package com.example.asteroids;
 // AUTHOR NAME HERE
 
 import android.graphics.PointF;
+import android.util.Log;
 
 
 public class Spaceship extends MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-   private PointF thrust;
+
+    protected PointF thrust;
+
+
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
@@ -27,6 +31,11 @@ public class Spaceship extends MovableObject {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+    public void calcRotation(PointF joyStickPos, long fps) {
+
+        rotation += ROTATION_SCALAR * joyStickPos.x/fps;
+    }
+
 
 
     public void genShape() {
@@ -38,13 +47,7 @@ public class Spaceship extends MovableObject {
 
     }
 
-    public void update(long fps, PointF joyStickPos) {
-        setForce(joyStickPos);
-        calcRotation(joyStickPos, fps);
-        calcVelocity(fps);
-        calcPos(fps);
-        checkBounds();
-    }
+
 
     public void checkBounds() {
         for(PointF i: shapeCoords) {
@@ -65,6 +68,20 @@ public class Spaceship extends MovableObject {
                     j.y += 100;
             }
         }
+    }
+
+    private void setThrust(PointF joystickPos) {
+        thrust.x = VELOCITY_SCALAR * (float) (joystickPos.y * Math.sin(Math.toRadians(rotation)));
+        thrust.y = VELOCITY_SCALAR * (float) (joystickPos.y * Math.cos(Math.toRadians(rotation)));
+        Log.d("force", "thrust: " + thrust);
+    }
+
+    public void update(long fps, PointF joyStickPos) {
+
+
+        updatePhysics(fps, joyStickPos);
+        checkBounds();
+
     }
 
 }

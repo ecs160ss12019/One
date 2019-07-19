@@ -12,9 +12,10 @@ abstract class MovableObject {
     ///////////////////////////
     //      Constants
     ///////////////////////////
-    private final int ROTATION_SCALAR = 2;
-    private final int VELOCITY_SCALAR = 10;
-    private final int MAX_SPEED = 50;
+    public final int ROTATION_SCALAR = 2;
+    public final int VELOCITY_SCALAR = 5;
+    public final int FORCE_SCALAR = 10;
+    private final int MAX_SPEED = 25;
 
 
     ///////////////////////////
@@ -24,17 +25,20 @@ abstract class MovableObject {
     //scaled screen resolution with domain of 0-100
     protected PointF blockSize;
 
-
-    protected PointF currThrust;
-    protected PointF currVelocity;
-
-
+    private PointF force;
     protected int mass;
     private float speed;
+
+
     //Value in degrees. 0 is pointing upwards
-    private float rotation;
-    Matrix transform;
-    RectF bounds;
+    protected float rotation;
+
+    private RectF bounds; //Maybe can use for collision detection
+
+
+
+
+    protected PointF currVelocity;
 
     //shapeCoords will store the default shape starting from (0,0)
     PointF[] shapeCoords;
@@ -50,10 +54,12 @@ abstract class MovableObject {
     public MovableObject(PointF blockSize) {
         this.blockSize = blockSize;
 
+        force = new PointF(0,0);
         currVelocity = new PointF(0,0);
-        currThrust = new PointF(0,0);
+
         //Initialize our shape
         shape = new Path();
+        bounds = new RectF(); //Initialize bounds
         shape.reset(); //TODO: Might not be needed
 
     }
@@ -62,83 +68,76 @@ abstract class MovableObject {
     //      METHODS
     ///////////////////////////
 
-
-    public Path draw() {
-        shape.rewind();
-        shape.moveTo(shapeCoords[0].x * blockSize.x, shapeCoords[0].y * blockSize.y);
-        for(int i = 1; i < shapeCoords.length; ++i) {
-            shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.y);
-        }
-        rotateShape();
-        return shape;
-    }
-
     //X=x0 + v0t + 1/2at^2
     public void calcPos(long fps) {
         for(PointF i : shapeCoords) {
-            i.x += ((currVelocity.x * 1/fps) + 1/2 * (currThrust.x / mass) * Math.pow(1/ fps, 2));
-            i.y += ((currVelocity.y * 1/fps) + 1/2 * (currThrust.y / mass) * Math.pow(1/ fps, 2));
+            i.x += ((currVelocity.x * 1/fps) + 1/2 * (force.x / mass) * Math.pow(1/ fps, 2));
+            i.y += ((currVelocity.y * 1/fps) + 1/2 * (force.y / mass) * Math.pow(1/ fps, 2));
         }
     }
 
-    public void calcRotation(PointF joyStickPos, long fps) {
-
-        rotation += Math.toRadians(ROTATION_SCALAR * joyStickPos.x/fps);
+    private void calcRotation() {
+        //Rotate shape based on the rotation
+        Matrix transform = new Matrix();
+        shape.computeBounds(bounds, true);
+        transform.postRotate(rotation, bounds.centerX(), bounds.centerY());
+        shape.transform(transform);
     }
 
-    private float updateAndGetSpeed() {
-        return speed = (float) Math.sqrt(Math.pow(currVelocity.x, 2) + Math.pow(currVelocity.y,2));
+    //Speed is the absolute value of velocity
+    private float calcSpeed() {
+        return (float) Math.sqrt(Math.pow(currVelocity.x, 2) + Math.pow(currVelocity.y,2));
 
     }
 
     //V = v0 + a*t
     public void calcVelocity(long fps) {
-            currVelocity.x += (currThrust.x) / (mass * fps);
-            currVelocity.y += (currThrust.y) / (mass * fps);
-            Log.d("vel", "CurrVelocity: " + currVelocity);
+        currVelocity.x += (force.x) / (mass * fps);
+        currVelocity.y += (force.y) / (mass * fps);
     }
 
-    private void rotateShape() {
-        //Rotate ship based on the rotation
-        transform = new Matrix();
-        bounds = new RectF();
-        shape.computeBounds(bounds, true);
-        transform.postRotate((float) Math.toDegrees(rotation), bounds.centerX(), bounds.centerY());
-        shape.transform(transform);
+    public Path draw() {
+        shape.rewind();
+        shape.moveTo(shapeCoords[0].x * blockSize.x, shapeCoords[0].y * blockSize.x);
 
+        for(int i = 1; i < shapeCoords.length; ++i)
+            shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.x);
+
+        calcRotation();
+        return shape;
     }
 
 
     public void setForce(PointF forceVector) {
-        double rad = Math.toRadians(rotation);
 
+        force.x = FORCE_SCALAR * forceVector.x;
+        force.y = -1 * FORCE_SCALAR * forceVector.y;
 
-            currThrust.x = VELOCITY_SCALAR * (float) (forceVector.y * Math.sin(rotation));
-            currThrust.y = -1 * VELOCITY_SCALAR * (float) (forceVector.y * Math.cos(rotation));
+        //If the speed > MAX_SPEED, then set force to be 0
+        if(calcSpeed() > MAX_SPEED) {
+            if(force.x > 0 && currVelocity.x > 0)
+                force.x = 0;
 
+            if(force.x < 0 && currVelocity.x < 0)
+                force.x = 0;
 
-        if(updateAndGetSpeed() > MAX_SPEED) {
-            if(currThrust.x > 0 && currVelocity.x > 0) {
-                currThrust.x = 0;
+            if(force.y > 0 && currVelocity.y > 0)
+                force.y = 0;
 
-            }
-            if(currThrust.x < 0 && currVelocity.x < 0) {
-                currThrust.x = 0;
-
-            }
-            if(currThrust.y > 0 && currVelocity.y > 0) {
-                currThrust.y = 0;
-            }
-            if(currThrust.y < 0 && currVelocity.y < 0) {
-                currThrust.y = 0;
-            }
+            if(force.y < 0 && currVelocity.y < 0)
+                force.y = 0;
         }
 
 
 
-
-
     }
+
+    public void updatePhysics(long fps, PointF force) {
+        setForce(force);
+        calcVelocity(fps);
+        calcPos(fps);
+    }
+
 
 
 }

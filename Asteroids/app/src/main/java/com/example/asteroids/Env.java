@@ -146,7 +146,6 @@ public class Env extends SurfaceView implements Runnable {
             }
 
 
-
             //JoyStick should be drawn last to be below all other objects
             paint.setColor(Color.argb(255,255,255,255));
             paint.setStyle(Paint.Style.STROKE);
@@ -211,8 +210,8 @@ public class Env extends SurfaceView implements Runnable {
         canvas.drawText("FPS: " + fps, 10, 150 + debugSize, paint);
 
         //Joystick Output
-        canvas.drawText("X-Thrust: " + hud.joyStick.getScaledStickPosition().x, 10, 200 + debugSize, paint);
-        canvas.drawText("Y-Thrust: " + hud.joyStick.getScaledStickPosition().y, 10, 250 + debugSize, paint);
+       // canvas.drawText("X-Thrust: " + hud.joyStick.getScaledStickPosition().x, 10, 200 + debugSize, paint);
+        //canvas.drawText("Y-Thrust: " + hud.joyStick.getScaledStickPosition().y, 10, 250 + debugSize, paint);
         Log.d("FPS", "FPS: " + fps);
 
     }
