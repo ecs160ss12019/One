@@ -1,9 +1,11 @@
 package com.example.asteroids;
 
 import android.graphics.Point;
+import android.graphics.PointF;
+
 import java.util.Random;
 
-public class Asteroid {
+public class Asteroid extends MovableObject {
     private AsteroidGenerator aGen = new AsteroidGenerator();
     public Point dVect;
     public long  time;
@@ -12,21 +14,31 @@ public class Asteroid {
     public Point offSet;
     public int asteroidType;
     public boolean reDraw = true;
-    private int maxVertices = 10;
+    public int maxVertices = 10;
     private int scalar = 15;
     private int resX;
     private int resY;
     public Point[] image;
-    public Point[] newPos = new Point[maxVertices];
+
+    public Asteroid(PointF blockSize){
+        super(blockSize);
+
+
+
+    }
 
     public void setAsteroid(int asteroidType){
         this.asteroidType = asteroidType;
-        this.image = aGen.which(this.asteroidType);
+        image = aGen.which(this.asteroidType);
+        shapeCoords = new PointF[image.length];
+        for(int i = 0; i < shapeCoords.length; i++){
+            shapeCoords[i] = new PointF();
+        }
     }
     public void checkReDraw(){
         for (int i = 0; i < image.length; i++) {
-            if(newPos[i].x < -resX/4 || newPos[i].y < -resY/4
-                    || newPos[i].x > resX + resX/4 || newPos[i].y > resY + resY/4)
+            if(shapeCoords[i].x*blockSize.x < -resX/4 || shapeCoords[i].y*blockSize.y < -resY/4
+                    || shapeCoords[i].x*blockSize.x > resX + resX/4 || shapeCoords[i].y*blockSize.y > resY + resY/4)
                 reDraw = true;
         }
     }
@@ -36,11 +48,11 @@ public class Asteroid {
         curTime = System.nanoTime() / 1000000;
         time = curTime - startTime;
         if(image != null) {
-            newPos[0].x = (int) (image[0].x * scalar + offSet.x + dVect.x *time/100);
-            newPos[0].y = (int) (image[0].y * scalar + offSet.y + dVect.y *time/100);
+            shapeCoords[0].x = (image[0].x * scalar + offSet.x + dVect.x *time/100)/blockSize.x;
+            shapeCoords[0].y = (image[0].y * scalar + offSet.y + dVect.y *time/100)/blockSize.y;
             for (int i = 1; i < image.length; i++) {
-                newPos[i].x = (int) (image[i].x * scalar + offSet.x + dVect.x *time/100);
-                newPos[i].y = (int) (image[i].y * scalar + offSet.y + dVect.y *time/100);
+                shapeCoords[i].x = (image[i].x * scalar + offSet.x + dVect.x *time/100)/blockSize.x;
+                shapeCoords[i].y = (image[i].y * scalar + offSet.y + dVect.y *time/100)/blockSize.y;
             }
         }
     }
@@ -95,4 +107,6 @@ public class Asteroid {
         }
         return tempVect;
     }
+    
+ 
 }

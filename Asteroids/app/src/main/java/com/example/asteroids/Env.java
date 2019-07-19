@@ -140,7 +140,11 @@ public class Env extends SurfaceView implements Runnable {
 
             //Draw asteroids
             paint.setColor(Color.argb(255,200,255,255));
-                canvas.drawPath(asteroidManager.draw(), paint);
+            asteroidManager.updateAsteroids();
+            for(Asteroid ast : asteroidManager.asteroidTracker){
+                canvas.drawPath(ast.draw(), paint);
+            }
+
 
 
             //JoyStick should be drawn last to be below all other objects
