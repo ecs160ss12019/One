@@ -14,7 +14,6 @@ public class Asteroid extends MovableObject {
     public Point offSet;
     public int asteroidType;
     public boolean reDraw = true;
-    public int maxVertices = 10;
     private int scalar = 15;
     private int resX;
     private int resY;

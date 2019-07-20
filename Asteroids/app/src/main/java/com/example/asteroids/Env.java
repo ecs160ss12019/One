@@ -140,6 +140,8 @@ public class Env extends SurfaceView implements Runnable {
 
             //Draw asteroids
             paint.setColor(Color.argb(255,200,255,255));
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            paint.setStrokeWidth(1);
             asteroidManager.updateAsteroids();
             for(Asteroid ast : asteroidManager.asteroidTracker){
                 canvas.drawPath(ast.draw(), paint);
