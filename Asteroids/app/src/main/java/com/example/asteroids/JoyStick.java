@@ -60,7 +60,6 @@ public class JoyStick {
         scaledOutput.y = -100 * (stickPosition.y - baseCenter.y ) / (baseRadius);
 
         return scaledOutput;
-
     }
 
     public void resetJoyStick() {
@@ -78,24 +77,18 @@ public class JoyStick {
         float yCentered = y - baseCenter.y;
 
         //TODO: add bound on where you can touch joystick from w/ simple if statement
-
         //distance from the center of joystick
         float distanceFromCenter = (float) Math.sqrt(Math.pow(xCentered, 2 ) + Math.pow(yCentered, 2));
 
         if (distanceFromCenter < baseRadius) { //If the touch is in bounds of joystick
-
             stickPosition.x = x;
             stickPosition.y = y;
-
         } else { // when hat needs constraining to base radius
-
             float ratio = baseRadius / distanceFromCenter ;
-
             float constrainedX = baseCenter.x + (xCentered) * ratio;
             float constrainedY = baseCenter.y + (yCentered) * ratio;
             stickPosition.x = constrainedX;
             stickPosition.y = constrainedY;
-
         }
 
         //Reset path, add a new circle with the new coordinates

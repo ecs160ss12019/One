@@ -12,7 +12,7 @@ public class Spaceship extends MovableObject {
     ///////////////////////////
 
     protected PointF thrust;
-
+    private float steeringInput;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -70,8 +70,40 @@ public class Spaceship extends MovableObject {
         }
     }
 
+    private void rotateShip(PointF joyStick) {
+
+        if (joyStick.x == 0 && joyStick.y == 0)
+            return;
+
+        steeringInput = (float) Math.toDegrees( Math.atan(joyStick.x / joyStick.y));
+        Log.d("steering", "steeringInput: " + steeringInput);
+
+        if (joyStick.y < 0) {
+            if(joyStick.x < 0)
+                steeringInput += 180;
+            else
+                steeringInput += 180;
+        }
+
+        /*
+        if (joyStick.x < 0 && joyStick.y < 0)
+            steeringInput -= 180;
+        else if (joyStick.x > 0 && joyStick.y < 0)
+            steeringInput += 180;
+        */
+
+
+        if (rotation < steeringInput)
+            rotation += 5;
+        else
+            rotation -= 5;
+
+
+    }
+
+
     private void setThrust(PointF joystickPos) {
-        thrust.x = VELOCITY_SCALAR * (float) (joystickPos.y * Math.sin(Math.toRadians(rotation)));
+        thrust.x = VELOCITY_SCALAR * (float) (joystickPos.x * Math.sin(Math.toRadians(rotation)));
         thrust.y = VELOCITY_SCALAR * (float) (joystickPos.y * Math.cos(Math.toRadians(rotation)));
         Log.d("force", "thrust: " + thrust);
     }
@@ -79,6 +111,7 @@ public class Spaceship extends MovableObject {
     public void update(long fps, PointF joyStickPos) {
 
 
+        rotateShip(joyStickPos);
         updatePhysics(fps, joyStickPos);
         checkBounds();
 

@@ -27,8 +27,6 @@ abstract class MovableObject {
 
     private PointF force;
     protected int mass;
-    private float speed;
-
 
     //Value in degrees. 0 is pointing upwards
     protected float rotation;
@@ -69,7 +67,7 @@ abstract class MovableObject {
     ///////////////////////////
 
     //X=x0 + v0t + 1/2at^2
-    public void calcPos(long fps) {
+    private void calcPos(long fps) {
         for(PointF i : shapeCoords) {
             i.x += ((currVelocity.x * 1/fps) + 1/2 * (force.x / mass) * Math.pow(1/ fps, 2));
             i.y += ((currVelocity.y * 1/fps) + 1/2 * (force.y / mass) * Math.pow(1/ fps, 2));
@@ -77,7 +75,7 @@ abstract class MovableObject {
     }
 
     private void calcRotation() {
-        //Rotate shape based on the rotation
+        //Rotate shape based on the rotation value
         Matrix transform = new Matrix();
         shape.computeBounds(bounds, true);
         transform.postRotate(rotation, bounds.centerX(), bounds.centerY());
@@ -87,11 +85,10 @@ abstract class MovableObject {
     //Speed is the absolute value of velocity
     private float calcSpeed() {
         return (float) Math.sqrt(Math.pow(currVelocity.x, 2) + Math.pow(currVelocity.y,2));
-
     }
 
     //V = v0 + a*t
-    public void calcVelocity(long fps) {
+    private void calcVelocity(long fps) {
         currVelocity.x += (force.x) / (mass * fps);
         currVelocity.y += (force.y) / (mass * fps);
     }
@@ -108,8 +105,9 @@ abstract class MovableObject {
     }
 
 
-    public void setForce(PointF forceVector) {
+    private void setForce(PointF forceVector) {
 
+        //force.y needs to be * -1 since we are drawing from top of screen
         force.x = FORCE_SCALAR * forceVector.x;
         force.y = -1 * FORCE_SCALAR * forceVector.y;
 
@@ -128,8 +126,6 @@ abstract class MovableObject {
                 force.y = 0;
         }
 
-
-
     }
 
     public void updatePhysics(long fps, PointF force) {
@@ -137,7 +133,5 @@ abstract class MovableObject {
         calcVelocity(fps);
         calcPos(fps);
     }
-
-
 
 }
