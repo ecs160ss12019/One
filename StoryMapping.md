@@ -19,6 +19,27 @@ as possible."
 
 ## Sprint 2 Update:
 
+### Sprint 1 Short Summary
+After completing Sprint 1 we ended up making a little more progress than we had
+initially expected. During the implementaion phase we decided to make a few 
+updates to the initial design which was the addition of a few new classes that 
+we had not though of during our design phase.
+
+In terms of what we have completed so far we satisfied all of our Sprint 1 
+Acceptance Criteria.  
+
+* When I start the game, I see a space ship.
+* When I start the game, I see asteroids.
+* When I start the game, I see at least 1 UFO.
+* When I start the game, I see all objects together.
+
+Additional tasks completed
+
+* The movement of the Space Ship
+* Implemented JoyStick feature.
+* Spawning of multiple and random (UFOs/Asteroids)
+
+
 ### Changes To Design
 * Added AsteroidManager.java class
 * Added AsteroidGenerator.java class
