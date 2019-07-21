@@ -1,6 +1,6 @@
 package com.example.asteroids;
 
-// AUTHOR NAME HERE
+// Jose Torres-Vargas
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -9,33 +9,26 @@ import android.util.Log;
 
 import java.util.Random;
 
-
-enum UFO_State{
-    WAITING, READY, ENTERING, LEAVING, INSIDE, DEAD
-}
-
 enum UFO_Origin{
     LEFT, TOP, RIGHT, BOTTOM
 }
 public class UFO extends MovableObject {
 
     //UFO body
-    private RectF body;
+    RectF body;
     private float bodyWidth, bodyHeight;
     private float circleX, circleY, radius;
     private float circleXOffset, circleYOffset;
-    private float mXVelocity, mYVelocity;
+    float mXVelocity, mYVelocity;
 
-    private UFO_Origin enterFrom;
+    StateContext state;
+    UFO_Origin enterFrom;
 
     //Max Boundary for UFO
-    private float xLBound, xRBound;
-    private float yTBound, yBBound;
+    float xLBound, xRBound;
+    float yTBound, yBBound;
     //Screen has four sides
     private int[] ufoEntry = new int[4];
-
-    //UFO State Variable
-    UFO_State state;
 
     private Random random = new Random();
 
@@ -65,51 +58,14 @@ public class UFO extends MovableObject {
         ufoEntry[2] = (int)xRBound + (int)bodyWidth;
         //Bottom
         ufoEntry[3] = (int)yBBound + (int)bodyHeight;
-        state = UFO_State.WAITING;
+
+        state = new StateContext();
     }
 
-
-
-     void update(long fps){
-        Log.d("UFO::update: ", "entering fcn");
-        switch(state){
-            case WAITING:
-                //Do waiting stuff here
-                break;
-            case READY:
-                //Do Ready stuff here
-                Log.d("UFO::update: ", "entering ufoReady");
-                ufoReady();
-                break;
-            case ENTERING:
-                //Do Entering stuff here
-                Log.d("UFO::update: ", "entering ufoEnter");
-                ufoEnter(fps);
-                break;
-            case INSIDE:
-                // Do inside stuff here
-                Log.d("UFO::update: ", "entering ufoInside");
-                ufoInside(fps);
-                break;
-            case LEAVING:
-                Log.d("UFO::leaving: ", "entering ufoLeaving");
-                ufoLeaving(fps);
-                break;
-            case DEAD:
-                // Do dead stuff here
-                break;
-            default:
-                //Do default stuff here
-                break;
-        }
-
-        Log.d("In update(): ", "END");
+    void update(long fps){
+        state.stateAction(this, fps);
     }
 
-
-    /*
-     * Returns the path of the UFO that will be drawn.
-     */
     public Path draw(){
         shape.rewind();
         shape.addOval(body, Path.Direction.CW);
@@ -117,25 +73,7 @@ public class UFO extends MovableObject {
         return shape;
     }
 
-
-
-    private void ufoReady(){
-
-        int side = random.nextInt(4);
-
-        if(side == 0){enterFrom = UFO_Origin.LEFT;}
-        else if(side == 1){enterFrom = UFO_Origin.TOP;}
-        else if(side == 2){enterFrom = UFO_Origin.RIGHT;}
-        else{enterFrom = UFO_Origin.BOTTOM;}
-
-
-        ufoSetPosition(side);
-
-        state = UFO_State.ENTERING;
-    }
-
-
-    private void ufoSetPosition(int side){
+    void ufoSetPosition(int side){
         int xPosition, yPosition;
 
         if( (side % 2) == 0 ){
@@ -152,92 +90,43 @@ public class UFO extends MovableObject {
 
     }
 
-
-
-
-
-    private void ufoEnter(long fps){
-
-        if(enterFrom == UFO_Origin.LEFT){
-            ufoUpdateX(fps);
-            if(body.left > 0){
-                state = UFO_State.INSIDE;
-            }
-        }
-        else if(enterFrom == UFO_Origin.TOP){
-            ufoUpdateY(fps);
-            if(body.top > 0){
-                state = UFO_State.INSIDE;
-            }
-        }
-        else if(enterFrom == UFO_Origin.RIGHT){
-            mXVelocity = -1 * Math.abs(mXVelocity);
-            ufoUpdateX(fps);
-            if(body.right  < xRBound){
-                state = UFO_State.INSIDE;
-            }
-        }
-        //Bottom
-        else{
-            mYVelocity = -1 * Math.abs(mYVelocity);
-            ufoUpdateY(fps);
-            if(body.bottom < yBBound){
-                state = UFO_State.INSIDE;
-            }
-        }
-
-    }
-
-    private void ufoLeaving(long fps){
-        ufoUpdateX(fps);
-        ufoUpdateY(fps);
-        isOut();
-    }
-
     void isOut(){
         //Top
         if(body.bottom < yTBound){
 
-            state = UFO_State.WAITING;
+            state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Right
         else if(body.left > xRBound){
-            state = UFO_State.WAITING;
+            state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Bottom
         else if((body.top - radius) > yBBound ){
-            state = UFO_State.WAITING;
+            state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Left
         else if(body.right < xLBound){
-            state = UFO_State.WAITING;
+            state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
-        else{}
     }
 
-    private void ufoInside(long fps){
-        ufoUpdateX(fps);
-        ufoUpdateY(fps);
-        checkBounds();
-    }
-
-    private void ufoUpdateX(long fps){
+    void ufoUpdateX(long fps){
         body.left = body.left + (mXVelocity / fps);
         body.right = body.left + bodyWidth;
         circleX = circleX + (mXVelocity / fps);
     }
 
-    private void ufoUpdateY(long fps){
+    void ufoUpdateY(long fps){
         body.top = body.top + (mYVelocity / fps);
         body.bottom = body.top + bodyHeight;
         circleY = circleY + (mYVelocity / fps);
     }
 
-    private void checkBounds(){
+    void checkBounds(){
         if(body.right > xRBound){
             body.right = xRBound;
             body.left = body.right - bodyWidth;
@@ -271,10 +160,5 @@ public class UFO extends MovableObject {
     private void reverseYVelocity(){
         mYVelocity = -mYVelocity;
     }
-
-
-
-
-
 
 }

@@ -52,7 +52,7 @@ public class Env extends SurfaceView implements Runnable {
     private AsteroidManager asteroidManager;
 
     private UFOManager ufoManager;
-    private int maxUFO = 5;
+    private int maxUFO = 10;
     private UFO[] ufoArr;
     private long timeOut = 15000;
 
@@ -130,10 +130,10 @@ public class Env extends SurfaceView implements Runnable {
             paint.setStyle(Paint.Style.FILL);
 
             //Draw UFO's
-            paint.setColor(Color.argb(255, 0, 255, 90));
+            paint.setColor(Color.argb(255, 0, 255, 0));
             ufoArr = ufoManager.getUFOS();
             for(int i = 0; i < maxUFO; i++){
-                if(ufoArr[i].state == UFO_State.INSIDE || (ufoArr[i].state ==UFO_State.LEAVING) ){
+                if(!ufoArr[i].state.isAvailable()){
                     canvas.drawPath(ufoArr[i].draw(), paint);
                 }
             }
@@ -262,7 +262,6 @@ public class Env extends SurfaceView implements Runnable {
     */
     public void update() {
         ufoManager.update(fps);
-        //ufo.update(resolution.x, resolution.y, fps);
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
     }
 

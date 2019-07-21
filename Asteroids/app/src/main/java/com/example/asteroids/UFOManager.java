@@ -5,10 +5,6 @@ import android.graphics.Point;
 import android.util.Log;
 
 
-
-/*
- * TODO: ADD "timer" that keeps track of how long UFO has been alive
- */
 public class UFOManager {
 
     //Will hold all of the UFO's to be managed
@@ -28,14 +24,10 @@ public class UFOManager {
             //Log.d("UFOManager: ", "calling UFO()");
             ufoArray[i] = new UFO(res, blockSize);
         }
-
         alive = 0;
 
     }
 
-
-    //Spawn UFO onto screen
-    //return 0 on success, else failed
     public int spawnUFO(){
         Log.d("spawnUFO: ", "Entering fcn");
         int ret;
@@ -55,8 +47,6 @@ public class UFOManager {
         return 0;
     }
 
-
-
     int update(long fps){
 
         //Update Timers
@@ -67,29 +57,33 @@ public class UFOManager {
 
             if(timers.doneTimers[i]){
                 Log.d("update: " , "timer " + i + " : set to Leaving");
-                ufoArray[i].state = UFO_State.LEAVING;
+                ufoArray[i].state.setState(new LeavingState());
                 timers.resetTimer(i);
             }
         }
 
         //update all of the UFO's
         if(alive <= 0){return -1;}
+
         for(int i = 0; i < maxUFO; i++){
-            if(ufoArray[i].state != UFO_State.WAITING) {
+            if(!ufoArray[i].state.isAvailable()) {
+
                 ufoArray[i].update(fps);
-                if(ufoArray[i].state == UFO_State.WAITING){alive--;};
+
+                if(ufoArray[i].state.isAvailable()) {
+                    alive--;
+                }
             }
         }
         return 0;
     }
 
-
     private int findAvailableUFO(){
         Log.d("findAvailableUFO: ", "entering");
         for(int i = 0; i < maxUFO; i++){
-            if(ufoArray[i].state == UFO_State.WAITING){
+            if(ufoArray[i].state.isAvailable()){
                 Log.d("findAvailableUFO: ", "found at " + i);
-                ufoArray[i].state = UFO_State.READY;
+                ufoArray[i].state.setState(new ReadyState());
                 return i;
             }
         }
@@ -107,4 +101,3 @@ public class UFOManager {
 
 }
 
-//    entering ufoInside
