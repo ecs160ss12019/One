@@ -75,28 +75,39 @@ public class Spaceship extends MovableObject {
         if (joyStick.x == 0 && joyStick.y == 0)
             return;
 
-        steeringInput = (float) Math.toDegrees( Math.atan(joyStick.x / joyStick.y));
-        Log.d("steering", "steeringInput: " + steeringInput);
+        //Unit circle
+        else if (joyStick.x > 0) {
+            steeringInput = (float) Math.toDegrees(Math.asin(joyStick.y / 100));
+            steeringInput -= 90;
+        } else if (joyStick.x < 0) {
+            steeringInput =  (float) Math.toDegrees(-1 * Math.asin(joyStick.y/100));
+            steeringInput -= 270;
+        }
+        steeringInput *= -1;
+        Log.d("rotation", "rotation: " +rotation);
+        Log.d("rotation", "steering input: " + steeringInput);
 
-        if (joyStick.y < 0) {
-            if(joyStick.x < 0)
-                steeringInput += 180;
-            else
-                steeringInput += 180;
+        //Accounting from movement from 360-0 && 0-360
+        rotation = rotation % 360;
+        if (rotation < 0) {
+            rotation = 360 + rotation;
         }
 
-        /*
-        if (joyStick.x < 0 && joyStick.y < 0)
-            steeringInput -= 180;
-        else if (joyStick.x > 0 && joyStick.y < 0)
-            steeringInput += 180;
-        */
 
-
-        if (rotation < steeringInput)
+        if (rotation > 270 && steeringInput < 90) {
             rotation += 5;
-        else
+        } else if (rotation < 90 && steeringInput > 270) {
             rotation -= 5;
+        } else {
+            if (rotation < steeringInput)
+                rotation += 5;
+            else
+                rotation -= 5;
+
+        }
+
+
+
 
 
     }
