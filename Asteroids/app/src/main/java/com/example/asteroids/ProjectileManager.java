@@ -15,13 +15,16 @@ public class ProjectileManager {
 
     }
 
-    public void fire(PointF speed, PointF direction, long fps){
-        projectileVector.add(new Projectile(blockSize, speed, direction, fps));
+    public void fire(PointF speed, PointF direction, PointF Position, long fps){
+        projectileVector.add(new Projectile(blockSize, speed, direction, Position, fps));
     }
 
     public void updateProjectiles(long fps){
         for(Projectile p: projectileVector){
-            p.update(fps);
+            if(p.startTime - System.nanoTime() / 1000000 < 10)
+                p.update(fps);
+            else
+                projectileVector.remove(p);
         }
 
     }
