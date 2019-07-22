@@ -91,14 +91,15 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize our game objects
+
+        projectileManager = new ProjectileManager(blockSize);
+
         hud = new HUD(blockSize);
         spaceship = new Spaceship(blockSize,projectileManager);
 
         ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut, projectileManager);
 
         asteroidManager = new AsteroidManager(blockSize);
-
-        projectileManager = new ProjectileManager(blockSize);
 
 
     }
@@ -147,6 +148,11 @@ public class Env extends SurfaceView implements Runnable {
             paint.setStrokeWidth(1);
             for(Asteroid ast : asteroidManager.asteroidTracker){
                 canvas.drawPath(ast.draw(), paint);
+            }
+
+            paint.setColor(Color.argb(255,255,0,0));
+            for(Projectile p : projectileManager.projectileVector){
+                canvas.drawPath(p.draw(), paint);
             }
 
 

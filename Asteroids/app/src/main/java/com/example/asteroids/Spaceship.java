@@ -5,6 +5,8 @@ package com.example.asteroids;
 import android.graphics.PointF;
 import android.util.Log;
 
+import java.util.Random;
+
 
 public class Spaceship extends MovableObject {
     ///////////////////////////
@@ -13,7 +15,7 @@ public class Spaceship extends MovableObject {
 
     protected PointF thrust;
     private float steeringInput;
-    private ProjectileManager projectileManager;
+    public ProjectileManager projectileManager;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -122,6 +124,10 @@ public class Spaceship extends MovableObject {
     }
 
     public void update(long fps, PointF joyStickPos) {
+        if(new Random().nextInt(3) == 1){
+            projectileManager.fire(new PointF(2,2), currVelocity, shapeCoords[1], fps);
+        }
+
         rotateShip(joyStickPos);
         updatePhysics(fps, joyStickPos);
         checkBounds();
