@@ -26,6 +26,5 @@ public class ProjectileManager {
             else
                 projectileVector.remove(p);
         }
-
     }
 }

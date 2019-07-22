@@ -13,11 +13,12 @@ public class UFOManager {
     private int maxUFO;
     private int alive;
     private Timers timers;
+    private ProjectileManager projectileManager;
 
-
-    UFOManager(int maxUFO, Point res, PointF blockSize, long timeOut){
+    UFOManager(int maxUFO, Point res, PointF blockSize, long timeOut, ProjectileManager projectileManager){
         this.maxUFO = maxUFO;
         ufoArray = new UFO[this.maxUFO];
+        this.projectileManager = projectileManager;
         timers = new Timers(maxUFO, timeOut);
 
         for(int i = 0; i < this.maxUFO; i++){

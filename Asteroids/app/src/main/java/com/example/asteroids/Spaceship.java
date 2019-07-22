@@ -13,14 +13,16 @@ public class Spaceship extends MovableObject {
 
     protected PointF thrust;
     private float steeringInput;
+    private ProjectileManager projectileManager;
 
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Spaceship(PointF blockSize) {
+    public Spaceship(PointF blockSize, ProjectileManager projectileManager) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
+        this.projectileManager = projectileManager;
         mass = 10;
         shapeCoords = new PointF[5];
         thrust = new PointF(0,0);
@@ -120,8 +122,6 @@ public class Spaceship extends MovableObject {
     }
 
     public void update(long fps, PointF joyStickPos) {
-
-
         rotateShip(joyStickPos);
         updatePhysics(fps, joyStickPos);
         checkBounds();

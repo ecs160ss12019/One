@@ -50,7 +50,7 @@ public class Env extends SurfaceView implements Runnable {
     private HUD hud;
     private Spaceship spaceship;
     private AsteroidManager asteroidManager;
-    private ProjectileManager projectileManager;
+    public ProjectileManager projectileManager;
 
     private UFOManager ufoManager;
     private int maxUFO = 10;
@@ -92,9 +92,9 @@ public class Env extends SurfaceView implements Runnable {
 
         //Initialize our game objects
         hud = new HUD(blockSize);
-        spaceship = new Spaceship(blockSize);
+        spaceship = new Spaceship(blockSize,projectileManager);
 
-        ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut);
+        ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut, projectileManager);
 
         asteroidManager = new AsteroidManager(blockSize);
 
