@@ -1,11 +1,11 @@
 package com.example.asteroids;
 
-// AUTHOR NAME HERE
+// Brian Coe
 
 import android.graphics.Path;
 import android.graphics.PointF;
 
-public class Projectile extends MovableObject implements Drawable {
+public class Projectile extends MovableObject{
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
@@ -14,9 +14,12 @@ public class Projectile extends MovableObject implements Drawable {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Projectile(PointF blockSize) {
+    public Projectile(PointF blockSize, PointF speed, PointF direction, long fps) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
+
+        updatePhysics(fps, direction);
+
 
 
     }
@@ -27,5 +30,9 @@ public class Projectile extends MovableObject implements Drawable {
 
     public Path draw() {
         return shape;
+    }
+
+    public void update(long fps){
+
     }
 }

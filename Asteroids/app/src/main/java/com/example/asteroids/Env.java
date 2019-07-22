@@ -50,6 +50,7 @@ public class Env extends SurfaceView implements Runnable {
     private HUD hud;
     private Spaceship spaceship;
     private AsteroidManager asteroidManager;
+    private ProjectileManager projectileManager;
 
     private UFOManager ufoManager;
     private int maxUFO = 10;
@@ -96,6 +97,8 @@ public class Env extends SurfaceView implements Runnable {
         ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut);
 
         asteroidManager = new AsteroidManager(blockSize);
+
+        projectileManager = new ProjectileManager(blockSize);
 
 
     }
@@ -263,6 +266,7 @@ public class Env extends SurfaceView implements Runnable {
         asteroidManager.updateAsteroids();
         ufoManager.update(fps);
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
+        projectileManager.updateProjectiles(fps);
     }
 
 }
