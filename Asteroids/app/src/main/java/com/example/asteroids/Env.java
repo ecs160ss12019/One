@@ -142,7 +142,6 @@ public class Env extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(255,200,255,255));
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setStrokeWidth(1);
-            asteroidManager.updateAsteroids();
             for(Asteroid ast : asteroidManager.asteroidTracker){
                 canvas.drawPath(ast.draw(), paint);
             }
@@ -261,6 +260,7 @@ public class Env extends SurfaceView implements Runnable {
     Should update the position of all movable objects here
     */
     public void update() {
+        asteroidManager.updateAsteroids();
         ufoManager.update(fps);
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
     }

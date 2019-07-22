@@ -37,7 +37,6 @@ public class AsteroidManager {
             ast.curTime = 0;
         }
         updateAsteroids();
-        // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
     }
 
     ///////////////////////////
@@ -50,6 +49,18 @@ public class AsteroidManager {
                      ast.initAsteroid(resX, resY);
                     ast.setNewPos();
         }
+    }
+
+    public void destroyAsteroid(){
+
+    }
+
+    public void updateScore(){
+
+    }
+
+    public void increaseDifficulty(){
+
     }
 
 }

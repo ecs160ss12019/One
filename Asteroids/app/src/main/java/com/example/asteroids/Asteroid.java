@@ -22,8 +22,6 @@ public class Asteroid extends MovableObject {
     public Asteroid(PointF blockSize){
         super(blockSize);
 
-
-
     }
 
     public void setAsteroid(int asteroidType){
@@ -34,7 +32,7 @@ public class Asteroid extends MovableObject {
             shapeCoords[i] = new PointF();
         }
     }
-    public void checkReDraw(){
+    private void checkReDraw(){
         for (int i = 0; i < image.length; i++) {
             if(shapeCoords[i].x*blockSize.x < -resX/4 || shapeCoords[i].y*blockSize.y < -resY/4
                     || shapeCoords[i].x*blockSize.x > resX + resX/4 || shapeCoords[i].y*blockSize.y > resY + resY/4)
@@ -72,20 +70,16 @@ public class Asteroid extends MovableObject {
         Point tempOffSet = new Point();
         switch(new Random().nextInt(4)) {
             case 0:
-                tempOffSet.x = new Random().nextInt(resX);
-                tempOffSet.y = 0;
+                tempOffSet.set(new Random().nextInt(resX), 0);
                 break;
             case 1:
-                tempOffSet.x = new Random().nextInt(resX);
-                tempOffSet.y = resY;
+                tempOffSet.set(new Random().nextInt(resX), resY);
                 break;
             case 2:
-                tempOffSet.x = 0;
-                tempOffSet.y = new Random().nextInt(resY);
+                tempOffSet.set(0, new Random().nextInt(resY));
                 break;
             case 3:
-                tempOffSet.x = resX;
-                tempOffSet.y = new Random().nextInt(resY);
+                tempOffSet.set(resX, new Random().nextInt(resY));
                 break;
         }
         return tempOffSet;
