@@ -14,4 +14,8 @@ public class StateContext {
         return state.isAvailable();
     }
 
+    public boolean isDead(){return state.isDead();}
+
+    public boolean isDrawable(){return state.isDrawable();}
+
 }

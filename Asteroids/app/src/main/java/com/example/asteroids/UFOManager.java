@@ -1,5 +1,6 @@
 package com.example.asteroids;
 
+import android.content.res.Resources;
 import android.graphics.PointF;
 import android.graphics.Point;
 import android.util.Log;
@@ -13,9 +14,14 @@ public class UFOManager {
     private int maxUFO;
     private int alive;
     private Timers timers;
+
+    private long gapTime = 2000;
+    private long lastTime = 0;
     private ProjectileManager projectileManager;
 
-    UFOManager(int maxUFO, Point res, PointF blockSize, long timeOut, ProjectileManager projectileManager){
+    UFOManager(int maxUFO, Point res, PointF blockSize, long timeOut, Resources resources,
+               ProjectileManager projectileManager){
+
         this.maxUFO = maxUFO;
         ufoArray = new UFO[this.maxUFO];
         this.projectileManager = projectileManager;
@@ -23,18 +29,28 @@ public class UFOManager {
 
         for(int i = 0; i < this.maxUFO; i++){
             //Log.d("UFOManager: ", "calling UFO()");
-            ufoArray[i] = new UFO(res, blockSize);
+            ufoArray[i] = new UFO(res, blockSize, resources);
         }
         alive = 0;
 
     }
 
-    public int spawnUFO(){
+    public int spawnUFO(int simultaneous){
         Log.d("spawnUFO: ", "Entering fcn");
         int ret;
         if(alive >= maxUFO){
             return -1;
         }
+
+        if(alive >= simultaneous){
+            return -1;
+        }
+
+        long time = System.currentTimeMillis();
+        if(time < lastTime + gapTime){
+            return -1;
+        }
+        lastTime = time;
         alive++;
 
         ret = findAvailableUFO();
@@ -44,7 +60,7 @@ public class UFOManager {
             return -1;
         }
 
-        Log.d("spawnUFO: ", "Leaving");
+        Log.d("UFOLife: ", "alive: " + alive);
         return 0;
     }
 
@@ -57,8 +73,11 @@ public class UFOManager {
         for(int i = 0; i < maxUFO; i++){
 
             if(timers.doneTimers[i]){
+
                 Log.d("update: " , "timer " + i + " : set to Leaving");
-                ufoArray[i].state.setState(new LeavingState());
+                //Change state of ufo to LEAVING
+                Log.d("UFOLife: ", "ufo at " + i + " timed out state to DEAD");
+                ufoArray[i].state.setState(new DeadState());
                 timers.resetTimer(i);
             }
         }
@@ -68,11 +87,11 @@ public class UFOManager {
 
         for(int i = 0; i < maxUFO; i++){
             if(!ufoArray[i].state.isAvailable()) {
-
                 ufoArray[i].update(fps);
-
-                if(ufoArray[i].state.isAvailable()) {
+                if (ufoArray[i].state.isAvailable()) {
                     alive--;
+                    Log.d("UFOLife: ", "decrementing alive: " + alive);
+
                 }
             }
         }
@@ -81,14 +100,15 @@ public class UFOManager {
 
     private int findAvailableUFO(){
         Log.d("findAvailableUFO: ", "entering");
-        for(int i = 0; i < maxUFO; i++){
+        int i;
+        for(i = 0; i < maxUFO; i++){
             if(ufoArray[i].state.isAvailable()){
-                Log.d("findAvailableUFO: ", "found at " + i);
                 ufoArray[i].state.setState(new ReadyState());
+                Log.d("UFOLife: ", "found UFO at " + i + " changing state to READY");
                 return i;
             }
         }
-        Log.e("findAvailableUFO: ", "Did not find available UFO");
+        Log.d("UFOLife: ", "didn't find available UFO");
         return -1;
     }
 

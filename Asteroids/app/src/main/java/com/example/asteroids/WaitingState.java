@@ -12,4 +12,14 @@ public class WaitingState implements State{
     public boolean isAvailable() {
         return true;
     }
+
+    @Override
+    public boolean isDead() {
+        return false;
+    }
+
+    @Override
+    public boolean isDrawable() {
+        return false;
+    }
 }
