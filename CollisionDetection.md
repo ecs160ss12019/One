@@ -18,7 +18,9 @@ The picture above shows the simplification process for pruning the sets.
 
 
 # Optimality
-To test the effect of optimization, I created an example graph containing 7 different nodes. The original method would make 42 total comparisions between objects, the new version makes 30 comparisons. That's roughly a 30% smaller problem. Results will vary with the number of objects existing at once, but still better performance is achieved. Now for planning the algorithm. To start, lets think about what is being checked for collisions against the player's ship. The ship can collide with ateroids, ufos, and ufo projectiles. Notice that the player ship doesn't have to check for collisions with its own projectiles (it cannot hurt itself). To achieve optimality, this thinking is applied to each type of game object. For example, all active ufos will be checked against player projectiles and asteroid - nothing more.
+To preface, there are many optimizations that can be made for 2d collision detection. For example, we could check just the objects that are close to each other, or create partitioned cells that calculate collisions in parallel. However, our game is simple and contains relatively few objects. These optimizations don't have to be made yet.
+
+To test the effect of our optimization, I created an example graph containing 7 different nodes. The original method would make 42 total comparisions between objects, the new version makes 30 comparisons. That's roughly a 30% smaller problem. Results will vary with the number of objects existing at once, but still better performance is achieved. Now for planning the algorithm. To start, lets think about what is being checked for collisions against the player's ship. The ship can collide with ateroids, ufos, and ufo projectiles. Notice that the player ship doesn't have to check for collisions with its own projectiles (it cannot hurt itself). To achieve optimality, this thinking is applied to each type of game object. For example, all active ufos will be checked against player projectiles and asteroid - nothing more.
 
 NOTES-3+4
 ![alt text](https://github.com/ecs160ss12019/One/blob/master/collisionDetectionBlueprint/IMG_9487.png "Notes p.3")
@@ -66,3 +68,4 @@ public globalCollisions(MovableObject[] moS) {
 ![alt text](https://github.com/ecs160ss12019/One/blob/master/collisionDetectionBlueprint/IMG_9489.png "Notes p.5")
 
 The image above shows the hand written psuedocode
+
