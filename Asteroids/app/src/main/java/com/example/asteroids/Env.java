@@ -92,9 +92,9 @@ public class Env extends SurfaceView implements Runnable {
 
         //Initialize our game objects
 
-        projectileManager = new ProjectileManager(blockSize);
 
         hud = new HUD(blockSize);
+        projectileManager = new ProjectileManager(blockSize);
         spaceship = new Spaceship(blockSize,projectileManager);
 
         ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut, projectileManager);
@@ -150,8 +150,9 @@ public class Env extends SurfaceView implements Runnable {
                 canvas.drawPath(ast.draw(), paint);
             }
 
-            paint.setColor(Color.argb(255,255,255,255));
-            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.argb(255,255,100,100));
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            paint.setStrokeWidth(5);
             for(Projectile p : projectileManager.projectileVector){
                 Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
                 canvas.drawPath(p.draw(), paint);
