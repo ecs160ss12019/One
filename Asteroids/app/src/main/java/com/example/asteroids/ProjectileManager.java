@@ -21,13 +21,14 @@ public class ProjectileManager {
     }
 
     public void updateProjectiles(long fps){
+        Vector<Projectile> temp = new Vector<Projectile>(0);
         if(!projectileVector.isEmpty())
         for(Projectile p: projectileVector){
-                p.update(fps);
-//            else
-//                projectileVector.removeElement(p);
-//            projectileVector.trimToSize();
+            p.update(fps);
+            if(System.nanoTime() / 1000000 - p.startTime < 2000){
+                temp.addElement(p);
+            }
         }
-
+        projectileVector = temp;
     }
 }
