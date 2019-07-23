@@ -21,13 +21,16 @@ public class Projectile extends MovableObject{
         super(blockSize);
         shapeCoords = new PointF[3];
         shapeCoords[0] = new PointF(Position.x,Position.y);
-        shapeCoords[1] = new PointF(Position.x + direction.x, Position.y + direction.x);
+        shapeCoords[1] = new PointF(Position.x + 3 * direction.x/Math.abs(direction.x),
+                Position.y + 3*direction.y/Math.abs(direction.y));
         shapeCoords[2] = new PointF(Position.x,Position.y);
         startTime = System.currentTimeMillis();
-        mass = 5;
+        mass = 100;
         directionVector = new PointF();
-        directionVector.x = (direction.x);
-        directionVector.y = (direction.y);
+        directionVector.x = (float)(direction.x / Math.sqrt(direction.x*direction.x
+                + direction.y*direction.y));
+        directionVector.y = (float)(direction.y/ Math.sqrt(direction.x*direction.x
+                + direction.y*direction.y));
         currVelocity.set(directionVector.x,directionVector.y);
         updatePhysics(fps, speed);
 
