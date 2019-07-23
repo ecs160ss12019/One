@@ -19,11 +19,13 @@ public class Projectile extends MovableObject{
     public Projectile(PointF blockSize, PointF speed, PointF direction, PointF Position, long fps) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
-        shapeCoords = new PointF[3];
+        shapeCoords = new PointF[4];
         shapeCoords[0] = new PointF(Position.x,Position.y);
         shapeCoords[1] = new PointF(Position.x + 5, Position.y + 5);
         shapeCoords[2] = new PointF(Position.x + 5, Position.y + 10);
+        shapeCoords[3] = new PointF(Position.x,Position.y);
         startTime = System.nanoTime() / 1000000;
+        mass = 10;
         directionVector = new PointF();
         directionVector.x = (speed.x + direction.x);
         directionVector.y = (speed.y + direction.y);

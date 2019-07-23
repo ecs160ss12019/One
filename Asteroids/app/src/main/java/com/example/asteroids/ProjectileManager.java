@@ -3,6 +3,7 @@ package com.example.asteroids;
 // Brian Coe
 
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.Vector;
 
@@ -20,12 +21,13 @@ public class ProjectileManager {
     }
 
     public void updateProjectiles(long fps){
-        if(projectileVector != null)
+        if(!projectileVector.isEmpty())
         for(Projectile p: projectileVector){
-            if(p.startTime - System.nanoTime() / 1000000 < 1000)
                 p.update(fps);
-            else
-                projectileVector.remove(p);
+//            else
+//                projectileVector.removeElement(p);
+//            projectileVector.trimToSize();
         }
+
     }
 }

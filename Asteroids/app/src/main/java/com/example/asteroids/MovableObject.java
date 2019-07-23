@@ -95,10 +95,10 @@ abstract class MovableObject {
 
     public Path draw() {
         shape.rewind();
-        shape.moveTo(shapeCoords[0].x * blockSize.x, shapeCoords[0].y * blockSize.x);
+        shape.moveTo(shapeCoords[0].x * blockSize.x, shapeCoords[0].y * blockSize.y);
 
         for(int i = 1; i < shapeCoords.length; ++i)
-            shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.x);
+            shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.y);
 
         calcRotation();
         return shape;

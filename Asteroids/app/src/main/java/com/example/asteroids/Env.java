@@ -150,8 +150,10 @@ public class Env extends SurfaceView implements Runnable {
                 canvas.drawPath(ast.draw(), paint);
             }
 
-            paint.setColor(Color.argb(255,255,0,0));
+            paint.setColor(Color.argb(255,255,255,255));
+            paint.setStyle(Paint.Style.FILL);
             for(Projectile p : projectileManager.projectileVector){
+                Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
                 canvas.drawPath(p.draw(), paint);
             }
 
