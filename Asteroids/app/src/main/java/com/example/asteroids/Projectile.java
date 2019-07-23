@@ -38,9 +38,6 @@ public class Projectile extends MovableObject{
     //      METHODS
     ///////////////////////////
 
-    public Path draw() {
-        return shape;
-    }
 
     public void update(long fps){
         updatePhysics(fps,directionVector);
