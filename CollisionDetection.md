@@ -18,15 +18,51 @@ The picture above shows the simplification process for pruning the sets.
 
 
 # Optimality
-To test the effect of optimization, I created an example graph containing 7 different nodes. The original method would make 42 total comparisions between objects, the new version makes 30 comparisons. That's roughly a 30% smaller problem. Results will vary with the number of objects existing at once, but still better performance is achieved. Now for planning the algorithm. To start, lets think about what is being checked for collisions against the player's ship. The ship can collide with ateroids, ufos, and ufo projectiles. Notice that the player ship doesn't have to check for collisions with its own projectiles (it cannot hurt itself). To achieve optimality, this thinking is applied to each type of game object.
+To test the effect of optimization, I created an example graph containing 7 different nodes. The original method would make 42 total comparisions between objects, the new version makes 30 comparisons. That's roughly a 30% smaller problem. Results will vary with the number of objects existing at once, but still better performance is achieved. Now for planning the algorithm. To start, lets think about what is being checked for collisions against the player's ship. The ship can collide with ateroids, ufos, and ufo projectiles. Notice that the player ship doesn't have to check for collisions with its own projectiles (it cannot hurt itself). To achieve optimality, this thinking is applied to each type of game object. For example, all active ufos will be checked against player projectiles and asteroid - nothing more.
 
-NOTES-3
+NOTES-3+4
 ![alt text](https://github.com/ecs160ss12019/One/blob/master/collisionDetectionBlueprint/IMG_9487.png "Notes p.3")
 
-The picture above shows the simplified comparison graph and structure of comparisons to be made in the algorithm.
-
-Picture 4:
 ![alt text](https://github.com/ecs160ss12019/One/blob/master/collisionDetectionBlueprint/IMG_9488.png "Notes p.4")
 
-Picture 5:
+The pictures above shows the simplified comparison graph and structures of comparisons to be made in the algorithm.
+
+# The Algorithm Pseudocode
+public globalCollisions(MovableObject[] moS) {
+
+// get sublists of objects from moS
+     ship = getShip(moS)
+     ufos = getUfos(moS)
+     asts = getAsts(moS)
+     projs = getprojs(moS)
+ 
+ // Check what hit the player's ship
+     for i = 1 to asts.size()
+          if asteroid collides with ship
+               record collision
+     for i = 1 to ufos.size()
+          if ufo collides with ship
+               record collision
+     for i = 1 to projs.size()
+          if projectile is alien made
+               if ufo collides with ship
+                    record collision
+
+// Check what hit the Ufos
+     for i=1 to ufos.size()
+          for i=1 to projs.size()
+               if projectile is player made
+                    record collision
+          for i=1 to asts.size()
+               if asteroid collides with ufo
+                    record collision
+
+// Check what hit the ateroids
+     for i=1 to asts.size()
+          for i=1 to projs.size()
+               if projectile hits asteroid
+                    record collision
+
 ![alt text](https://github.com/ecs160ss12019/One/blob/master/collisionDetectionBlueprint/IMG_9489.png "Notes p.5")
+
+The image above shows the hand written psuedocode
