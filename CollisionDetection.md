@@ -30,38 +30,38 @@ The pictures above shows the simplified comparison graph and structures of compa
 # The Algorithm Pseudocode
 public globalCollisions(MovableObject[] moS) {
 
-// get sublists of objects from moS
-     ship = getShip(moS)
-     ufos = getUfos(moS)
-     asts = getAsts(moS)
-     projs = getprojs(moS)
+1. get sublists of objects from moS
+   - ship = getShip(moS)
+   - ufos = getUfos(moS)
+   - asts = getAsts(moS)
+   - projs = getprojs(moS)
  
- // Check what hit the player's ship
-     for i = 1 to asts.size()
-          if asteroid collides with ship
-               record collision
-     for i = 1 to ufos.size()
-          if ufo collides with ship
-               record collision
-     for i = 1 to projs.size()
-          if projectile is alien made
-               if ufo collides with ship
-                    record collision
+2. Check what hit the player's ship
+   - for i = 1 to asts.size()
+     - if asteroid collides with ship
+       - record collision
+   - for i = 1 to ufos.size()
+     - if ufo collides with ship
+       - record collision
+   - for i = 1 to projs.size()
+     - if projectile is alien made
+       - if ufo collides with ship
+         - record collision
 
-// Check what hit the Ufos
-     for i=1 to ufos.size()
-          for i=1 to projs.size()
-               if projectile is player made
-                    record collision
-          for i=1 to asts.size()
-               if asteroid collides with ufo
-                    record collision
+3. Check what hit the Ufos
+   - for i=1 to ufos.size()
+     - for i=1 to projs.size()
+       - if projectile is player made
+         - record collision
+       - for i=1 to asts.size()
+         - if asteroid collides with ufo
+           - record collision
 
-// Check what hit the ateroids
-     for i=1 to asts.size()
-          for i=1 to projs.size()
-               if projectile hits asteroid
-                    record collision
+4. Check what hit the ateroids
+   - for i=1 to asts.size()
+     - for i=1 to projs.size()
+       - if projectile hits asteroid
+         - record collision
 
 ![alt text](https://github.com/ecs160ss12019/One/blob/master/collisionDetectionBlueprint/IMG_9489.png "Notes p.5")
 
