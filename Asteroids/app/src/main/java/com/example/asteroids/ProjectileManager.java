@@ -25,10 +25,11 @@ public class ProjectileManager {
         if(!projectileVector.isEmpty())
         for(Projectile p: projectileVector){
             p.update(fps);
-            if(System.nanoTime() / 1000000 - p.startTime < 2000){
+            if(System.currentTimeMillis() - p.startTime < 2000){
                 temp.addElement(p);
             }
         }
+        projectileVector = null;
         projectileVector = temp;
     }
 }

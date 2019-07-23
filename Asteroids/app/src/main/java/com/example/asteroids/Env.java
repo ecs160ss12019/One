@@ -275,7 +275,7 @@ public class Env extends SurfaceView implements Runnable {
         asteroidManager.updateAsteroids();
         ufoManager.update(fps);
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
-//        projectileManager.updateProjectiles(fps);
+        projectileManager.updateProjectiles(fps);
     }
 
 }
