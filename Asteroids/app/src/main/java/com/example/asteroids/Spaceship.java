@@ -5,6 +5,8 @@ package com.example.asteroids;
 import android.graphics.PointF;
 import android.util.Log;
 
+import java.util.Random;
+
 
 public class Spaceship extends MovableObject {
     ///////////////////////////
@@ -13,14 +15,16 @@ public class Spaceship extends MovableObject {
 
     protected PointF thrust;
     private float steeringInput;
+    public ProjectileManager projectileManager;
 
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Spaceship(PointF blockSize) {
+    public Spaceship(PointF blockSize, ProjectileManager projectileManager) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
+        this.projectileManager = projectileManager;
         mass = 10;
         shapeCoords = new PointF[5];
         thrust = new PointF(0,0);
@@ -120,7 +124,9 @@ public class Spaceship extends MovableObject {
     }
 
     public void update(long fps, PointF joyStickPos) {
-
+        if(new Random().nextInt(20) == 1){
+            projectileManager.fire(new PointF(2,2), new PointF(currVelocity.x/fps,currVelocity.y/fps), shapeCoords[1], fps);
+        }
 
         rotateShip(joyStickPos);
         updatePhysics(fps, joyStickPos);

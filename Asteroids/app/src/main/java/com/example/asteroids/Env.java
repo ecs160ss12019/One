@@ -50,6 +50,7 @@ public class Env extends SurfaceView implements Runnable {
     private HUD hud;
     private Spaceship spaceship;
     private AsteroidManager asteroidManager;
+    public ProjectileManager projectileManager;
 
     private UFOManager ufoManager;
     private int maxUFO = 10;
@@ -91,10 +92,14 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize our game objects
-        hud = new HUD(blockSize);
-        spaceship = new Spaceship(blockSize);
 
-        ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut, getResources());
+
+        hud = new HUD(blockSize);
+        projectileManager = new ProjectileManager(blockSize);
+        spaceship = new Spaceship(blockSize,projectileManager);
+
+        ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut, getResources(),
+                projectileManager);
         active = 3;
         asteroidManager = new AsteroidManager(blockSize);
 
@@ -149,6 +154,14 @@ public class Env extends SurfaceView implements Runnable {
             paint.setStrokeWidth(1);
             for(Asteroid ast : asteroidManager.asteroidTracker){
                 canvas.drawPath(ast.draw(), paint);
+            }
+
+            paint.setColor(Color.argb(255,255,100,100));
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            paint.setStrokeWidth(5);
+            for(Projectile p : projectileManager.projectileVector){
+                Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
+                canvas.drawPath(p.draw(), paint);
             }
 
 
@@ -269,6 +282,7 @@ public class Env extends SurfaceView implements Runnable {
         ufoManager.update(fps);
         ufoManager.spawnUFO(active);
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
+        projectileManager.updateProjectiles(fps);
     }
 
 }
