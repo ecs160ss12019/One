@@ -1,6 +1,7 @@
 package com.example.asteroids;
 
 // Jose Torres-Vargas
+import android.content.res.Resources;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -20,8 +21,10 @@ public class UFO extends MovableObject {
     private float circleX, circleY, radius;
     private float circleXOffset, circleYOffset;
     float mXVelocity, mYVelocity;
-
+    Resources resources;
     StateContext state;
+
+    Explosion explosion;
     UFO_Origin enterFrom;
 
     //Max Boundary for UFO
@@ -32,8 +35,9 @@ public class UFO extends MovableObject {
 
     private Random random = new Random();
 
-    UFO(Point res, PointF blockSize) {
+    UFO(Point res, PointF blockSize, Resources resources) {
         super(blockSize);
+        this.resources = resources;
 
         body = new RectF();
         bodyWidth = 100;
@@ -60,6 +64,7 @@ public class UFO extends MovableObject {
         ufoEntry[3] = (int)yBBound + (int)bodyHeight;
 
         state = new StateContext();
+        explosion = new Explosion(4,4, resources);
     }
 
     void update(long fps){
@@ -133,19 +138,19 @@ public class UFO extends MovableObject {
             circleX = body.left + circleXOffset;
             reverseXVelocity();
         }
-        if(body.left < xLBound){
+        else if(body.left < xLBound){
             body.left = xLBound;
             body.right = body.left + bodyWidth;
             circleX = body.left + circleXOffset;
             reverseXVelocity();
         }
-        if(body.top < (yTBound + radius) ){
+        else if(body.top < (yTBound + radius) ){
             body.top = yTBound + radius;
             body.bottom = body.top + bodyHeight;
             circleY = body.top + circleYOffset;
             reverseYVelocity();
         }
-        if(body.bottom > yBBound){
+        else if(body.bottom > yBBound){
             body.bottom = yBBound;
             body.top = body.bottom - bodyHeight;
             circleY = body.top + circleYOffset;
@@ -160,5 +165,7 @@ public class UFO extends MovableObject {
     private void reverseYVelocity(){
         mYVelocity = -mYVelocity;
     }
+
+
 
 }

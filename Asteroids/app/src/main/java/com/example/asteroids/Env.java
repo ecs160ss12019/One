@@ -53,8 +53,9 @@ public class Env extends SurfaceView implements Runnable {
 
     private UFOManager ufoManager;
     private int maxUFO = 10;
+    private int active;
     private UFO[] ufoArr;
-    private long timeOut = 15000;
+    private long timeOut = 5000;
 
     //Here is the thread and two control variables
     private Thread gameThread = null;
@@ -93,8 +94,8 @@ public class Env extends SurfaceView implements Runnable {
         hud = new HUD(blockSize);
         spaceship = new Spaceship(blockSize);
 
-        ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut);
-
+        ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut, getResources());
+        active = 3;
         asteroidManager = new AsteroidManager(blockSize);
 
 
@@ -133,7 +134,11 @@ public class Env extends SurfaceView implements Runnable {
             paint.setColor(Color.argb(255, 0, 255, 0));
             ufoArr = ufoManager.getUFOS();
             for(int i = 0; i < maxUFO; i++){
-                if(!ufoArr[i].state.isAvailable()){
+                if(ufoArr[i].state.isDead()){
+                    canvas.drawBitmap(ufoArr[i].explosion.bitMap, ufoArr[i].explosion.frameToDraw,
+                            ufoArr[i].explosion.whereToDraw, paint);
+                }
+                else if(ufoArr[i].state.isDrawable()){
                     canvas.drawPath(ufoArr[i].draw(), paint);
                 }
             }
@@ -176,7 +181,7 @@ public class Env extends SurfaceView implements Runnable {
         //Touch coordinates are scaled to be values between 0-100
         float scaledX = e.getX() / blockSize.x;
         float scaledY = e.getY() / blockSize.x;
-        ufoManager.spawnUFO();
+
 
         if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
             hud.joyStick.updateStick(scaledX, scaledY);
@@ -262,6 +267,7 @@ public class Env extends SurfaceView implements Runnable {
     public void update() {
         asteroidManager.updateAsteroids();
         ufoManager.update(fps);
+        ufoManager.spawnUFO(active);
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
     }
 

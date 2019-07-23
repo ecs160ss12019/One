@@ -15,4 +15,14 @@ public class LeavingState implements State {
     public boolean isAvailable() {
         return false;
     }
+
+    @Override
+    public boolean isDead() {
+        return false;
+    }
+
+    @Override
+    public boolean isDrawable() {
+        return true;
+    }
 }
