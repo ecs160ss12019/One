@@ -125,7 +125,7 @@ public class Spaceship extends MovableObject {
 
     public void update(long fps, PointF joyStickPos) {
         if(new Random().nextInt(20) == 1){
-            projectileManager.fire(new PointF(2,2), new PointF(currVelocity.x/fps,currVelocity.y/fps), shapeCoords[1], fps);
+            projectileManager.fire(currVelocity, new PointF(currVelocity.x/fps,currVelocity.y/fps), shapeCoords[1], fps);
         }
 
         rotateShip(joyStickPos);
