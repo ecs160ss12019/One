@@ -1,37 +1,58 @@
 package com.example.asteroids;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
+import android.widget.ImageView;
 
 // AUTHOR NAME HERE
 
 public class MainActivity extends Activity {
 
-    private Env env;
+    private Point resolution;
 
+    private Env env;
+    Display display;
 
     /*Basically followed the book's example of pong*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point resolution = new Point();
+        /*Initialize the env when entering the menu, though game doesn't start
+        * until it is infocus
+        * */
 
+        resolution = new Point();
+        display = getWindowManager().getDefaultDisplay();
         display.getSize(resolution);
 
-        env = new Env(this, resolution);
-        setContentView(env);
 
+        //Sets the content view to the activity_main.xml
+        setContentView(R.layout.activity_main);
+
+
+    }
+
+    public void resumeGame(View view) {
+        if(env != null)
+            env.resume();
+    }
+
+    public void newGame(View view) {
+        env = new Env(this, resolution);
+        env.resume();
+        setContentView(env);
     }
 
     @Override
     protected void onResume() {
 
         super.onResume();
-        env.resume();
+
     }
 
     @Override
@@ -40,5 +61,7 @@ public class MainActivity extends Activity {
         super.onPause();
         env.pause();
     }
+
+
 
 }
