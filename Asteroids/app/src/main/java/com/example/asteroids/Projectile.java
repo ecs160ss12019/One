@@ -23,6 +23,7 @@ public class Projectile extends MovableObject{
         directionVector = new PointF();
         directionVector.x = ((float)Math.cos(rotate)*(pos2.x - pos1.x))-((float)Math.sin(rotate)*(pos2.y - pos1.y));
         directionVector.y = ((float)Math.cos(rotate)*(pos2.y - pos1.y))+((float)Math.sin(rotate)*(pos2.x - pos1.x));
+
         shapeCoords = new PointF[3];
         shapeCoords[0] = new PointF(pos2.x, pos2.y);
         shapeCoords[1] = new PointF(pos2.x - directionVector.x, pos2.y - directionVector.y);
