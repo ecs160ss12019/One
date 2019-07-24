@@ -271,7 +271,7 @@ public class Env extends SurfaceView implements Runnable {
         paused = false;
         //Touch coordinates are scaled to be values between 0-100
         float scaledX = e.getX() / blockSize.x;
-        float scaledY = e.getY() / blockSize.y;
+        float scaledY = e.getY() / blockSize.x;
 
 
         //If input was from bottom right, it's the joystick
