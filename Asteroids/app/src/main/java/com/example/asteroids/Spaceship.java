@@ -130,12 +130,7 @@ public class Spaceship extends MovableObject {
         updatePhysics(fps, joyStickPos);
         checkBounds();
         if(new Random().nextInt(20) == 1){
-            projectileManager.fire(currVelocity,
-                    new PointF(currVelocity.x/fps,currVelocity.y/fps),
-                    shapeCoords[1],
-                    shapeCoords[3],
-                    rotation,
-                    fps);
+            projectileManager.fire(currVelocity,shapeCoords[1], shapeCoords[3], rotation);
         }
     }
 
