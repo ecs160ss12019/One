@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -31,7 +32,7 @@ public class Env extends SurfaceView implements Runnable {
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
     private Paint paint;
-
+    private MediaPlayer music;
     //FPS
     private long fps;
     private final int MILLIS_IN_SECOND = 1000;
@@ -102,7 +103,8 @@ public class Env extends SurfaceView implements Runnable {
                 projectileManager, sfxManager);
         active = 3;
         asteroidManager = new AsteroidManager(blockSize);
-
+        music = MediaPlayer.create(context, R.raw.chibininja);
+        music.start();
 
     }
 

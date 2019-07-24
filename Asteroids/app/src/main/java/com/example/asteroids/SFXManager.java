@@ -41,6 +41,6 @@ public class SFXManager {
     }
 
     public void playExplosion(){
-        soundPool.play(explosionID, 1, 1, 0, 0, 1);
+        soundPool.play(explosionID, .2f, .2f, 0, 0, 1);
     }
 }
