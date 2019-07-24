@@ -32,7 +32,11 @@ public class Env extends SurfaceView implements Runnable {
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
     private Paint paint;
+
+    //Sound objects
     private MediaPlayer music;
+    private SFXManager sfxManager;
+
     //FPS
     private long fps;
     private final int MILLIS_IN_SECOND = 1000;
@@ -46,19 +50,14 @@ public class Env extends SurfaceView implements Runnable {
     //It is a scaled screen resolution with domain of 0-100
     private PointF blockSize;
 
-
     //Game objects
     private HUD hud;
     private Spaceship spaceship;
     private AsteroidManager asteroidManager;
     public ProjectileManager projectileManager;
-
     private UFOManager ufoManager;
-    private int maxUFO = 10;
-    private int active;
     private UFO[] ufoArr;
-    private long timeOut = 5000;
-    private SFXManager sfxManager;
+
     //Here is the thread and two control variables
     private Thread gameThread = null;
 
@@ -77,8 +76,7 @@ public class Env extends SurfaceView implements Runnable {
 
         //Pass the resolution to our local variables, and set our fontsize
         resolution = new Point();
-        resolution.x = res.x;
-        resolution.y = res.y;
+        resolution = res;
 
         //1 value in blockSize = 1/100th of the screen
         blockSize = new PointF();
@@ -92,19 +90,19 @@ public class Env extends SurfaceView implements Runnable {
         surfaceHolder = getHolder();
         paint = new Paint();
 
-        //Initialize our game objects
-
+        //Initialize sound obj.
+        music = MediaPlayer.create(context, R.raw.chibininja);
+        music.start();
         sfxManager = new SFXManager(context);
+
+        //Initialize our game objects
         hud = new HUD(blockSize);
         projectileManager = new ProjectileManager(blockSize);
         spaceship = new Spaceship(blockSize,projectileManager);
 
-        ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut, getResources(),
+        ufoManager = new UFOManager(resolution, blockSize, getResources(),
                 projectileManager, sfxManager);
-        active = 3;
         asteroidManager = new AsteroidManager(blockSize);
-        music = MediaPlayer.create(context, R.raw.chibininja);
-        music.start();
 
     }
 
@@ -140,7 +138,7 @@ public class Env extends SurfaceView implements Runnable {
             //Draw UFO's
             paint.setColor(Color.argb(255, 0, 255, 0));
             ufoArr = ufoManager.getUFOS();
-            for(int i = 0; i < maxUFO; i++){
+            for(int i = 0; i < ufoManager.maxUFO; i++){
                 if(ufoArr[i].state.isDead()){
                     canvas.drawBitmap(ufoArr[i].explosion.bitMap, ufoArr[i].explosion.frameToDraw,
                             ufoArr[i].explosion.whereToDraw, paint);
@@ -289,7 +287,7 @@ public class Env extends SurfaceView implements Runnable {
     public void update() {
         asteroidManager.updateAsteroids();
         ufoManager.update(fps);
-        ufoManager.spawnUFO(active);
+        ufoManager.spawnUFO();
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
         projectileManager.updateProjectiles(fps);
     }
