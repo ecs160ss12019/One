@@ -25,18 +25,18 @@ public class Projectile extends MovableObject{
 //        directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))-((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
 //        directionVector.y = ((float)Math.cos(rotateRads)*(pos2.y - pos1.y))+((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
 
-        if(rotate > 0  && rotate < 90){
+        if(rotate > 0  && rotate <= 90){
             directionVector.x = ((float)Math.cos(rotateRads)*(pos1.x - pos2.x))-((float)Math.sin(rotateRads)*(pos1.y - pos2.y));
             directionVector.y = ((float)Math.cos(rotateRads)*(pos1.y - pos2.y))+((float)Math.sin(rotateRads)*(pos1.x - pos2.x));
-        }else if(rotate > 90 && rotate < 180){
+        }else if(rotate > 90 && rotate <= 180){
             rotateRads += 3.14;
             directionVector.y = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))-((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
             directionVector.x = ((float)Math.cos(rotateRads)*(pos2.y - pos1.y))+((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
-        }else if(rotate > 180 && rotate < 270){
+        }else if(rotate > 180 && rotate <= 270){
             rotateRads += 3.14;
             directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))-((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
             directionVector.y = -((float)Math.cos(rotateRads)*(pos2.y - pos1.y))+((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
-        }else if(rotate > 270 && rotate < 360){
+        }else if(rotate > 270 && rotate <= 360){
             rotateRads += 3.14;
             directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))-((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
             directionVector.y = -((float)Math.cos(rotateRads)*(pos2.y - pos1.y))+((float)Math.sin(rotateRads)*(pos2.x - pos1.x));

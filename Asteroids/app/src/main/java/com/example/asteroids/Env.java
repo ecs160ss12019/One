@@ -207,11 +207,11 @@ public class Env extends SurfaceView implements Runnable {
         paused = false;
         //Touch coordinates are scaled to be values between 0-100
         float scaledX = e.getX() / blockSize.x;
-        float scaledY = e.getY() / blockSize.x;
+        float scaledY = e.getY() / blockSize.y;
 
 
         //If input was from bottom right, it's the joystick
-        if (scaledX < 50 && scaledY < 50) {
+        if (scaledX < 50) {
 
             if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
                 hud.joyStick.updateStick(scaledX, scaledY);
