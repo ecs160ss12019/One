@@ -55,19 +55,19 @@ public class Spaceship extends MovableObject {
 
     public void checkBounds() {
         for(PointF i: shapeCoords) {
-            if (i.x > 100) {
+            if (i.x > 105) {
                 for (PointF j : shapeCoords)
                     j.x -= 100;
             }
-            if (i.x < 0) {
+            if (i.x < -5) {
                 for (PointF j : shapeCoords)
                     j.x += 100;
             }
-            if (i.y > 100) {
+            if (i.y > 105) {
                 for (PointF j : shapeCoords)
                     j.y -= 100;
             }
-            if (i.y < 0) {
+            if (i.y < -5) {
                 for (PointF j : shapeCoords)
                     j.y += 100;
             }
@@ -124,14 +124,19 @@ public class Spaceship extends MovableObject {
     }
 
     public void update(long fps, PointF joyStickPos) {
-        if(new Random().nextInt(20) == 1){
-            projectileManager.fire(currVelocity, new PointF(currVelocity.x/fps,currVelocity.y/fps), shapeCoords[1], fps);
-        }
+
 
         rotateShip(joyStickPos);
         updatePhysics(fps, joyStickPos);
         checkBounds();
-
+        if(new Random().nextInt(20) == 1){
+            projectileManager.fire(currVelocity,
+                    new PointF(currVelocity.x/fps,currVelocity.y/fps),
+                    shapeCoords[1],
+                    shapeCoords[3],
+                    rotation,
+                    fps);
+        }
     }
 
 }

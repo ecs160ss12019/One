@@ -16,8 +16,8 @@ public class ProjectileManager {
 
     }
 
-    public void fire(PointF speed, PointF direction, PointF Position, long fps){
-        projectileVector.addElement(new Projectile(this.blockSize, speed, direction, Position, fps));
+    public void fire(PointF speed, PointF direction, PointF Position1, PointF Position2, float rotation, long fps){
+        projectileVector.addElement(new Projectile(this.blockSize, speed, direction, Position1, Position2, rotation, fps));
     }
 
     public void updateProjectiles(long fps){
