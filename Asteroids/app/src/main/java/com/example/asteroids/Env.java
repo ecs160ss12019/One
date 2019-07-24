@@ -17,6 +17,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.Arrays;
+import java.util.Vector;
+
 /*TODO: since we can't implement both runnable and drawable, maybe we should rethink the drawable interface*/
 
 public class Env extends SurfaceView implements Runnable {
@@ -27,6 +30,10 @@ public class Env extends SurfaceView implements Runnable {
 
     private final boolean DEBUGGING = true;
 
+    // collision detection
+    private boolean isHit = false;
+    private long timeHit = 0;
+    private CollisionDetection cd;
 
     //Objects that are used for rendering to screen
     private SurfaceHolder surfaceHolder;
@@ -95,6 +102,8 @@ public class Env extends SurfaceView implements Runnable {
         music = MediaPlayer.create(context, R.raw.chibininja);
         sfxManager = new SFXManager(context, SFXMute);
 
+
+
         //Initialize our game objects
         hud = new HUD(blockSize);
         projectileManager = new ProjectileManager(blockSize);
@@ -114,6 +123,8 @@ public class Env extends SurfaceView implements Runnable {
 
         asteroidManager = new AsteroidManager(blockSize);
 
+        cd = new CollisionDetection(blockSize);
+
     }
 
 
@@ -121,7 +132,56 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+    public void calcGlobalCollisions() {
+        //cd.checkBinaryCollision(spaceship.draw())
+        //see first if spaceship collides with any asteroids
 
+        Vector<Projectile> projs = projectileManager.projectileVector;
+        Vector<UFO> ufos = new Vector(Arrays.asList(ufoManager.getUFOS()));;
+        Vector<Asteroid> asts = asteroidManager.asteroidTracker;
+
+        // CHECK WHAT HIT PLAYER'S SHIP
+        long halfSecond = MILLIS_IN_SECOND - 500;
+        if (System.currentTimeMillis() - timeHit > halfSecond) {
+            isHit = false;
+        }
+
+
+        // asteroid hit the ship?
+        for(int i = 1; i < asts.size(); i++) {
+            if (cd.checkBinaryCollision(spaceship.draw(), asts.get(i).draw())) {
+                // collision detected, kill player
+                isHit = true;
+                timeHit = System.currentTimeMillis();
+                break;
+            }
+        }
+
+        //ufo hit the ship?
+        for(int i = 0; i < ufos.size(); i++) {
+            if (cd.checkBinaryCollision(spaceship.draw(), ufos.get(i).draw())) {
+                // collision detected, kill player
+                isHit = true;
+                timeHit = System.currentTimeMillis();
+                break;
+            }
+        }
+
+
+        // alien projectile hit the ship?
+        for(int i = 0; i < projs.size(); i++) {
+            if (cd.checkBinaryCollision(spaceship.draw(), projs.get(i).draw())) {
+                // collision detected, kill player
+                isHit = true;
+                timeHit = System.currentTimeMillis();
+                break;
+            }
+        }
+
+        // CHECK WHAT HIT THE UFOS
+
+        // CHECK WHAT HIT THE ASTEROIDS
+    }
 
     /*
     *Is responsible for drawing everything to screen
@@ -141,7 +201,11 @@ public class Env extends SurfaceView implements Runnable {
             //Draw Space ship
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(3);
-            paint.setColor(Color.argb(255,255,255,255));
+            if(isHit) {
+                paint.setColor(Color.argb(255,255,0,0));
+            } else {
+                paint.setColor(Color.argb(255,255,255,255));
+            }
             canvas.drawPath(spaceship.draw(), paint);
             paint.setStyle(Paint.Style.FILL);
 
@@ -207,11 +271,11 @@ public class Env extends SurfaceView implements Runnable {
         paused = false;
         //Touch coordinates are scaled to be values between 0-100
         float scaledX = e.getX() / blockSize.x;
-        float scaledY = e.getY() / blockSize.x;
+        float scaledY = e.getY() / blockSize.y;
 
 
         //If input was from bottom right, it's the joystick
-        if (scaledX < 50 && scaledY < 50) {
+        if (scaledX < 50) {
 
             if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
                 hud.joyStick.updateStick(scaledX, scaledY);
@@ -303,6 +367,7 @@ public class Env extends SurfaceView implements Runnable {
         ufoManager.spawnUFO();
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
         projectileManager.updateProjectiles(fps);
+        calcGlobalCollisions();
     }
 
 }
