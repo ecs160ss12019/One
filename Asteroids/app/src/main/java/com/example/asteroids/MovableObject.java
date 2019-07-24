@@ -5,6 +5,7 @@ package com.example.asteroids;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -21,26 +22,17 @@ abstract class MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-
-    //scaled screen resolution with domain of 0-100
     protected PointF blockSize;
 
     private PointF force;
     protected int mass;
-
-    //Value in degrees. 0 is pointing upwards
-    protected float rotation;
-
-    private RectF bounds; //Maybe can use for collision detection
-
-
-
-
     protected PointF currVelocity;
+    protected float rotation; //Value in degrees. 0 is pointing upwards
+
+
 
     //shapeCoords will store the default shape starting from (0,0)
     PointF[] shapeCoords;
-
     // Shape of the object needs to be a path which can form any polygon
     protected Path shape;
 
@@ -51,15 +43,11 @@ abstract class MovableObject {
 
     public MovableObject(PointF blockSize) {
         this.blockSize = blockSize;
-
         force = new PointF(0,0);
         currVelocity = new PointF(0,0);
-
         //Initialize our shape
         shape = new Path();
-        bounds = new RectF(); //Initialize bounds
         shape.reset(); //TODO: Might not be needed
-
     }
 
     ///////////////////////////
@@ -77,6 +65,7 @@ abstract class MovableObject {
     private void calcRotation() {
         //Rotate shape based on the rotation value
         Matrix transform = new Matrix();
+        RectF bounds = new RectF(); //Initialize bounds
         shape.computeBounds(bounds, true);
         transform.postRotate(rotation, bounds.centerX(), bounds.centerY());
         shape.transform(transform);
@@ -106,7 +95,6 @@ abstract class MovableObject {
 
 
     private void setForce(PointF forceVector) {
-
         //force.y needs to be * -1 since we are drawing from top of screen
         force.x = FORCE_SCALAR * forceVector.x;
         force.y = -1 * FORCE_SCALAR * forceVector.y;
@@ -125,7 +113,6 @@ abstract class MovableObject {
             if(force.y < 0 && currVelocity.y < 0)
                 force.y = 0;
         }
-
     }
 
     public void updatePhysics(long fps, PointF force) {

@@ -166,6 +166,10 @@ public class Env extends SurfaceView implements Runnable {
                 canvas.drawPath(p.draw(), paint);
             }
 
+            //Print pause button
+            paint.setColor(Color.argb(255,255,0,0));
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
+            canvas.drawRect(hud.pauseButton.button, paint);
 
             //JoyStick should be drawn last to be below all other objects
             paint.setColor(Color.argb(255,255,255,255));
@@ -198,11 +202,14 @@ public class Env extends SurfaceView implements Runnable {
         float scaledY = e.getY() / blockSize.x;
 
 
-        if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
-            hud.joyStick.updateStick(scaledX, scaledY);
-        } else
-            hud.joyStick.resetJoyStick();
+        //If input was from bottom right, it's the joystick
+        if (scaledX < 50 && scaledY < 50) {
 
+            if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
+                hud.joyStick.updateStick(scaledX, scaledY);
+            } else
+                hud.joyStick.resetJoyStick();
+        }
         return true;
 
     }

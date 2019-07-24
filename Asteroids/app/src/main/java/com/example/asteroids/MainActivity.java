@@ -37,11 +37,14 @@ public class MainActivity extends Activity {
 
     }
 
+    //Called by the button in activity_main.xml
     public void resumeGame(View view) {
         if(env != null)
             env.resume();
+            setContentView(env);
     }
 
+    //Called by the button in activity_main.xml
     public void newGame(View view) {
         env = new Env(this, resolution);
         env.resume();
