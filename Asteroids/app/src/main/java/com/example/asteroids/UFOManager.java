@@ -10,32 +10,40 @@ public class UFOManager {
 
     //Will hold all of the UFO's to be managed
     private UFO[] ufoArray;
-    int maxUFO = 10;
+    int maxUFO;  //            HERE!!!!!
     private int alive;
-    int wantActive = 3;
+    int wantActive;
 
     //Time stuff
     private Timers timers;
-    private long gapTime = 2000;
+    private long gapTime;
     private long lastTime = 0;
-    private long timeOut = 5000;
+    private long timeOut;
 
     private ProjectileManager projectileManager;
     private SFXManager sfx;
 
 
     UFOManager(Point res, PointF blockSize, Resources resources,
-               ProjectileManager projectileManager, SFXManager sfx){
+               ProjectileManager projectileManager, SFXManager sfx,
+               int maxUFO, int wantActive, long timeOut, long ufoGapTime){
 
+        this.maxUFO = maxUFO;
         ufoArray = new UFO[this.maxUFO];
+        this.wantActive = wantActive;
+
+        this.timeOut = timeOut;
+        gapTime = ufoGapTime;
+
         this.projectileManager = projectileManager;
+        this.sfx = sfx;
+
         timers = new Timers(maxUFO, timeOut);
+
         for(int i = 0; i < this.maxUFO; i++){
-            //Log.d("UFOManager: ", "calling UFO()");
             ufoArray[i] = new UFO(res, blockSize, resources);
         }
         alive = 0;
-        this.sfx = sfx;
     }
 
     public int spawnUFO(){

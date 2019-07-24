@@ -100,8 +100,18 @@ public class Env extends SurfaceView implements Runnable {
         projectileManager = new ProjectileManager(blockSize);
         spaceship = new Spaceship(blockSize,projectileManager);
 
-        ufoManager = new UFOManager(resolution, blockSize, getResources(),
-                projectileManager, sfxManager);
+        ufoManager = new UFOManBuilder(resolution)
+                        .setMaxUFO(10)
+                        .wantActive(5)
+                        .setTimeOut(3000)
+                        .setSpawnGap(1000)
+                        .setResources(getResources())
+                        .setProjectileManager(projectileManager)
+                        .setSFXManager(sfxManager)
+                        .setBlockSize(blockSize)
+                        .build();
+
+
         asteroidManager = new AsteroidManager(blockSize);
 
     }
