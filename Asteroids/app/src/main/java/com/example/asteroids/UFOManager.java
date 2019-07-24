@@ -18,9 +18,9 @@ public class UFOManager {
     private long gapTime = 2000;
     private long lastTime = 0;
     private ProjectileManager projectileManager;
-
+    private SFXManager sfx;
     UFOManager(int maxUFO, Point res, PointF blockSize, long timeOut, Resources resources,
-               ProjectileManager projectileManager){
+               ProjectileManager projectileManager, SFXManager sfx){
 
         this.maxUFO = maxUFO;
         ufoArray = new UFO[this.maxUFO];
@@ -32,7 +32,7 @@ public class UFOManager {
             ufoArray[i] = new UFO(res, blockSize, resources);
         }
         alive = 0;
-
+        this.sfx = sfx;
     }
 
     public int spawnUFO(int simultaneous){
@@ -77,6 +77,7 @@ public class UFOManager {
                 Log.d("update: " , "timer " + i + " : set to Leaving");
                 //Change state of ufo to LEAVING
                 Log.d("UFOLife: ", "ufo at " + i + " timed out state to DEAD");
+                sfx.playExplosion();
                 ufoArray[i].state.setState(new DeadState());
                 timers.resetTimer(i);
             }

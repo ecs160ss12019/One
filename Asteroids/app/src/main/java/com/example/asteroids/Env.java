@@ -57,7 +57,7 @@ public class Env extends SurfaceView implements Runnable {
     private int active;
     private UFO[] ufoArr;
     private long timeOut = 5000;
-
+    private SFXManager sfxManager;
     //Here is the thread and two control variables
     private Thread gameThread = null;
 
@@ -93,13 +93,13 @@ public class Env extends SurfaceView implements Runnable {
 
         //Initialize our game objects
 
-
+        sfxManager = new SFXManager(context);
         hud = new HUD(blockSize);
         projectileManager = new ProjectileManager(blockSize);
         spaceship = new Spaceship(blockSize,projectileManager);
 
         ufoManager = new UFOManager(maxUFO, resolution, blockSize, timeOut, getResources(),
-                projectileManager);
+                projectileManager, sfxManager);
         active = 3;
         asteroidManager = new AsteroidManager(blockSize);
 
