@@ -128,9 +128,9 @@ public class Spaceship extends MovableObject {
         updatePhysics(fps, joyStickPos);
         checkBounds();
         if(firing){
-            projectileManager.fire(currVelocity,shapeCoords[1], shapeCoords[3], rotation);
+            projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation);
         }
-        //firing = false;
+        firing = false;
     }
 
 }

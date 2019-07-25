@@ -3,7 +3,6 @@ package com.example.asteroids;
 // Brian Coe
 
 import android.graphics.PointF;
-import android.util.Log;
 
 import java.util.Vector;
 
@@ -16,8 +15,8 @@ public class ProjectileManager {
 
     }
 
-    public void fire(PointF speed, PointF pos1, PointF pos2, float rotation){
-        projectileVector.addElement(new Projectile(this.blockSize, speed, pos1, pos2, rotation));
+    public void fire(PointF pos1, PointF pos2, float rotation){
+        projectileVector.addElement(new Projectile(this.blockSize, pos1, pos2, rotation));
     }
 
     public void updateProjectiles(long fps){

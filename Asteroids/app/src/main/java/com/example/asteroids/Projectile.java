@@ -2,7 +2,6 @@ package com.example.asteroids;
 
 // Brian Coe
 
-import android.graphics.Path;
 import android.graphics.PointF;
 
 public class Projectile extends MovableObject{
@@ -16,7 +15,7 @@ public class Projectile extends MovableObject{
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public Projectile(PointF blockSize, PointF speed, PointF pos1,
+    public Projectile(PointF blockSize, PointF pos1,
                       PointF pos2, float rotate) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
