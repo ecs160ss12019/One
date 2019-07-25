@@ -111,8 +111,8 @@ public class Env extends SurfaceView implements Runnable {
 
         ufoManager = new UFOManBuilder(resolution)
                         .setMaxUFO(10)
-                        .wantActive(5)
-                        .setTimeOut(3000)
+                        .wantActive(3)
+                        .setTimeOut(10000)
                         .setSpawnGap(1000)
                         .setResources(getResources())
                         .setProjectileManager(projectileManager)

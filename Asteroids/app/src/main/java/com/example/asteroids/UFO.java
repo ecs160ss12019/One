@@ -21,6 +21,9 @@ public class UFO extends MovableObject {
     private float circleX, circleY, radius;
     private float circleXOffset, circleYOffset;
     float mXVelocity, mYVelocity;
+    PointF bulletOrigin1;
+    PointF bulletOrigin2;
+    Point res;
     Resources resources;
     StateContext state;
 
@@ -33,9 +36,10 @@ public class UFO extends MovableObject {
     //Screen has four sides
     private int[] ufoEntry = new int[4];
 
-    private Random random = new Random();
+    Random random = new Random();
+    ProjectileManager projectileManager;
 
-    UFO(Point res, PointF blockSize, Resources resources) {
+    UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager) {
         super(blockSize);
         this.resources = resources;
 
@@ -65,6 +69,11 @@ public class UFO extends MovableObject {
 
         state = new StateContext();
         explosion = new Explosion(4,4, resources);
+        this.projectileManager = projectileManager;
+        bulletOrigin1 = new PointF();
+        bulletOrigin2 = new PointF();
+        this.res = new Point();
+        this.res.set(res.x,res.y);
     }
 
     void update(long fps){

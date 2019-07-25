@@ -41,7 +41,7 @@ public class UFOManager {
         timers = new Timers(maxUFO, timeOut);
 
         for(int i = 0; i < this.maxUFO; i++){
-            ufoArray[i] = new UFO(res, blockSize, resources);
+            ufoArray[i] = new UFO(res, blockSize, resources, projectileManager);
         }
         alive = 0;
     }
