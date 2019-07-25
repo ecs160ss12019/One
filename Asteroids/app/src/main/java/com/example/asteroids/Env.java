@@ -290,7 +290,10 @@ public class Env extends SurfaceView implements Runnable {
                 if (e.getX() / blockSize.x > 50)
                     spaceship.firing = true;
                 break;
-
+            //If the primary finger is removed, reset joystick
+            case MotionEvent.ACTION_UP:
+                hud.joyStick.resetJoyStick();
+                break;
             //If the touch is moving, call joyStick.update
             case MotionEvent.ACTION_MOVE:
                 if(e.getX() / blockSize.x < 50)
@@ -305,10 +308,6 @@ public class Env extends SurfaceView implements Runnable {
 
             case MotionEvent.ACTION_POINTER_UP:
                 spaceship.firing = false;
-            //If the primary finger is removed, reset joystick
-            case MotionEvent.ACTION_UP:
-                hud.joyStick.resetJoyStick();
-                break;
             }
 
         return true;
