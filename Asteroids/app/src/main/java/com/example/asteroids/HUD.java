@@ -12,7 +12,7 @@ public class HUD {
     ///////////////////////////
     protected JoyStick joyStick;
     protected Button pauseButton;
-
+    protected Button shootButton;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -29,6 +29,9 @@ public class HUD {
         PointF pausePosition = new PointF(85,5);
         pauseButton = new Button(pausePosition, blockSize);
 
+
+        PointF shootPosition = new PointF(85, 95);
+        shootButton = new Button(shootPosition, blockSize);
 
     }
 

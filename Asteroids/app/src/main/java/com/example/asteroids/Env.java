@@ -252,19 +252,38 @@ public class Env extends SurfaceView implements Runnable {
     public boolean onTouchEvent(MotionEvent e) {
 
         paused = false;
-        //Touch coordinates are scaled to be values between 0-100
-        float scaledX = e.getX() / blockSize.x;
-        float scaledY = e.getY() / blockSize.x;
 
 
-        //If input was from bottom right, it's the joystick
-        if (scaledX < 50) {
+        int pointerIndex = e.getActionIndex();
 
-            if (e.getAction() == e.ACTION_MOVE || e.getAction() == e.ACTION_DOWN) {
-                hud.joyStick.updateStick(scaledX, scaledY);
-            } else
+        int maskedAction = e.getActionMasked();
+
+        switch(maskedAction) {
+
+            //If 1 touch is registered, shoot
+            case MotionEvent.ACTION_DOWN:
+                if (e.getX() / blockSize.x > 50)
+                    spaceship.firing = true;
+                break;
+
+            //If the touch is moving, call joyStick.update
+            case MotionEvent.ACTION_MOVE:
+                if(e.getX() / blockSize.x < 50)
+                    hud.joyStick.updateStick(e.getX() / blockSize.x, e.getY() / blockSize.x);
+                break;
+
+            //If there is a secondary touch, shoot
+            case MotionEvent.ACTION_POINTER_DOWN:
+                if (e.getX(pointerIndex) / blockSize.x > 50)
+                    spaceship.firing = true;
+                break;
+
+            //If the primary finger is removed, reset joystick
+            case MotionEvent.ACTION_UP:
                 hud.joyStick.resetJoyStick();
-        }
+                break;
+            }
+
         return true;
 
     }
