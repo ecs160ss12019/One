@@ -2,6 +2,9 @@ package com.example.asteroids;
 
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.util.Log;
+import android.view.MotionEvent;
+
 
 public class Button {
 
@@ -18,10 +21,6 @@ public class Button {
                 (buttonPos.x + size.x) * blockSize.x, (buttonPos.y + size.y) * blockSize.y);
     }
 
-    public void onClick(float x, float y) {
 
-
-
-    }
 
 }

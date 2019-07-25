@@ -16,6 +16,8 @@ public class Spaceship extends MovableObject {
     protected PointF thrust;
     private float steeringInput;
     public ProjectileManager projectileManager;
+    public boolean firing;
+
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -110,10 +112,6 @@ public class Spaceship extends MovableObject {
 
         }
 
-
-
-
-
     }
 
 
@@ -129,9 +127,10 @@ public class Spaceship extends MovableObject {
         rotateShip(joyStickPos);
         updatePhysics(fps, joyStickPos);
         checkBounds();
-        if(new Random().nextInt(20) == 1){
+        if(firing){
             projectileManager.fire(currVelocity,shapeCoords[1], shapeCoords[3], rotation);
         }
+        firing = false;
     }
 
 }
