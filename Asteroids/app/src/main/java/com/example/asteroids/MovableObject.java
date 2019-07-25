@@ -59,7 +59,8 @@ abstract class MovableObject {
     private void calcPos(long fps) {
         for(PointF i : shapeCoords) {
             i.x += ((currVelocity.x * 1/fps) + 1/2 * (force.x / mass) * Math.pow(1/ fps, 2));
-            i.y += ((currVelocity.y * 1/fps) + 1/2 * (force.y / mass) * Math.pow(1/ fps, 2));
+            i.y += ((currVelocity.y * 1/fps) + 1/2 * (force.y / mass) * Math.pow(1/ fps, 2)) * blockSize.x / blockSize.y;
+            Log.d("Pos", "CurPos: (" + i.x + ", " + i.y + ")");
         }
     }
 
@@ -81,6 +82,7 @@ abstract class MovableObject {
     private void calcVelocity(long fps) {
         currVelocity.x += (force.x) / (mass * fps);
         currVelocity.y += (force.y) / (mass * fps);
+
     }
 
     public Path draw() {
@@ -113,7 +115,10 @@ abstract class MovableObject {
 
             if(force.y < 0 && currVelocity.y < 0)
                 force.y = 0;
+
         }
+
+        //Log.d("Force", "Force: (" + force.x + ", " + force.y + ")");
     }
 
     public void updatePhysics(long fps, PointF force) {

@@ -81,6 +81,7 @@ public class Spaceship extends MovableObject {
         if (joyStick.x == 0 && joyStick.y == 0)
             return;
 
+
         //Unit circle
         else if (joyStick.x > 0) {
             steeringInput = (float) Math.toDegrees(Math.asin(joyStick.y / 100));
@@ -123,6 +124,7 @@ public class Spaceship extends MovableObject {
 
     public void update(long fps, PointF joyStickPos) {
 
+        //Log.d("Joy", "Force: (" + joyStickPos.x + ", " + joyStickPos.y + ")");
 
         rotateShip(joyStickPos);
         updatePhysics(fps, joyStickPos);
@@ -130,6 +132,8 @@ public class Spaceship extends MovableObject {
         if(firing){
             projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation);
         }
+
+
         firing = false;
     }
 
