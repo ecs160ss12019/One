@@ -5,7 +5,6 @@ package com.example.asteroids;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -58,8 +57,8 @@ abstract class MovableObject {
     //X=x0 + v0t + 1/2at^2
     private void calcPos(long fps) {
         for(PointF i : shapeCoords) {
-            i.x += ((currVelocity.x * 1/fps) + 1/2 * (force.x / mass) * Math.pow(1/ fps, 2));
-            i.y += ((currVelocity.y * 1/fps) + 1/2 * (force.y / mass) * Math.pow(1/ fps, 2)) * blockSize.x / blockSize.y;
+            i.x += ((currVelocity.x * 1/fps) + 1/2 * (force.x / mass) * Math.pow(1/ Math.max(1, (int) fps), 2));
+            i.y += ((currVelocity.y * 1/fps) + 1/2 * (force.y / mass) * Math.pow(1/ Math.max(1, (int) fps), 2)) * blockSize.x / blockSize.y;
             Log.d("Pos", "CurPos: (" + i.x + ", " + i.y + ")");
         }
     }
