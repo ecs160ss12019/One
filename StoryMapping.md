@@ -63,7 +63,7 @@ were implemented using a `switch case`. In the new design we used a State
 Pattern implementation. The benifit of this was the abilitly to encapsulate the
 varying behavior of the UFO objects.
 
-![UFO State](https://github.com/ecs160ss12019/One/blob/master/UFOStateDiagram.pdf)
+[UFO State](https://github.com/ecs160ss12019/One/blob/master/UFOStateDiagram.pdf)
 
 A Builder was also implemented for UFOManager because its constructor was
 starting to get long. Apart from improving readability this implemenation
