@@ -13,10 +13,11 @@ public class SFXManager {
     SoundPool soundPool;
     int explosionID = -1;
     private AudioAttributes audioAttributes;
+    boolean mute;
 
     //Assuming we're playing on Android Lollipop or Later
     //Set up code is from book example
-    public SFXManager(Context context){
+    public SFXManager(Context context, boolean mute){
         audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -38,9 +39,12 @@ public class SFXManager {
             e.getCause();
             Log.e("error", e.getMessage());
         }
+
+        this.mute = mute;
     }
 
     public void playExplosion(){
-        soundPool.play(explosionID, .2f, .2f, 0, 0, 1);
+        if(!mute)
+            soundPool.play(explosionID, .2f, .2f, 0, 0, 1);
     }
 }

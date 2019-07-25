@@ -43,6 +43,7 @@ public class Env extends SurfaceView implements Runnable {
     //Sound objects
     private MediaPlayer music;
     private SFXManager sfxManager;
+    boolean SFXMute = true;
 
     //FPS
     private long fps;
@@ -98,9 +99,10 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize sound obj.
-        //music = MediaPlayer.create(context, R.raw.chibininja);
-       // music.start();
-        sfxManager = new SFXManager(context);
+        music = MediaPlayer.create(context, R.raw.chibininja);
+        sfxManager = new SFXManager(context, SFXMute);
+
+
 
         //Initialize our game objects
         hud = new HUD(blockSize);
@@ -275,6 +277,8 @@ public class Env extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
             Log.e("Error", "Joining Thread");
         }
+
+        music.pause();
     }
 
 
@@ -303,6 +307,7 @@ public class Env extends SurfaceView implements Runnable {
         gameThread = new Thread(this);
 
         gameThread.start();
+        music.start();
     }
 
 
