@@ -117,7 +117,7 @@ abstract class MovableObject {
 
         }
 
-        //Log.d("Force", "Force: (" + force.x + ", " + force.y + ")");
+        Log.d("Force", "Force: (" + force.x + ", " + force.y + ")");
     }
 
     public void updatePhysics(long fps, PointF force) {
