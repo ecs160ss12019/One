@@ -130,7 +130,7 @@ public class Spaceship extends MovableObject {
         if(firing){
             projectileManager.fire(currVelocity,shapeCoords[1], shapeCoords[3], rotation);
         }
-        firing = false;
+        //firing = false;
     }
 
 }

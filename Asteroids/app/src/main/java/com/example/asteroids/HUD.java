@@ -24,7 +24,7 @@ public class HUD {
         Point joyStickPos = new Point(20,70);
         joyStick = new JoyStick(joyStickPos, 10, 4, blockSize);
 
-
+/*
         //Pause button is in the top right corner
         PointF pausePosition = new PointF(85,5);
         pauseButton = new Button(pausePosition, blockSize);
@@ -32,7 +32,7 @@ public class HUD {
 
         PointF shootPosition = new PointF(85, 95);
         shootButton = new Button(shootPosition, blockSize);
-
+*/
     }
 
     ///////////////////////////

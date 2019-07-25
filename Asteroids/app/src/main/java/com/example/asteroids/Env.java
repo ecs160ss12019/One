@@ -220,12 +220,12 @@ public class Env extends SurfaceView implements Runnable {
                 Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
                 canvas.drawPath(p.draw(), paint);
             }
-
+/*
             //Print pause button
             paint.setColor(Color.argb(255,255,0,0));
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             canvas.drawRect(hud.pauseButton.button, paint);
-
+*/
             //JoyStick should be drawn last to be below all other objects
             paint.setColor(Color.argb(255,255,255,255));
             paint.setStyle(Paint.Style.STROKE);
@@ -278,6 +278,8 @@ public class Env extends SurfaceView implements Runnable {
                     spaceship.firing = true;
                 break;
 
+            case MotionEvent.ACTION_POINTER_UP:
+                spaceship.firing = false;
             //If the primary finger is removed, reset joystick
             case MotionEvent.ACTION_UP:
                 hud.joyStick.resetJoyStick();
