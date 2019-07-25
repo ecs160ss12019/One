@@ -10,7 +10,7 @@ public class UFOManager {
 
     //Will hold all of the UFO's to be managed
     private UFO[] ufoArray;
-    int maxUFO;  //            HERE!!!!!
+    int maxUFO;
     private int alive;
     int wantActive;
 
