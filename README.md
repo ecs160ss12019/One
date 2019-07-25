@@ -24,6 +24,7 @@ counter-fire. The game becomes harder as the number of asteroids increases.
 [Story Mapping & Acceptance Criteria](https://github.com/ecs160ss12019/One/blob/master/StoryMapping.md)
 
 [CRC Cards](https://github.com/ecs160ss12019/One/blob/master/CRC.md)  
-[CRC Cards 2](https://github.com/ecs160ss12019/One/blob/master/CRC2.md)  
+[CRC Cards 2](https://github.com/ecs160ss12019/One/blob/master/CRC2.md)   
+[CRC Cards 3](https://github.com/ecs160ss12019/One/blob/master/CRC3.md)
 
 
