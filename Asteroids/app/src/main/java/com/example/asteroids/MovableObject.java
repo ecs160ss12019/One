@@ -23,7 +23,8 @@ abstract class MovableObject {
     //      VARIABLES
     ///////////////////////////
     protected PointF blockSize;
-
+    public boolean isHit = false;
+    public long timeHit = 0;
     private PointF force;
     protected int mass;
     protected PointF currVelocity;

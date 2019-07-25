@@ -31,8 +31,8 @@ public class Env extends SurfaceView implements Runnable {
     private final boolean DEBUGGING = true;
 
     // collision detection
-    private boolean isHit = false;
-    private long timeHit = 0;
+    
+    
     private CollisionDetection cd;
 
     //Objects that are used for rendering to screen
@@ -41,8 +41,10 @@ public class Env extends SurfaceView implements Runnable {
     private Paint paint;
 
     //Sound objects
-    private MediaPlayer music;
+    private MusicManager musicManager;
+    boolean MusicMute = true;
     private SFXManager sfxManager;
+    boolean SFXMute = true;
 
     //FPS
     private long fps;
@@ -98,9 +100,10 @@ public class Env extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Initialize sound obj.
-        //music = MediaPlayer.create(context, R.raw.chibininja);
-       // music.start();
-        sfxManager = new SFXManager(context);
+        sfxManager = new SFXManager(context, SFXMute);
+        musicManager = new MusicManager(context, MusicMute);
+        musicManager.loadSong(1);
+
 
         //Initialize our game objects
         hud = new HUD(blockSize);
@@ -140,45 +143,27 @@ public class Env extends SurfaceView implements Runnable {
 
         // CHECK WHAT HIT PLAYER'S SHIP
         long halfSecond = MILLIS_IN_SECOND - 500;
-        if (System.currentTimeMillis() - timeHit > halfSecond) {
-            isHit = false;
+        if (System.currentTimeMillis() - spaceship.timeHit > halfSecond) {
+            spaceship.isHit = false;
         }
-
-
-        // asteroid hit the ship?
-        for(int i = 1; i < asts.size(); i++) {
-            if (cd.checkBinaryCollision(spaceship.draw(), asts.get(i).draw())) {
-                // collision detected, kill player
-                isHit = true;
-                timeHit = System.currentTimeMillis();
-                break;
-            }
-        }
-
-        //ufo hit the ship?
-        for(int i = 0; i < ufos.size(); i++) {
-            if (cd.checkBinaryCollision(spaceship.draw(), ufos.get(i).draw())) {
-                // collision detected, kill player
-                isHit = true;
-                timeHit = System.currentTimeMillis();
-                break;
-            }
-        }
-
-
-        // alien projectile hit the ship?
-        for(int i = 0; i < projs.size(); i++) {
-            if (cd.checkBinaryCollision(spaceship.draw(), projs.get(i).draw())) {
-                // collision detected, kill player
-                isHit = true;
-                timeHit = System.currentTimeMillis();
-                break;
-            }
-        }
+        checkHit(asts, spaceship);
+        checkHit(ufos, spaceship);
+        checkHit(projs, spaceship);
 
         // CHECK WHAT HIT THE UFOS
 
         // CHECK WHAT HIT THE ASTEROIDS
+    }
+
+    public void checkHit(Vector object, MovableObject thisObject){
+        for(MovableObject mov : (Vector<MovableObject>)object) {
+            if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
+                // collision detected, kill player
+               thisObject.isHit = true;
+                thisObject.timeHit = System.currentTimeMillis();
+                break;
+            }
+        }
     }
 
     /*
@@ -199,7 +184,7 @@ public class Env extends SurfaceView implements Runnable {
             //Draw Space ship
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(3);
-            if(isHit) {
+            if(spaceship.isHit) {
                 paint.setColor(Color.argb(255,255,0,0));
             } else {
                 paint.setColor(Color.argb(255,255,255,255));
@@ -312,6 +297,8 @@ public class Env extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
             Log.e("Error", "Joining Thread");
         }
+
+        musicManager.pause();
     }
 
 
@@ -340,6 +327,8 @@ public class Env extends SurfaceView implements Runnable {
         gameThread = new Thread(this);
 
         gameThread.start();
+        //music.start();
+        musicManager.play();
     }
 
 
