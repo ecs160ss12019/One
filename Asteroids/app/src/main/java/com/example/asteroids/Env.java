@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -133,37 +132,63 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
-    public void calcGlobalCollisions() {
+    public Vector<MovableObject> calcGlobalCollisions() {
         //cd.checkBinaryCollision(spaceship.draw())
         //see first if spaceship collides with any asteroids
+        Vector<MovableObject> objectsHit = new Vector<MovableObject>();
 
         Vector<Projectile> projs = projectileManager.projectileVector;
         Vector<UFO> ufos = new Vector(Arrays.asList(ufoManager.getUFOS()));;
         Vector<Asteroid> asts = asteroidManager.asteroidTracker;
 
-        // CHECK WHAT HIT PLAYER'S SHIP
+
+        // debug code for changing color on spaceship collision.
         long halfSecond = MILLIS_IN_SECOND - 500;
         if (System.currentTimeMillis() - spaceship.timeHit > halfSecond) {
             spaceship.isHit = false;
         }
-        checkHit(asts, spaceship);
-        checkHit(ufos, spaceship);
-        checkHit(projs, spaceship);
+
+        // CHECK WHAT HIT PLAYER'S SHIP
+        // adds ship to objectsHit if collision
+        if(checkHit(asts, spaceship) || checkHit(ufos, spaceship) || checkHit(projs, spaceship)) {
+            if(!objectsHit.contains(spaceship)) {
+                objectsHit.add(spaceship);
+            }
+        }
 
         // CHECK WHAT HIT THE UFOS
+        // adds currUFO to objectsHit if collision
+        for(UFO currUFO : ufos) {
+            if(checkHit(projs, currUFO) || checkHit(asts, currUFO)) {
+                if(!objectsHit.contains(currUFO)) {
+                    objectsHit.add(currUFO);
+                }
+            }
+        }
 
         // CHECK WHAT HIT THE ASTEROIDS
+        // adds currAst to objectsHit if collision
+        for(Asteroid currAst : asts) {
+            if(checkHit(projs, currAst) || checkHit(asts, currAst)) {
+                if(!objectsHit.contains(currAst)) {
+                    objectsHit.add(currAst);
+                }
+            }
+        }
+
+        return objectsHit;
     }
 
-    public void checkHit(Vector object, MovableObject thisObject){
+    public boolean checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
                thisObject.isHit = true;
-                thisObject.timeHit = System.currentTimeMillis();
-                break;
+               thisObject.timeHit = System.currentTimeMillis();
+               return true;
             }
         }
+        return false;
     }
 
     /*
@@ -265,7 +290,10 @@ public class Env extends SurfaceView implements Runnable {
                 if (e.getX() / blockSize.x > 50)
                     spaceship.firing = true;
                 break;
-
+            //If the primary finger is removed, reset joystick
+            case MotionEvent.ACTION_UP:
+                hud.joyStick.resetJoyStick();
+                break;
             //If the touch is moving, call joyStick.update
             case MotionEvent.ACTION_MOVE:
                 if(e.getX() / blockSize.x < 50)
@@ -280,10 +308,6 @@ public class Env extends SurfaceView implements Runnable {
 
             case MotionEvent.ACTION_POINTER_UP:
                 spaceship.firing = false;
-            //If the primary finger is removed, reset joystick
-            case MotionEvent.ACTION_UP:
-                hud.joyStick.resetJoyStick();
-                break;
             }
 
         return true;
@@ -372,7 +396,7 @@ public class Env extends SurfaceView implements Runnable {
         ufoManager.spawnUFO();
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
         projectileManager.updateProjectiles(fps);
-        calcGlobalCollisions();
+        Vector<MovableObject> hitList = calcGlobalCollisions();
     }
 
 }
