@@ -45,6 +45,9 @@ public class AsteroidManager {
 
     public void updateAsteroids() {
              for(Asteroid ast:asteroidTracker){
+                 if(ast.isHit){
+                     destroyAsteroid();
+                 }
                  if(ast.reDraw)
                      ast.initAsteroid(resX, resY);
                     ast.setNewPos();

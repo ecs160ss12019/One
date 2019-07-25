@@ -39,8 +39,9 @@ public class Asteroid extends MovableObject {
                 reDraw = true;
         }
     }
-    
+
     public void setNewPos(){
+
         checkReDraw();
         curTime = System.nanoTime() / 1000000;
         time = curTime - startTime;
