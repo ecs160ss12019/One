@@ -50,14 +50,21 @@
 | --- | ---|
 | Keeps track of how long an object has been alive| UFOManager
  
-
 ## Projectile.java:
 | Responsibilites | Interacts with |
 | --- | --- |
-| Moves linearly away from point of origin. | UFO
-| Has limited range | Ship
-| - | Asteroid
-| - | HUD
+| Moves linearly away from point of origin. | ProjectileManager
+| Dissapears after 2 seconds, or hit's the edge of screen. | ColisionDetection
+| - | -
+| - | -
+
+## ProjectileManager.java:
+| Responsibilites | Interacts with |
+| --- | --- |
+| Create Projectile Vector to hold projectiles. | UFO
+| Provide fire method for shooters. | Ship
+| Pass instantiation data to projectile | Asteroid
+| - | Projectile
 
 ## Spaceship.java:
 | Responsibilites | Interacts with |
