@@ -75,11 +75,15 @@ class PauseGameState implements GameState {
     @Override
     public void draw(Env env) {
         //Draws the menu
+        env.canvas.drawColor(Color.argb(255,0,0,0));
+
     }
 
     @Override
     public void onTouch(Env env, MotionEvent e) {
         //Interface with the menu
+        env.paused = false;
+
     }
 }
 
@@ -151,22 +155,27 @@ class PlayingGameState implements GameState {
         int pointerIndex = e.getActionIndex();
 
         int maskedAction = e.getActionMasked();
-
+        //Log.d("touch", "Touch-x: " + e.getX()/ env.blockSize.x);
         switch(maskedAction) {
 
             //If 1 touch is registered, shoot
             case MotionEvent.ACTION_DOWN:
+
+                //Lower left touch controls the space ship's shooting
                 if (e.getX() / env.blockSize.x > 50)
-                    //Lower left touch controls the space ship's shooting
                     env.spaceship.firing = true;
-                else if (e.getX() / env.blockSize.x > 90 && e.getY() / env.blockSize.y > 90 )
-                    //upper right touch pauses
-                    env.paused = true;
+
+                //upper right touch pauses
+                if ((e.getX() / env.blockSize.x ) > 80 && (e.getY() / env.blockSize.y < 20) )
+                    env.currState = new PauseGameState();
+
                 break;
+
             //If the primary finger is removed, reset joystick
             case MotionEvent.ACTION_UP:
                 env.hud.joyStick.resetJoyStick();
                 break;
+
             //If the touch is moving, call joyStick.update
             case MotionEvent.ACTION_MOVE:
                 if(e.getX() / env.blockSize.x < 50)
@@ -182,12 +191,12 @@ class PlayingGameState implements GameState {
             case MotionEvent.ACTION_POINTER_UP:
                 env.spaceship.firing = false;
         }
-
     }
 
     @Override
     public void update(Env env) {
-        //Handles the paused Game (sets paused to true)
+
+
 
         env.asteroidManager.updateAsteroids();
         env.ufoManager.update(env.fps);
@@ -195,10 +204,8 @@ class PlayingGameState implements GameState {
         env.spaceship.update(env.fps, env.hud.joyStick.getScaledStickPosition());
         env.projectileManager.updateProjectiles(env.fps);
 
+
+
     }
-
-
-
-
 
 }

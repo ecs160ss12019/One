@@ -25,14 +25,12 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-    private GameState currState;
+    public GameState currState;
 
 
     private final boolean DEBUGGING = true;
 
     // collision detection
-    
-    
     CollisionDetection cd;
 
     //Objects that are used for rendering to screen
@@ -183,13 +181,13 @@ public class Env extends SurfaceView implements Runnable {
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         currState.onTouch(this, e);
-        Log.d("Resume", "In onTouch");
         return true;
     }
     
 
     public void pause() {
         isGameOnFocus = false;
+        currState = new PauseGameState();
         try {
             //Try stopping the thread
             gameThread.join();
@@ -204,6 +202,7 @@ public class Env extends SurfaceView implements Runnable {
     public void resume() {
         Log.d("Resume", "Resuming");
         isGameOnFocus = true;
+        currState = new PlayingGameState();
         //Initialize the instance of the thread
         gameThread = new Thread(this);
 
@@ -216,23 +215,22 @@ public class Env extends SurfaceView implements Runnable {
     //This method basically runs entirely on the new thread we created
     @Override
     public void run() {
-
         long frameStartTime;
         long frameTime;
 
         //setting fps to random value for a very brief second to get states going
         fps = 60;
-        for(;;) {
+
+        //Keep running game if it is in foreground
+        while(isGameOnFocus) {
             frameStartTime = System.currentTimeMillis();
             currState.update(this);
             draw();
             frameTime = System.currentTimeMillis() - frameStartTime;
             if (frameTime > 0)
                 fps = MILLIS_IN_SECOND / frameTime;
-            else
-                fps = 1;
-        }
 
+        }
     }
 
 }
