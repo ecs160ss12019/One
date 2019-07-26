@@ -27,6 +27,7 @@ public class Spaceship extends MovableObject {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
         this.projectileManager = projectileManager;
+        projectileOwner = 1;
         mass = 10;
         shapeCoords = new PointF[5];
         thrust = new PointF(0,0);
@@ -130,7 +131,7 @@ public class Spaceship extends MovableObject {
         updatePhysics(fps, joyStickPos);
         checkBounds();
         if(firing){
-            projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation, true);
+            projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation, projectileOwner);
         }
 
 
