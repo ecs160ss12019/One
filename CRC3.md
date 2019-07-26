@@ -83,15 +83,15 @@
 | - | Moveable Object
 | - | HUD 
 
-##NewGameState
+##NewGameState:
 |Responsibilities | Interacts with
 | Deals with setting up a new game | Env |
 
-##PlayingGameState
+##PlayingGameState:
 |Responsibilities | Interacts with
 | Responsible for updating and drawing the current game | Env |
 
-##PauseGameState
+##PauseGameState:
 |Responsibilities | Interacts with
 | Responsible for updating and drawing the menu | Env |
 
