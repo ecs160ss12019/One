@@ -37,24 +37,5 @@ public class CollisionDetection {
             return false;
         }
     }
-
-
-    public void calcGlobalCollisons(ArrayList<UFO> ufoList, ArrayList<Asteroid> astList,
-                                    ArrayList<Projectile> projList, Spaceship ship) {
-
-        // SHIP COLLISIONS - check ship's interaction with these entities:
-        //      ship - asteroid
-        //      ship - ufo
-        //      ship - projectile
-
-
-
-        // UFO COLLISIONS - check all UFOs interactions with these entities:
-        //      ufo - asteroid
-        //      ufo - projectile
-
-        // ASTEROID COLLISIONS - check all asteroids interactions with entity:
-        //      asteroid - projectile
-    }
-
+    
 }

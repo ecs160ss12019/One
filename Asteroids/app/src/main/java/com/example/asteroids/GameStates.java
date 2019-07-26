@@ -233,6 +233,7 @@ class PlayingGameState implements GameState {
         env.ufoManager.spawnUFO();
         env.spaceship.update(env.fps, env.hud.joyStick.getScaledStickPosition());
         env.projectileManager.updateProjectiles(env.fps);
+        env.calcGlobalCollisions();
     }
 
 }
