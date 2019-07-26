@@ -26,6 +26,7 @@ abstract class MovableObject {
     public long timeHit = 0;
     private PointF force;
     protected int mass;
+    public boolean playerProjectile = false;
     protected PointF currVelocity;
     protected float rotation; //Value in degrees. 0 is pointing upwards
 

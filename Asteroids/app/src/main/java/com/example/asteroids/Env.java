@@ -185,7 +185,7 @@ public class Env extends SurfaceView implements Runnable {
 
     public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
-            if(mov == thisObject)
+            if(mov == thisObject || (thisObject == spaceship && mov.playerProjectile))
                 continue;
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
@@ -255,9 +255,9 @@ public class Env extends SurfaceView implements Runnable {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setStrokeWidth(5);
             for(Projectile p : projectileManager.projectileVector){
-                Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
+                Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);
                 if(p.isHit)
-                    paint.setColor(Color.argb(255,0,0,255));
+                    paint.setColor(Color.argb(255,0,255,255));
                 else
                     paint.setColor(Color.argb(255,255,100,100));
                 canvas.drawPath(p.draw(), paint);

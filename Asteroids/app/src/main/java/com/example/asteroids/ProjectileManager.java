@@ -15,8 +15,11 @@ public class ProjectileManager {
 
     }
 
-    public void fire(PointF pos1, PointF pos2, float rotation){
+    public void fire(PointF pos1, PointF pos2, float rotation, boolean isP){
         projectileVector.addElement(new Projectile(this.blockSize, pos1, pos2, rotation));
+        if(isP){
+            projectileVector.lastElement().playerProjectile = true;
+        }
     }
 
     public void updateProjectiles(long fps){
