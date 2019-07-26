@@ -5,8 +5,6 @@ package com.example.asteroids;
 import android.graphics.PointF;
 import android.util.Log;
 
-import java.util.Random;
-
 
 public class Spaceship extends MovableObject {
     ///////////////////////////

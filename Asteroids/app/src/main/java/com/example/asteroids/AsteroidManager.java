@@ -4,7 +4,7 @@ package com.example.asteroids;
 
 import android.graphics.Point;
 import java.util.Vector;
-import android.graphics.Path;
+
 import android.graphics.PointF;
 
 public class AsteroidManager {

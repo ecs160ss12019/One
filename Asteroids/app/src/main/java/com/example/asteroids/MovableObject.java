@@ -5,11 +5,10 @@ package com.example.asteroids;
 import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 
-abstract class MovableObject {
+public abstract class MovableObject {
     ///////////////////////////
     //      Constants
     ///////////////////////////

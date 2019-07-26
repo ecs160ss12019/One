@@ -24,7 +24,7 @@ public class UFO extends MovableObject {
     Resources resources;
     StateContext state;
 
-    Explosion explosion;
+    public Explosion explosion;
     UFO_Origin enterFrom;
 
     //Max Boundary for UFO
@@ -35,7 +35,7 @@ public class UFO extends MovableObject {
 
     private Random random = new Random();
 
-    UFO(Point res, PointF blockSize, Resources resources) {
+    public UFO(Point res, PointF blockSize, Resources resources) {
         super(blockSize);
         this.resources = resources;
 

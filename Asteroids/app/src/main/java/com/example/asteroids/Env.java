@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -27,54 +26,55 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
+    private GameState currState;
+
 
     private final boolean DEBUGGING = true;
 
     // collision detection
     
     
-    private CollisionDetection cd;
+    CollisionDetection cd;
 
     //Objects that are used for rendering to screen
-    private SurfaceHolder surfaceHolder;
-    private Canvas canvas;
-    private Paint paint;
+    SurfaceHolder surfaceHolder;
+    Canvas canvas;
+    Paint paint;
 
     //Sound objects
-    private MusicManager musicManager;
+    MusicManager musicManager;
     boolean MusicMute = true;
-    private SFXManager sfxManager;
+    SFXManager sfxManager;
     boolean SFXMute = true;
 
     //FPS
-    private long fps;
-    private final int MILLIS_IN_SECOND = 1000;
+    long fps;
+    final int MILLIS_IN_SECOND = 1000;
 
     //Resolution and font sizes
     protected Point resolution;
-    private float fontSize;
-    private float fontMargin;
+    protected float fontSize;
 
     //Using blockSize to make a consistent ui that scales resolutions
     //It is a scaled screen resolution with domain of 0-100
-    private PointF blockSize;
+    protected PointF blockSize;
 
     //Game objects
-    private HUD hud;
-    private Spaceship spaceship;
-    private AsteroidManager asteroidManager;
-    public ProjectileManager projectileManager;
-    private UFOManager ufoManager;
-    private UFO[] ufoArr;
+    HUD hud;
+    Spaceship spaceship;
+    AsteroidManager asteroidManager;
+    ProjectileManager projectileManager;
+    UFOManager ufoManager;
+    UFO[] ufoArr;
 
     //Here is the thread and two control variables
-    private Thread gameThread = null;
+    Thread gameThread = null;
 
     /*isGameOnFocus is true when game is in the foreground,
     * and false when it is in the background
     * */
-    private volatile boolean isGameOnFocus;
-    private boolean paused = true;
+    volatile boolean isGameOnFocus;
+    boolean paused = true;
 
 
     ///////////////////////////
@@ -83,9 +83,15 @@ public class Env extends SurfaceView implements Runnable {
     public Env(Context context, Point res) {
         super(context);
 
+
+
         //Pass the resolution to our local variables, and set our fontsize
         resolution = new Point();
         resolution = res;
+
+        currState = new NewGameState();
+        currState.update(this);
+
 
         //1 value in blockSize = 1/100th of the screen
         blockSize = new PointF();
@@ -93,7 +99,6 @@ public class Env extends SurfaceView implements Runnable {
         blockSize.y = (float) resolution.y / 100;
 
         fontSize = resolution.x / 20;
-        fontMargin = resolution.x / 75;
 
         //Initialize the objects reading for drawing with getHolder, a method of SurfaceView
         surfaceHolder = getHolder();
@@ -133,37 +138,63 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
-    public void calcGlobalCollisions() {
+    public Vector<MovableObject> calcGlobalCollisions() {
         //cd.checkBinaryCollision(spaceship.draw())
         //see first if spaceship collides with any asteroids
+        Vector<MovableObject> objectsHit = new Vector<MovableObject>();
 
         Vector<Projectile> projs = projectileManager.projectileVector;
         Vector<UFO> ufos = new Vector(Arrays.asList(ufoManager.getUFOS()));;
         Vector<Asteroid> asts = asteroidManager.asteroidTracker;
+/*
 
-        // CHECK WHAT HIT PLAYER'S SHIP
+        // debug code for changing color on spaceship collision.
         long halfSecond = MILLIS_IN_SECOND - 500;
         if (System.currentTimeMillis() - spaceship.timeHit > halfSecond) {
             spaceship.isHit = false;
         }
-        checkHit(asts, spaceship);
-        checkHit(ufos, spaceship);
-        checkHit(projs, spaceship);
+
+        // CHECK WHAT HIT PLAYER'S SHIP
+        // adds ship to objectsHit if collision
+        if(checkHit(asts, spaceship) || checkHit(ufos, spaceship) || checkHit(projs, spaceship)) {
+            if(!objectsHit.contains(spaceship)) {
+                objectsHit.add(spaceship);
+            }
+        }
 
         // CHECK WHAT HIT THE UFOS
+        // adds currUFO to objectsHit if collision
+        for(UFO currUFO : ufos) {
+            if(checkHit(projs, currUFO) || checkHit(asts, currUFO)) {
+                if(!objectsHit.contains(currUFO)) {
+                    objectsHit.add(currUFO);
+                }
+            }
+        }
 
         // CHECK WHAT HIT THE ASTEROIDS
+        // adds currAst to objectsHit if collision
+        for(Asteroid currAst : asts) {
+            if(checkHit(projs, currAst) || checkHit(asts, currAst)) {
+                if(!objectsHit.contains(currAst)) {
+                    objectsHit.add(currAst);
+                }
+            }
+        }
+*/
+        return objectsHit;
     }
 
-    public void checkHit(Vector object, MovableObject thisObject){
+    public boolean checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
                thisObject.isHit = true;
-                thisObject.timeHit = System.currentTimeMillis();
-                break;
+               thisObject.timeHit = System.currentTimeMillis();
+               return true;
             }
         }
+        return false;
     }
 
     /*
@@ -265,7 +296,10 @@ public class Env extends SurfaceView implements Runnable {
                 if (e.getX() / blockSize.x > 50)
                     spaceship.firing = true;
                 break;
-
+            //If the primary finger is removed, reset joystick
+            case MotionEvent.ACTION_UP:
+                hud.joyStick.resetJoyStick();
+                break;
             //If the touch is moving, call joyStick.update
             case MotionEvent.ACTION_MOVE:
                 if(e.getX() / blockSize.x < 50)
@@ -280,10 +314,6 @@ public class Env extends SurfaceView implements Runnable {
 
             case MotionEvent.ACTION_POINTER_UP:
                 spaceship.firing = false;
-            //If the primary finger is removed, reset joystick
-            case MotionEvent.ACTION_UP:
-                hud.joyStick.resetJoyStick();
-                break;
             }
 
         return true;
@@ -372,7 +402,8 @@ public class Env extends SurfaceView implements Runnable {
         ufoManager.spawnUFO();
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
         projectileManager.updateProjectiles(fps);
-        calcGlobalCollisions();
+        //calcGlobalCollisions();
+       // Vector<MovableObject> hitList = calcGlobalCollisions();
     }
 
 }
