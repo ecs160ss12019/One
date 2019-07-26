@@ -175,6 +175,4 @@ public class UFO extends MovableObject {
         mYVelocity = -mYVelocity;
     }
 
-
-
 }
