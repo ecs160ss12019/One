@@ -86,17 +86,20 @@
 ## NewGameState:
 |Responsibilities | Interacts with |
 | --- | --- |
-| Deals with setting up a new game | Env 
+| Resets all variables for a new game | Env 
 
 ## PlayingGameState:
 |Responsibilities | Interacts with |
 | --- | --- |
-| Responsible for updating and drawing the current game | Env 
+| Keeps track of all objects on the screen | Env
+| Draws all objects to the screen | - 
+| Keeps track of user's multi touch input for joystick and shoot | -
 
 ## PauseGameState:
 |Responsibilities | Interacts with |
 | --- | --- |
-| Responsible for updating and drawing the menu | Env 
+| Draws the menu | Env
+| Responds to player's touch input | -  
 
 
 ## HUD.java:
