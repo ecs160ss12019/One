@@ -132,13 +132,11 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
-    public Vector<MovableObject> calcGlobalCollisions() {
+    public void calcGlobalCollisions() {
         //cd.checkBinaryCollision(spaceship.draw())
         //see first if spaceship collides with any asteroids
-        Vector<MovableObject> objectsHit = new Vector<MovableObject>();
-
         Vector<Projectile> projs = projectileManager.projectileVector;
-        Vector<UFO> ufos = new Vector(Arrays.asList(ufoManager.getUFOS()));;
+        Vector<UFO> ufos = new Vector(Arrays.asList(ufoManager.getUFOS()));
         Vector<Asteroid> asts = asteroidManager.asteroidTracker;
 
 
@@ -150,45 +148,45 @@ public class Env extends SurfaceView implements Runnable {
 
         // CHECK WHAT HIT PLAYER'S SHIP
         // adds ship to objectsHit if collision
-        if(checkHit(asts, spaceship) || checkHit(ufos, spaceship) || checkHit(projs, spaceship)) {
-            if(!objectsHit.contains(spaceship)) {
-                objectsHit.add(spaceship);
-            }
-        }
+        if(!spaceship.isHit)
+        checkHit(asts, spaceship);
+        if(!spaceship.isHit)
+        checkHit(ufos, spaceship);
+        if(!spaceship.isHit)
+        checkHit(projs, spaceship);
+
 
         // CHECK WHAT HIT THE UFOS
         // adds currUFO to objectsHit if collision
         for(UFO currUFO : ufos) {
-            if(checkHit(projs, currUFO) || checkHit(asts, currUFO)) {
-                if(!objectsHit.contains(currUFO)) {
-                    objectsHit.add(currUFO);
-                }
+            if(!currUFO.isHit)
+                checkHit(projs, currUFO);
+            if(!currUFO.isHit)
+                checkHit(asts, currUFO);
             }
-        }
+
 
         // CHECK WHAT HIT THE ASTEROIDS
         // adds currAst to objectsHit if collision
         for(Asteroid currAst : asts) {
-            if(checkHit(projs, currAst) || checkHit(asts, currAst)) {
-                if(!objectsHit.contains(currAst)) {
-                    objectsHit.add(currAst);
-                }
+            if(!currAst.isHit)
+                checkHit(projs, currAst);
+            if(!currAst.isHit)
+                checkHit(asts, currAst);
             }
         }
 
-        return objectsHit;
-    }
-
-    public boolean checkHit(Vector object, MovableObject thisObject){
+    public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
                thisObject.isHit = true;
+               mov.isHit = true;
                thisObject.timeHit = System.currentTimeMillis();
-               return true;
+               break;
             }
         }
-        return false;
+//        return false;
     }
 
     /*
@@ -396,7 +394,8 @@ public class Env extends SurfaceView implements Runnable {
         ufoManager.spawnUFO();
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
         projectileManager.updateProjectiles(fps);
-        Vector<MovableObject> hitList = calcGlobalCollisions();
+        //Vector<MovableObject> hitList =
+                calcGlobalCollisions();
     }
 
 }
