@@ -49,6 +49,9 @@ class NewGameState implements GameState {
                 .setBlockSize(env.blockSize)
                 .build();
 
+        //After creating a new game, we should move to playGameState
+        env.currState = new PlayingGameState();
+
     }
 
     @Override
@@ -66,10 +69,16 @@ class NewGameState implements GameState {
 }
 
 class PauseGameState implements GameState {
+
+    Menu menu;
+
+    public PauseGameState(Env env) {
+        menu = new Menu(env.blockSize);
+    }
+
     @Override
     public void update(Env env) {
         //Handles the paused Game (sets paused to true)
-        //ctx.isPaused = true;
     }
 
     @Override
@@ -77,12 +86,36 @@ class PauseGameState implements GameState {
         //Draws the menu
         env.canvas.drawColor(Color.argb(255,0,0,0));
 
+        env.paint.setColor(Color.argb(255,255,255,255));
+        env.canvas.drawRect(menu.resume.button, env.paint);
+        env.canvas.drawRect(menu.newGame.button, env.paint);
+
+        //TODO: Make buttons have text
+        //env.paint.setColor(Color.argb(255,0,0,0));
+        //env.canvas.drawText(menu.resume.textBox, menu.resume.absPosition.x, menu.resume.absPosition.y, env.paint);
+        //env.canvas.drawText(menu.resume.textBox, menu.resume.absPosition.x, menu.resume.absPosition.y, env.paint);
+
     }
 
     @Override
     public void onTouch(Env env, MotionEvent e) {
         //Interface with the menu
-        env.paused = false;
+
+        switch(e.getActionMasked()) {
+
+            //If 1 touch is registered, shoot
+            case MotionEvent.ACTION_DOWN:
+
+                //Touches on top of screen restates the game
+                if (e.getY() / env.blockSize.y > 50)
+                    env.currState = new NewGameState();
+
+                //Touches on bottom resumes the current game
+                if (e.getY() / env.blockSize.y < 50)
+                    env.currState = new PlayingGameState();
+
+                break;
+        }
 
     }
 }
@@ -167,7 +200,7 @@ class PlayingGameState implements GameState {
 
                 //upper right touch pauses
                 if ((e.getX() / env.blockSize.x ) > 80 && (e.getY() / env.blockSize.y < 20) )
-                    env.currState = new PauseGameState();
+                    env.currState = new PauseGameState(env);
 
                 break;
 
@@ -195,17 +228,11 @@ class PlayingGameState implements GameState {
 
     @Override
     public void update(Env env) {
-
-
-
         env.asteroidManager.updateAsteroids();
         env.ufoManager.update(env.fps);
         env.ufoManager.spawnUFO();
         env.spaceship.update(env.fps, env.hud.joyStick.getScaledStickPosition());
         env.projectileManager.updateProjectiles(env.fps);
-
-
-
     }
 
 }

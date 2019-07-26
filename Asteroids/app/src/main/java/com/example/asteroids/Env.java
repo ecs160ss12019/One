@@ -62,7 +62,6 @@ public class Env extends SurfaceView implements Runnable {
     AsteroidManager asteroidManager;
     ProjectileManager projectileManager;
     UFOManager ufoManager;
-    UFO[] ufoArr;
 
     //Here is the thread and two control variables
     Thread gameThread = null;
@@ -87,9 +86,6 @@ public class Env extends SurfaceView implements Runnable {
         //Set the state to new game to reset all variables
         currState = new NewGameState();
         currState.update(this);
-
-        currState = new PlayingGameState();
-
     }
 
 
@@ -157,6 +153,7 @@ public class Env extends SurfaceView implements Runnable {
     }
 */
 
+
     //Is responsible for drawing everything to screen
     public void draw() {
         //Make sure canvas is unlocked
@@ -177,7 +174,7 @@ public class Env extends SurfaceView implements Runnable {
         }
     }
 
-    
+    //OntouchEvent just calls the current state's onTouch Event
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         currState.onTouch(this, e);
@@ -187,7 +184,7 @@ public class Env extends SurfaceView implements Runnable {
 
     public void pause() {
         isGameOnFocus = false;
-        currState = new PauseGameState();
+        currState = new PauseGameState(this);
         try {
             //Try stopping the thread
             gameThread.join();
@@ -202,10 +199,9 @@ public class Env extends SurfaceView implements Runnable {
     public void resume() {
         Log.d("Resume", "Resuming");
         isGameOnFocus = true;
-        currState = new PlayingGameState();
+
         //Initialize the instance of the thread
         gameThread = new Thread(this);
-
         gameThread.start();
         //music.start();
         //musicManager.play();
