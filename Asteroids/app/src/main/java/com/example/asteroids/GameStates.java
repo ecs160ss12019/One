@@ -152,10 +152,13 @@ class PlayingGameState implements GameState {
         }
 
         //Draw the Asteroids
-        env.paint.setColor(Color.argb(255,200,255,255));
         env.paint.setStyle(Paint.Style.FILL_AND_STROKE);
         env.paint.setStrokeWidth(1);
         for(Asteroid ast : env.asteroidManager.asteroidTracker){
+            if(ast.isHit)
+                env.paint.setColor(Color.argb(255,255,0,0));
+            else
+                env.paint.setColor(Color.argb(255,200,255,255));
             env.canvas.drawPath(ast.draw(), env.paint);
         }
 

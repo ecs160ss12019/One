@@ -108,20 +108,14 @@ public class Spaceship extends MovableObject {
             rotation -= 5;
         } else {
             if (rotation < steeringInput)
-                rotation += 5;
+                rotation += 10;
             else
-                rotation -= 5;
+                rotation -= 10;
 
         }
 
     }
 
-
-    private void setThrust(PointF joystickPos) {
-        thrust.x = VELOCITY_SCALAR * (float) (joystickPos.x * Math.sin(Math.toRadians(rotation)));
-        thrust.y = VELOCITY_SCALAR * (float) (joystickPos.y * Math.cos(Math.toRadians(rotation)));
-        Log.d("force", "thrust: " + thrust);
-    }
 
     public void update(long fps, PointF joyStickPos) {
 
@@ -133,8 +127,6 @@ public class Spaceship extends MovableObject {
         if(firing){
             projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation, projectileOwner);
         }
-
-
         firing = false;
     }
 
