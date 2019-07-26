@@ -88,7 +88,7 @@ public class UFOManager {
                 Log.d("update: " , "timer " + i + " : set to Leaving");
                 //Change state of ufo to LEAVING
                 Log.d("UFOLife: ", "ufo at " + i + " timed out state to DEAD");
-//                sfx.playExplosion();
+                sfx.playExplosion();
                 ufoArray[i].state.setState(new DeadState());
                 timers.resetTimer(i);
             }

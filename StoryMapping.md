@@ -33,7 +33,7 @@ Acceptance Criteria.
 * When I start the game, I see at least 1 UFO.
 * When I start the game, I see all objects together.
 
-Additional tasks completed
+#### Additional tasks completed
 
 * The movement of the Space Ship
 * Implemented JoyStick feature.
@@ -77,8 +77,11 @@ Music, Sound Effects, and a game menu have also been implemented. During our
 next sprint we will further enhance thesee systems.
 
 
-Acceptance criteria that we met during our second sprint
+#### Acceptance criteria that we met during our second sprint
 * When I press a button the space ship shoots
 * When I fly off screen I reappear from the opposite side.
+* I see the UFO periodically shoot bullets out.
 
+#### Acceptance criteria that will carry over to Sprint 3
+* 
 
