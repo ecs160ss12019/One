@@ -83,5 +83,21 @@ next sprint we will further enhance thesee systems.
 * I see the UFO periodically shoot bullets out.
 
 #### Acceptance criteria that will carry over to Sprint 3
-* 
+
+
+### Changes Made to Design
+* Added Several State classes to manage UFO state behavior
+* Added a ProjectileManager class to hold a projectile vector and handle
+  initialization and updating of projectiles.
+* Added an Explosion class to manage the drawing of an animated sprite explosion
+* Added MusicManager and SFXManager to manage music and sound effects
+* Added a Builder for the UFOManager class since its constructor was getting
+  long. 
+
+### Sprints Chart
+![Sprints Chart 3](https://github.com/ecs160ss12019/One/blob/master/Sprint3Chart.PNG)
+
+### Acceptance Criteria
+![Acceptance Criteria Chart 3](https://github.com/ecs160ss12019/One/blob/master/acceptance-criteria3.PNG)
+
 
