@@ -109,6 +109,9 @@
 ## CollisionDetection.java
 | Responsibilites | Interacts with |
 | --- | --- |
+| Detect intersection of game objects | Every MovableObject |
+| Report list of items collided | Env |
+| Color items to indicate collisions | Env |
 
 ## StateContext.java
 | Resonsibilites | Interacts with |
