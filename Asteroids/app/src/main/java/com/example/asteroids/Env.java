@@ -174,10 +174,19 @@ public class Env extends SurfaceView implements Runnable {
             if(!currAst.isHit)
                 checkHit(asts, currAst);
             }
+
+        for(Projectile currP : projs) {
+            if(!currP.isHit)
+                checkHit(ufos, currP);
+            if(!currP.isHit)
+                checkHit(asts, currP);
+        }
         }
 
     public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
+            if(mov == thisObject)
+                continue;
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
                thisObject.isHit = true;
@@ -207,18 +216,21 @@ public class Env extends SurfaceView implements Runnable {
             //Draw Space ship
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(3);
-            if(spaceship.isHit) {
+            if(spaceship.isHit)
                 paint.setColor(Color.argb(255,255,0,0));
-            } else {
+            else
                 paint.setColor(Color.argb(255,255,255,255));
-            }
             canvas.drawPath(spaceship.draw(), paint);
             paint.setStyle(Paint.Style.FILL);
 
             //Draw UFO's
-            paint.setColor(Color.argb(255, 0, 255, 0));
+
             ufoArr = ufoManager.getUFOS();
             for(int i = 0; i < ufoManager.maxUFO; i++){
+                if(ufoArr[i].isHit)
+                    paint.setColor(Color.argb(255,0,0,255));
+                else
+                    paint.setColor(Color.argb(255, 0, 255, 0));
                 if(ufoArr[i].state.isDead()){
                     canvas.drawBitmap(ufoArr[i].explosion.bitMap, ufoArr[i].explosion.frameToDraw,
                             ufoArr[i].explosion.whereToDraw, paint);
@@ -229,18 +241,25 @@ public class Env extends SurfaceView implements Runnable {
             }
 
             //Draw asteroids
-            paint.setColor(Color.argb(255,200,255,255));
+
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setStrokeWidth(1);
             for(Asteroid ast : asteroidManager.asteroidTracker){
+                if(ast.isHit)
+                    paint.setColor(Color.argb(255,255,0,0));
+                else
+                    paint.setColor(Color.argb(255,200,255,255));
                 canvas.drawPath(ast.draw(), paint);
             }
 
-            paint.setColor(Color.argb(255,255,100,100));
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setStrokeWidth(5);
             for(Projectile p : projectileManager.projectileVector){
                 Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
+                if(p.isHit)
+                    paint.setColor(Color.argb(255,0,0,255));
+                else
+                    paint.setColor(Color.argb(255,255,100,100));
                 canvas.drawPath(p.draw(), paint);
             }
 /*
