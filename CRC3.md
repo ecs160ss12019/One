@@ -83,6 +83,18 @@
 | - | Moveable Object
 | - | HUD 
 
+##NewGameState
+|Responsibilities | Interacts with
+| Deals with setting up a new game | Env |
+
+##PlayingGameState
+|Responsibilities | Interacts with
+| Responsible for updating and drawing the current game | Env |
+
+##PauseGameState
+|Responsibilities | Interacts with
+| Responsible for updating and drawing the menu | Env |
+
 
 ## HUD.java:
 | Responsibilites | Intracts with |
