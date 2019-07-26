@@ -43,7 +43,10 @@ public class AsteroidManager {
     ///////////////////////////
 
     public void updateAsteroids() {
+
              for(Asteroid ast:asteroidTracker){
+                 if(ast.curTime -ast.startTime < 250)
+                 ast.isHit = false;
                  if(ast.isHit){
                      destroyAsteroid();
                  }

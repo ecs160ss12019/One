@@ -18,6 +18,7 @@ public class Projectile extends MovableObject{
     public Projectile(PointF blockSize, PointF pos1,
                       PointF pos2, float rotate) {
         super(blockSize);
+        isHit = false;
         float rotateRads = (float)(Math.toRadians(rotate) - 3.14/2);
         directionVector = new PointF();
 
