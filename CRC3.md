@@ -84,15 +84,15 @@
 | - | HUD 
 
 ##NewGameState:
-|Responsibilities | Interacts with
+|Responsibilities | Interacts with |
 | Deals with setting up a new game | Env |
 
 ##PlayingGameState:
-|Responsibilities | Interacts with
+|Responsibilities | Interacts with |
 | Responsible for updating and drawing the current game | Env |
 
 ##PauseGameState:
-|Responsibilities | Interacts with
+|Responsibilities | Interacts with |
 | Responsible for updating and drawing the menu | Env |
 
 
