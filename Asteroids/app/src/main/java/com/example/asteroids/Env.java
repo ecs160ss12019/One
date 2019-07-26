@@ -194,6 +194,11 @@ public class Env extends SurfaceView implements Runnable {
                thisObject.timeHit = System.currentTimeMillis();
                break;
             }
+            if((thisObject.projectileOwner == 2 && mov.projectileOwner == 3)
+                    || (thisObject.projectileOwner == 3 && mov.projectileOwner == 2) ){
+                mov.isHit = false;
+                thisObject.isHit = false;
+            }
         }
 //        return false;
     }

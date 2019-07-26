@@ -26,6 +26,7 @@ public class Asteroid extends MovableObject {
         time = 0;
         startTime = 0;
         curTime = 0;
+        projectileOwner = 3;
 
     }
 
