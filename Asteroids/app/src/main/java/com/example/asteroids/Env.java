@@ -113,7 +113,7 @@ public class Env extends SurfaceView implements Runnable {
                         .setMaxUFO(10)
                         .wantActive(3)
                         .setTimeOut(10000)
-                        .setSpawnGap(1000)
+                        .setSpawnGap(3000)
                         .setResources(getResources())
                         .setProjectileManager(projectileManager)
                         .setSFXManager(sfxManager)
