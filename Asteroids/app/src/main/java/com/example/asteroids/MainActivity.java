@@ -31,15 +31,14 @@ public class MainActivity extends Activity {
         display = getWindowManager().getDefaultDisplay();
         display.getSize(resolution);
 
-
-        //Sets the content view to the activity_main.xml
-        setContentView(R.layout.activity_main);
+        env = new Env(this, resolution);
+        setContentView(env);
 
 
     }
 
     //Called by the button in activity_main.xml
-    public void resumeGame(View view) {
+    /*public void resumeGame(View view) {
         if(env != null)
             env.resume();
             setContentView(env);
@@ -51,11 +50,12 @@ public class MainActivity extends Activity {
         env.resume();
         setContentView(env);
     }
-
+*/
     @Override
     protected void onResume() {
         super.onResume();
-        setContentView(R.layout.activity_main);
+        env.resume();
+        //setContentView(R.layout.activity_main);
 
     }
 
@@ -63,7 +63,6 @@ public class MainActivity extends Activity {
     protected void onPause() {
 
         super.onPause();
-
         env.pause();
     }
 

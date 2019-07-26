@@ -1,8 +1,11 @@
 package com.example.asteroids;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.util.Log;
+import android.view.MotionEvent;
 
 public class GameStates {
 }
@@ -10,7 +13,7 @@ public class GameStates {
 interface GameState {
     public void update(Env env);
     public void draw(Env env);
-    public void onTouch(Env env);
+    public void onTouch(Env env, MotionEvent e);
 }
 
 
@@ -46,8 +49,6 @@ class NewGameState implements GameState {
                 .setBlockSize(env.blockSize)
                 .build();
 
-
-
     }
 
     @Override
@@ -56,7 +57,7 @@ class NewGameState implements GameState {
     }
 
     @Override
-    public void onTouch(Env env) {
+    public void onTouch(Env env, MotionEvent e) {
         /*if(pauseButton was touched)
             setState(new PausedState)
         */
@@ -77,25 +78,127 @@ class PauseGameState implements GameState {
     }
 
     @Override
-    public void onTouch(Env env) {
+    public void onTouch(Env env, MotionEvent e) {
         //Interface with the menu
     }
 }
 
 class PlayingGameState implements GameState {
-    @Override
-    public void update(Env env) {
-        //Handles the paused Game (sets paused to true)
-        //ctx.isPaused = true;
-    }
 
     @Override
     public void draw(Env env) {
-        //Draws the menu
+        //Draws the playing game
+
+        //Fill game with solid black background
+        env.canvas.drawColor(Color.argb(255,0,0,0));
+
+        //Draw Space Ship
+        env.paint.setStyle(Paint.Style.STROKE);
+        env.paint.setStrokeWidth(3);
+        if(env.spaceship.isHit)
+            env.paint.setColor(Color.argb(255,255,0,0));
+        else
+            env.paint.setColor(Color.argb(255,255,255,255));
+        env.canvas.drawPath(env.spaceship.draw(), env.paint);
+
+        //Draw the UFO's
+        env.paint.setStyle(Paint.Style.FILL);
+        env.paint.setColor(Color.argb(255,0,255,0));
+        for(UFO ufo : env.ufoManager.getUFOS()){
+            if(ufo.state.isDead()){
+                env.canvas.drawBitmap(ufo.explosion.bitMap, ufo.explosion.frameToDraw,
+                        ufo.explosion.whereToDraw, env.paint);
+            }
+            else if(ufo.state.isDrawable()){
+                env.canvas.drawPath(ufo.draw(), env.paint);
+            }
+        }
+
+        //Draw the Asteroids
+        env.paint.setColor(Color.argb(255,200,255,255));
+        env.paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        env.paint.setStrokeWidth(1);
+        for(Asteroid ast : env.asteroidManager.asteroidTracker){
+            env.canvas.drawPath(ast.draw(), env.paint);
+        }
+
+        //Draw the Projectiles
+        env.paint.setColor(Color.argb(255,255,100,100));
+        env.paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        env.paint.setStrokeWidth(5);
+        for(Projectile p : env.projectileManager.projectileVector){
+            Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
+            env.canvas.drawPath(p.draw(), env.paint);
+        }
+
+
+        //Draw the Joystick below all other objects
+        //JoyStick should be drawn last to be below all other objects
+        env.paint.setColor(Color.argb(255,255,255,255));
+        env.paint.setStyle(Paint.Style.STROKE);
+        env.paint.setStrokeWidth(3);
+        env.canvas.drawPath(env.hud.joyStick.draw()[0], env.paint);
+        env.paint.setStyle(Paint.Style.FILL);
+        env.paint.setColor(Color.argb(200,255,0,0));
+        env.canvas.drawPath(env.hud.joyStick.draw()[1], env.paint);
+
     }
 
     @Override
-    public void onTouch(Env env) {
-        //Interface with the menu
+    public void onTouch(Env env, MotionEvent e) {
+        //Handle Joystick, shooting, and pause button presses
+
+        int pointerIndex = e.getActionIndex();
+
+        int maskedAction = e.getActionMasked();
+
+        switch(maskedAction) {
+
+            //If 1 touch is registered, shoot
+            case MotionEvent.ACTION_DOWN:
+                if (e.getX() / env.blockSize.x > 50)
+                    //Lower left touch controls the space ship's shooting
+                    env.spaceship.firing = true;
+                else if (e.getX() / env.blockSize.x > 90 && e.getY() / env.blockSize.y > 90 )
+                    //upper right touch pauses
+                    env.paused = true;
+                break;
+            //If the primary finger is removed, reset joystick
+            case MotionEvent.ACTION_UP:
+                env.hud.joyStick.resetJoyStick();
+                break;
+            //If the touch is moving, call joyStick.update
+            case MotionEvent.ACTION_MOVE:
+                if(e.getX() / env.blockSize.x < 50)
+                    env.hud.joyStick.updateStick(e.getX() / env.blockSize.x, e.getY() / env.blockSize.x);
+                break;
+
+            //If there is a secondary touch, shoot
+            case MotionEvent.ACTION_POINTER_DOWN:
+                if (e.getX(pointerIndex) / env.blockSize.x > 50)
+                    env.spaceship.firing = true;
+                break;
+
+            case MotionEvent.ACTION_POINTER_UP:
+                env.spaceship.firing = false;
+        }
+
     }
+
+    @Override
+    public void update(Env env) {
+        //Handles the paused Game (sets paused to true)
+
+        env.asteroidManager.updateAsteroids();
+        env.ufoManager.update(env.fps);
+        env.ufoManager.spawnUFO();
+        env.spaceship.update(env.fps, env.hud.joyStick.getScaledStickPosition());
+        env.projectileManager.updateProjectiles(env.fps);
+
+    }
+
+
+
+
+
 }
