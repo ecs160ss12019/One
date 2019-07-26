@@ -21,7 +21,7 @@ public class InsideState implements State {
 //        Log.d("InsideState: ", "bullet2: " + ufo.bulletOrigin2);
         time = System.currentTimeMillis();
         if(time > lastTime + gapTime) {
-            ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1);
+            ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, false);
             lastTime = time;
         }
     }
