@@ -63,6 +63,8 @@ public class UFOManager {
         alive++;
 
         ret = findAvailableUFO();
+        //Here Debug stuff remove later
+        ufoArray[ret].id = ret;
         timers.startTimer(ret);
 
         if(ret == -1){
@@ -81,13 +83,17 @@ public class UFOManager {
         timers.checkTimers();
         for(int i = 0; i < maxUFO; i++){
 
+            if(ufoArray[i].state.isDead()){
+                timers.resetTimer(i);
+            }
+
             if(timers.doneTimers[i]){
 
                 Log.d("update: " , "timer " + i + " : set to Leaving");
                 //Change state of ufo to LEAVING
-                Log.d("UFOLife: ", "ufo at " + i + " timed out state to DEAD");
-                sfx.playExplosion();
-                ufoArray[i].state.setState(new DeadState());
+                Log.d("UFOLife: ", "UFO ID: " + i + " timed out state to LEAVING");
+                //sfx.playExplosion(); THIS DOES NOT GO HERE!!!!!!!!!!!!!!!!!
+                ufoArray[i].state.setState(new LeavingState());
                 timers.resetTimer(i);
             }
         }

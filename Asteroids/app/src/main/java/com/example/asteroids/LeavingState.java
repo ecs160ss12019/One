@@ -9,6 +9,8 @@ public class LeavingState implements State {
         ufo.ufoUpdateX(fps);
         ufo.ufoUpdateY(fps);
         ufo.isOut();
+        ufo.isHit = false;
+
     }
 
     @Override

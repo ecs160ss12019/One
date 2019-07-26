@@ -14,6 +14,8 @@ public class DeadState implements State{
             context.setState(new WaitingState());
             ufo.explosion.resetExplosion();
         }
+        ufo.isHit = false;
+
     }
 
     @Override

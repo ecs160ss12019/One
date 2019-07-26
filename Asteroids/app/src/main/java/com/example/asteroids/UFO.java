@@ -35,7 +35,7 @@ public class UFO extends MovableObject {
     float yTBound, yBBound;
     //Screen has four sides
     private int[] ufoEntry = new int[4];
-
+    int id;
     Random random = new Random();
     ProjectileManager projectileManager;
 
@@ -74,9 +74,13 @@ public class UFO extends MovableObject {
         bulletOrigin2 = new PointF();
         this.res = new Point();
         this.res.set(res.x,res.y);
+        id = -1;
     }
 
     void update(long fps){
+        if(this.isHit && !state.isDead()){
+            state.setState(new DeadState());
+        }
         state.stateAction(this, fps);
     }
 
@@ -107,22 +111,28 @@ public class UFO extends MovableObject {
     void isOut(){
         //Top
         if(body.bottom < yTBound){
-
+            Log.d("UFOLife: ", "UFO ID: " + id + " has left state is WAITING");
             state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Right
         else if(body.left > xRBound){
+            Log.d("UFOLife: ", "UFO ID: " + id + " has left state is WAITING");
+
             state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Bottom
         else if((body.top - radius) > yBBound ){
+            Log.d("UFOLife: ", "UFO ID: " + id + " has left state is WAITING");
+
             state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Left
         else if(body.right < xLBound){
+            Log.d("UFOLife: ", "UFO ID: " + id + " has left state is WAITING");
+
             state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }

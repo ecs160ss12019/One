@@ -13,17 +13,25 @@ public class InsideState implements State {
     @Override
     public void stateAction(StateContext context, UFO ufo, long fps) {
         //Log.d("InsideState: ", "Inside stateAction");
-        ufo.ufoUpdateX(fps);
-        ufo.ufoUpdateY(fps);
-        ufo.checkBounds();
-        setShot(ufo);
-//        Log.d("InsideState: ", "bullet1: " + ufo.bulletOrigin1);
-//        Log.d("InsideState: ", "bullet2: " + ufo.bulletOrigin2);
-        time = System.currentTimeMillis();
-        if(time > lastTime + gapTime) {
-            ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1);
-            lastTime = time;
+        if(ufo.isHit && !ufo.state.isDead()){
+            Log.d("UFOLife: ", "From INSIDE to DEAD UFO ID: " + ufo.id);
+            ufo.state.setState(new DeadState());
         }
+        else {
+            ufo.ufoUpdateX(fps);
+            ufo.ufoUpdateY(fps);
+            ufo.checkBounds();
+            setShot(ufo);
+//          Log.d("InsideState: ", "bullet1: " + ufo.bulletOrigin1);
+//          Log.d("InsideState: ", "bullet2: " + ufo.bulletOrigin2);
+            time = System.currentTimeMillis();
+            if (time > lastTime + gapTime) {
+                ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1);
+                lastTime = time;
+            }
+        }
+        ufo.isHit = false;
+
     }
 
     @Override
