@@ -12,7 +12,7 @@ public class UFOManager {
     private UFO[] ufoArray;
     int maxUFO;
     private int alive;
-    int wantActive;
+    private int wantActive;
 
     //Time stuff
     private Timers timers;
@@ -20,7 +20,6 @@ public class UFOManager {
     private long lastTime = 0;
     private long timeOut;
 
-    private ProjectileManager projectileManager;
     private SFXManager sfx;
 
 
@@ -35,7 +34,6 @@ public class UFOManager {
         this.timeOut = timeOut;
         gapTime = ufoGapTime;
 
-        this.projectileManager = projectileManager;
         this.sfx = sfx;
 
         timers = new Timers(maxUFO, timeOut);
@@ -46,7 +44,7 @@ public class UFOManager {
         alive = 0;
     }
 
-    public int spawnUFO(){
+    int spawnUFO(){
         Log.d("spawnUFO: ", "Entering fcn");
         int ret;
         if(alive >= maxUFO){
@@ -124,7 +122,7 @@ public class UFOManager {
         return -1;
     }
 
-    public UFO[] getUFOS(){
+    UFO[] getUFOS(){
         return ufoArray;
     }
 
