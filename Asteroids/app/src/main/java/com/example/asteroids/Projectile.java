@@ -43,10 +43,12 @@ public class Projectile extends MovableObject{
         directionVector.x = directionVector.x/mag;
         directionVector.y = directionVector.y/mag;
 
-        shapeCoords = new PointF[3];
+        shapeCoords = new PointF[5];
         shapeCoords[0] = new PointF(pos2.x, pos2.y);
         shapeCoords[1] = new PointF(pos2.x + directionVector.x, pos2.y + directionVector.y);
-        shapeCoords[2] = new PointF(pos2.x, pos2.y);
+        shapeCoords[2] = new PointF(pos2.x + directionVector.x + 1, pos2.y + directionVector.y);
+        shapeCoords[3] = new PointF(pos2.x+1, pos2.y);
+        shapeCoords[4] = new PointF(pos2.x, pos2.y);
         startTime = System.currentTimeMillis();
         mass = 10;
 
@@ -58,6 +60,8 @@ public class Projectile extends MovableObject{
 
 
     public void update(long fps){
+        if(System.currentTimeMillis() - startTime  < 100)
+            isHit = false;
         for(PointF s: shapeCoords){
             s.x += directionVector.x;
             s.y += directionVector.y;
