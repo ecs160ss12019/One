@@ -5,8 +5,6 @@ package com.example.asteroids;
 import android.graphics.PointF;
 import android.util.Log;
 
-import java.util.Random;
-
 
 public class Spaceship extends MovableObject {
     ///////////////////////////
@@ -17,6 +15,7 @@ public class Spaceship extends MovableObject {
     private float steeringInput;
     public ProjectileManager projectileManager;
     public boolean firing;
+    public int numOfLives;
 
 
     ///////////////////////////
@@ -26,6 +25,7 @@ public class Spaceship extends MovableObject {
     public Spaceship(PointF blockSize, ProjectileManager projectileManager) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
+        this.numOfLives = 3;
         this.projectileManager = projectileManager;
         projectileOwner = 1;
         mass = 10;
@@ -51,7 +51,6 @@ public class Spaceship extends MovableObject {
         shapeCoords[2] = new PointF(50, 52);
         shapeCoords[3] = new PointF(49, 53);
         shapeCoords[4] = new PointF(50, 50);
-
     }
 
 

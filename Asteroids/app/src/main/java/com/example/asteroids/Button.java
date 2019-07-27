@@ -10,7 +10,7 @@ public class Button {
 
     public RectF button;
     public String textBox;
-    public Path image;
+    public Path shape;
 
     //The position of the button accounting for screenResolution
     public Point pos;
@@ -24,11 +24,13 @@ public class Button {
 
         button = new RectF(buttonPos.x * blockSize.x, buttonPos.y * blockSize.y,
                 (buttonPos.x + size.x) * blockSize.x, (buttonPos.y + size.y) * blockSize.y);
+
+        this.shape = new Path();
     }
 
     public Path draw() {
-        this.image.addRect(button, Path.Direction.CW);
-        return this.image;
+        this.shape.addRect(button, Path.Direction.CW);
+        return this.shape;
     }
 
 
