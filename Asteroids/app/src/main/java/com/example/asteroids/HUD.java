@@ -2,9 +2,9 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.RectF;
 
 public class HUD {
     ///////////////////////////
@@ -14,6 +14,8 @@ public class HUD {
     protected Button pauseButton;
     protected Button shootButton;
 
+    protected Path[] shapes;
+
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
@@ -21,8 +23,12 @@ public class HUD {
     public HUD(PointF blockSize) {
 
         //Setting JoyStick to 50% of screen, with baseRad of 20% of screen, and hatRadius of 8% of screen
-        Point joyStickPos = new Point(20,70);
-        joyStick = new JoyStick(joyStickPos, 10, 4, blockSize);
+        Point pos = new Point(20,70);
+        joyStick = new JoyStick(pos, 10, 4, blockSize);
+
+        pos = new Point(80, 70);
+        shootButton = new Button(pos, blockSize);
+
 
 /*
         //Pause button is in the top right corner
@@ -33,10 +39,13 @@ public class HUD {
         PointF shootPosition = new PointF(85, 95);
         shootButton = new Button(shootPosition, blockSize);
 */
+        // Holds shapes to return in draw method.
+        shapes = new Path[2];
     }
 
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+
 
 }
