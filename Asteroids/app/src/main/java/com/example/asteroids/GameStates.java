@@ -1,3 +1,23 @@
+/*
+* METHODOLOGY: Currently, I have 4 game states: EndGame, NewGame, PlayingGame, and PauseGame
+* Think of the game states as an NFA where NewGame -> PlayingGame -> EndGame
+*
+* Endgame is reached when you are in newGame and your ship is hit (within PlayingGame.update)
+* Pause game is reached when you touch the top right corner of the screen. In Pause game if you
+* touch the top rectangle, you resume the game (state changes to PlayingGame), but if you touch the
+* bottom rectangle, you restart the game (state changes to NewGame).
+*
+* Each state implements GameState that has 3 methods (update/draw/onTouch). Each of these methods
+* only needs to handle its own state. In other words, EndGame's ontouch is only concerned with
+* a touch event anywhere on the screen, whereas PlayingGame's ontouch needs to handle multitouch
+*
+* Each of these classes can also have methods added to them that are unique to the state.
+* Ideally, I think we should migrate globalCollision and calcGlobalCollision into PlayingGameState
+*
+* */
+
+
+
 package com.example.asteroids;
 
 import android.graphics.Color;
@@ -6,8 +26,6 @@ import android.graphics.PointF;
 import android.util.Log;
 import android.view.MotionEvent;
 
-public class GameStates {
-}
 
 interface GameState {
     public void update(Env env);
@@ -34,7 +52,6 @@ class EndGameState implements GameState{
     public void onTouch(Env env, MotionEvent e) {
 
         int maskedAction = e.getActionMasked();
-
         switch (maskedAction) {
             //If 1 touch is registered, shoot
             case MotionEvent.ACTION_DOWN:
@@ -47,9 +64,6 @@ class EndGameState implements GameState{
 
 
     }
-
-
-
 }
 
 

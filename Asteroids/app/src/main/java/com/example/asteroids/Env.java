@@ -5,6 +5,20 @@ package com.example.asteroids;
 the constructor which will always be on top */
 
 
+/*
+* METHODOLOGY: Ideally, Env only holds the methods and variables that are consistent and
+* throughout the game and not dependent on a game state.
+* This obviously includes all of our game objects, as well as vars like fps, blocksize, etc
+*
+* If you are adding a method to env that only needs to exist while the game is playing,
+* add it to PlayingGameState instead.
+*
+* Currently, the game only runs in the env.run() method which essentially
+* loops between the gameState's update and draw methods. I change the states of the game mostly
+* in the actual game states(see comment there). The only exception is env.onPause where I
+* set the game to be paused
+* */
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -18,7 +32,6 @@ import android.view.SurfaceView;
 import java.util.Arrays;
 import java.util.Vector;
 
-/*TODO: since we can't implement both runnable and drawable, maybe we should rethink the drawable interface*/
 
 public class Env extends SurfaceView implements Runnable {
 
