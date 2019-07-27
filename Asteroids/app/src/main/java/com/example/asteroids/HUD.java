@@ -27,7 +27,7 @@ public class HUD {
         joyStick = new JoyStick(pos, 10, 4, blockSize);
 
         pos = new Point(80, 70);
-        shootButton = new Button(pos, blockSize);
+        shootButton = new Button(pos, blockSize, "Shoot");
 
 
 /*
@@ -40,7 +40,7 @@ public class HUD {
         shootButton = new Button(shootPosition, blockSize);
 */
         // Holds shapes to return in draw method.
-        shapes = new Path[2];
+       // shapes = new Path[2];
     }
 
     ///////////////////////////

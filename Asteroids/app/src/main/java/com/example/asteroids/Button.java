@@ -17,7 +17,7 @@ public class Button {
 
 
 
-    public Button(Point buttonPos, PointF blockSize) {
+    public Button(Point buttonPos, PointF blockSize, String text) {
         //The button is 1/10th screen res in both x & y
         PointF size = new PointF(10, 10);
         pos = new Point(buttonPos.x * (int)blockSize.x, buttonPos.y * (int)blockSize.y);
