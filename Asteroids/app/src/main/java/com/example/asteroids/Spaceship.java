@@ -2,6 +2,8 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.Log;
 
@@ -116,6 +118,18 @@ public class Spaceship extends MovableObject {
     }
 
 
+    public void setPaint(){
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(3);
+
+        if(isHit)
+            paint.setColor(Color.argb(255,255,0,0));
+        else
+            paint.setColor(Color.argb(255,255,255,255));
+
+    }
+
+
     public void update(long fps, PointF joyStickPos) {
 
         //Log.d("Joy", "Force: (" + joyStickPos.x + ", " + joyStickPos.y + ")");
@@ -127,6 +141,7 @@ public class Spaceship extends MovableObject {
             projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation, projectileOwner);
         }
         firing = false;
+        setPaint(); //TODO: move to constructor when we don't need ship to be drawn red if hit
     }
 
 }

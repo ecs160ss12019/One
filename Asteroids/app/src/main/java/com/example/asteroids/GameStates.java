@@ -180,14 +180,8 @@ class PlayingGameState implements GameState {
         //Fill game with solid black background
         env.canvas.drawColor(Color.argb(255,0,0,0));
 
-        //Draw Space Ship
-        env.paint.setStyle(Paint.Style.STROKE);
-        env.paint.setStrokeWidth(3);
-        if(env.spaceship.isHit)
-            env.paint.setColor(Color.argb(255,255,0,0));
-        else
-            env.paint.setColor(Color.argb(255,255,255,255));
-        env.canvas.drawPath(env.spaceship.draw(), env.paint);
+
+        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
 
         //Draw the UFO's
         env.paint.setStyle(Paint.Style.FILL);
