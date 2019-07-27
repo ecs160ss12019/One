@@ -185,7 +185,7 @@ public class Env extends SurfaceView implements Runnable {
 
     public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
-            if(mov == thisObject || (thisObject == spaceship && mov.playerProjectile))
+            if(mov == thisObject || (thisObject.projectileOwner == mov.projectileOwner))
                 continue;
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
@@ -193,6 +193,11 @@ public class Env extends SurfaceView implements Runnable {
                mov.isHit = true;
                thisObject.timeHit = System.currentTimeMillis();
                break;
+            }
+            if((thisObject.projectileOwner == 2 && mov.projectileOwner == 3)
+                    || (thisObject.projectileOwner == 3 && mov.projectileOwner == 2) ){
+                mov.isHit = false;
+                thisObject.isHit = false;
             }
         }
 //        return false;

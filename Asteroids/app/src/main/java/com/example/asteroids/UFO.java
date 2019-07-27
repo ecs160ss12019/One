@@ -43,6 +43,8 @@ public class UFO extends MovableObject {
         super(blockSize);
         this.resources = resources;
 
+        projectileOwner = 2;
+
         body = new RectF();
         bodyWidth = 100;
         bodyHeight = 40;
