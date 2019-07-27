@@ -2,7 +2,7 @@ package com.example.asteroids;
 
 import android.util.Log;
 
-public class DeadState implements State{
+public class DeadState implements State {
     int curFrame;
 
     @Override

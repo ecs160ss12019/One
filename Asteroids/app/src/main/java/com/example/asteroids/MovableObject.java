@@ -1,8 +1,8 @@
 package com.example.asteroids;
 
-// Kyle Muldoon
 
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -26,6 +26,7 @@ abstract class MovableObject {
     public long timeHit = 0;
     private PointF force;
     protected int mass;
+    public int projectileOwner = 0;//0 for default 1 for player 2 for ufo
     protected PointF currVelocity;
     protected float rotation; //Value in degrees. 0 is pointing upwards
 
@@ -35,6 +36,7 @@ abstract class MovableObject {
     PointF[] shapeCoords;
     // Shape of the object needs to be a path which can form any polygon
     protected Path shape;
+    protected Paint paint;
 
     ///////////////////////////
     //      Constructor
@@ -48,6 +50,7 @@ abstract class MovableObject {
         //Initialize our shape
         shape = new Path();
         shape.reset(); //TODO: Might not be needed
+        paint = new Paint();
     }
 
     ///////////////////////////
@@ -95,6 +98,9 @@ abstract class MovableObject {
         return shape;
     }
 
+    public Paint getPaint(){
+        return paint;
+    }
 
     private void setForce(PointF forceVector) {
         //force.y needs to be * -1 since we are drawing from top of screen

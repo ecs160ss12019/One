@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
+import com.example.asteroids.R;
+
 public class Explosion {
 
     Bitmap bitMap;
@@ -28,7 +30,7 @@ public class Explosion {
         //Start at first frame
         frameToDraw = new Rect(0,0,frameWidth,frameHeight);
         whereToDraw = new RectF(500,500,500+frameWidth, 500+frameHeight);
-        bitMap = BitmapFactory.decodeResource(resources,R.drawable.expclear);
+        bitMap = BitmapFactory.decodeResource(resources, R.drawable.expclear);
         bitMap = Bitmap.createScaledBitmap(bitMap,
                 frameWidth*numCol,
                 frameHeight*numRow,

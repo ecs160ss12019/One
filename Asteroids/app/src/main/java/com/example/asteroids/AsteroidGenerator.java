@@ -1,7 +1,6 @@
 package com.example.asteroids;
 
 import android.graphics.Point;
-import android.graphics.PointF;
 
 public class AsteroidGenerator {
     private Point[] ab1 = new Point[7];

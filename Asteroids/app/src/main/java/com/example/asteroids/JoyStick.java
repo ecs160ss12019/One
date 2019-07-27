@@ -1,5 +1,7 @@
 package com.example.asteroids;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -21,7 +23,7 @@ public class JoyStick {
 
     private Path base;
     private Path hat;
-    private Path[] joyStick = new Path[2];
+    private Paint paint;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -37,7 +39,7 @@ public class JoyStick {
 
         base = new Path();
         hat = new Path();
-
+        paint = new Paint();
         this.blockSize = blockSize;
         this.baseRadius = baseRadius;
         this.hatRadius = hatRadius;
@@ -69,6 +71,19 @@ public class JoyStick {
         stickPosition.y = baseCenter.y;
     }
 
+    public Paint setPaint(int i) {
+        if (i == 0) {
+            paint.setColor(Color.argb(255,255,255,255));
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(3);
+        } else {
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.argb(200,255,0,0));
+        }
+        return paint;
+    }
+
+
     //X and Y have values of 0-100 mapped to domain of screen
     public void updateStick(float x, float y) {
 
@@ -98,10 +113,11 @@ public class JoyStick {
     }
 
 
-    public Path[] draw() {
-        joyStick[0] = base;
-        joyStick[1] = hat;
-        return joyStick;
+    public Path draw(int i) {
+        if (i == 0)
+            return base;
+        else
+            return hat;
     }
 
 }

@@ -2,10 +2,10 @@ package com.example.asteroids;
 
 // AUTHOR NAME HERE
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.Log;
-
-import java.util.Random;
 
 
 public class Spaceship extends MovableObject {
@@ -17,6 +17,7 @@ public class Spaceship extends MovableObject {
     private float steeringInput;
     public ProjectileManager projectileManager;
     public boolean firing;
+    public int numOfLives;
 
 
     ///////////////////////////
@@ -26,7 +27,9 @@ public class Spaceship extends MovableObject {
     public Spaceship(PointF blockSize, ProjectileManager projectileManager) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
+        this.numOfLives = 3;
         this.projectileManager = projectileManager;
+        projectileOwner = 1;
         mass = 10;
         shapeCoords = new PointF[5];
         thrust = new PointF(0,0);
@@ -50,7 +53,6 @@ public class Spaceship extends MovableObject {
         shapeCoords[2] = new PointF(50, 52);
         shapeCoords[3] = new PointF(49, 53);
         shapeCoords[4] = new PointF(50, 50);
-
     }
 
 
@@ -82,7 +84,7 @@ public class Spaceship extends MovableObject {
             return;
 
 
-        //Unit circle
+            //Unit circle
         else if (joyStick.x > 0) {
             steeringInput = (float) Math.toDegrees(Math.asin(joyStick.y / 100));
             steeringInput -= 90;
@@ -107,20 +109,26 @@ public class Spaceship extends MovableObject {
             rotation -= 5;
         } else {
             if (rotation < steeringInput)
-                rotation += 5;
+                rotation += 10;
             else
-                rotation -= 5;
+                rotation -= 10;
 
         }
 
     }
 
 
-    private void setThrust(PointF joystickPos) {
-        thrust.x = VELOCITY_SCALAR * (float) (joystickPos.x * Math.sin(Math.toRadians(rotation)));
-        thrust.y = VELOCITY_SCALAR * (float) (joystickPos.y * Math.cos(Math.toRadians(rotation)));
-        Log.d("force", "thrust: " + thrust);
+    public void setPaint(){
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(3);
+
+        if(isHit)
+            paint.setColor(Color.argb(255,255,0,0));
+        else
+            paint.setColor(Color.argb(255,255,255,255));
+
     }
+
 
     public void update(long fps, PointF joyStickPos) {
 
@@ -130,11 +138,10 @@ public class Spaceship extends MovableObject {
         updatePhysics(fps, joyStickPos);
         checkBounds();
         if(firing){
-            projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation);
+            projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation, projectileOwner);
         }
-
-
         firing = false;
+        setPaint(); //TODO: move to constructor when we don't need ship to be drawn red if hit
     }
 
 }
