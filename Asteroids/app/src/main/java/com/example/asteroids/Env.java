@@ -111,8 +111,8 @@ public class Env extends SurfaceView implements Runnable {
 
         ufoManager = new UFOManBuilder(resolution)
                         .setMaxUFO(10)
-                        .wantActive(5)
-                        .setTimeOut(3000)
+                        .wantActive(3)
+                        .setTimeOut(7000)
                         .setSpawnGap(1000)
                         .setResources(getResources())
                         .setProjectileManager(projectileManager)
@@ -132,13 +132,11 @@ public class Env extends SurfaceView implements Runnable {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
-    public Vector<MovableObject> calcGlobalCollisions() {
+    public void calcGlobalCollisions() {
         //cd.checkBinaryCollision(spaceship.draw())
         //see first if spaceship collides with any asteroids
-        Vector<MovableObject> objectsHit = new Vector<MovableObject>();
-
         Vector<Projectile> projs = projectileManager.projectileVector;
-        Vector<UFO> ufos = new Vector(Arrays.asList(ufoManager.getUFOS()));;
+        Vector<UFO> ufos = new Vector(Arrays.asList(ufoManager.getUFOS()));
         Vector<Asteroid> asts = asteroidManager.asteroidTracker;
 
 
@@ -150,45 +148,59 @@ public class Env extends SurfaceView implements Runnable {
 
         // CHECK WHAT HIT PLAYER'S SHIP
         // adds ship to objectsHit if collision
-        if(checkHit(asts, spaceship) || checkHit(ufos, spaceship) || checkHit(projs, spaceship)) {
-            if(!objectsHit.contains(spaceship)) {
-                objectsHit.add(spaceship);
-            }
-        }
+        if(!spaceship.isHit)
+        checkHit(asts, spaceship);
+        if(!spaceship.isHit)
+        checkHit(ufos, spaceship);
+        if(!spaceship.isHit)
+        checkHit(projs, spaceship);
+
 
         // CHECK WHAT HIT THE UFOS
         // adds currUFO to objectsHit if collision
         for(UFO currUFO : ufos) {
-            if(checkHit(projs, currUFO) || checkHit(asts, currUFO)) {
-                if(!objectsHit.contains(currUFO)) {
-                    objectsHit.add(currUFO);
-                }
+            if(!currUFO.isHit)
+                checkHit(projs, currUFO);
+            if(!currUFO.isHit)
+                checkHit(asts, currUFO);
             }
-        }
+
 
         // CHECK WHAT HIT THE ASTEROIDS
         // adds currAst to objectsHit if collision
         for(Asteroid currAst : asts) {
-            if(checkHit(projs, currAst) || checkHit(asts, currAst)) {
-                if(!objectsHit.contains(currAst)) {
-                    objectsHit.add(currAst);
-                }
+            if(!currAst.isHit)
+                checkHit(projs, currAst);
+            if(!currAst.isHit)
+                checkHit(asts, currAst);
             }
+
+        for(Projectile currP : projs) {
+            if(!currP.isHit)
+                checkHit(ufos, currP);
+            if(!currP.isHit)
+                checkHit(asts, currP);
+        }
         }
 
-        return objectsHit;
-    }
-
-    public boolean checkHit(Vector object, MovableObject thisObject){
+    public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
+            if(mov == thisObject || (thisObject.projectileOwner == mov.projectileOwner))
+                continue;
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
                thisObject.isHit = true;
+               mov.isHit = true;
                thisObject.timeHit = System.currentTimeMillis();
-               return true;
+               break;
+            }
+            if((thisObject.projectileOwner == 2 && mov.projectileOwner == 3)
+                    || (thisObject.projectileOwner == 3 && mov.projectileOwner == 2) ){
+                mov.isHit = false;
+                thisObject.isHit = false;
             }
         }
-        return false;
+//        return false;
     }
 
     /*
@@ -209,18 +221,21 @@ public class Env extends SurfaceView implements Runnable {
             //Draw Space ship
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(3);
-            if(spaceship.isHit) {
+            if(spaceship.isHit)
                 paint.setColor(Color.argb(255,255,0,0));
-            } else {
+            else
                 paint.setColor(Color.argb(255,255,255,255));
-            }
             canvas.drawPath(spaceship.draw(), paint);
             paint.setStyle(Paint.Style.FILL);
 
             //Draw UFO's
-            paint.setColor(Color.argb(255, 0, 255, 0));
+
             ufoArr = ufoManager.getUFOS();
             for(int i = 0; i < ufoManager.maxUFO; i++){
+//                if(ufoArr[i].isHit)
+//                    paint.setColor(Color.argb(255,0,0,255));
+//                else
+                paint.setColor(Color.argb(255, 0, 255, 0));
                 if(ufoArr[i].state.isDead()){
                     canvas.drawBitmap(ufoArr[i].explosion.bitMap, ufoArr[i].explosion.frameToDraw,
                             ufoArr[i].explosion.whereToDraw, paint);
@@ -231,18 +246,25 @@ public class Env extends SurfaceView implements Runnable {
             }
 
             //Draw asteroids
-            paint.setColor(Color.argb(255,200,255,255));
+
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setStrokeWidth(1);
             for(Asteroid ast : asteroidManager.asteroidTracker){
+                if(ast.isHit)
+                    paint.setColor(Color.argb(255,255,0,0));
+                else
+                    paint.setColor(Color.argb(255,200,255,255));
                 canvas.drawPath(ast.draw(), paint);
             }
 
-            paint.setColor(Color.argb(255,255,100,100));
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setStrokeWidth(5);
             for(Projectile p : projectileManager.projectileVector){
-                Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
+                Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);
+                if(p.isHit)
+                    paint.setColor(Color.argb(255,0,255,255));
+                else
+                    paint.setColor(Color.argb(255,255,100,100));
                 canvas.drawPath(p.draw(), paint);
             }
 /*
@@ -396,8 +418,8 @@ public class Env extends SurfaceView implements Runnable {
         ufoManager.spawnUFO();
         spaceship.update(fps, hud.joyStick.getScaledStickPosition());
         projectileManager.updateProjectiles(fps);
-        Vector<MovableObject> hitList = calcGlobalCollisions();
-        //calcGlobalCollisions();
+        //Vector<MovableObject> hitList =
+                calcGlobalCollisions();
     }
 
 }

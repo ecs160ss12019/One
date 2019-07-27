@@ -3,6 +3,8 @@ package com.example.asteroids;
 // Brian Coe
 
 import android.graphics.Point;
+
+import java.util.Random;
 import java.util.Vector;
 import android.graphics.PointF;
 
@@ -13,8 +15,10 @@ public class AsteroidManager {
     ///////////////////////////
    public Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
     private int numAsteroids = 10;
+    private PointF blockSize;
     private static int resY;
     private static int resX;
+    private boolean remove = false;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -22,18 +26,12 @@ public class AsteroidManager {
 
     public AsteroidManager(PointF blockSize) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
+        this.blockSize = blockSize;
         resY = (int) (100 * blockSize.y);
         resX = (int) (100 * blockSize.x);
         for(int i = 0; i < numAsteroids; i++){
 
             asteroidTracker.add(new Asteroid(blockSize));
-        }
-        for(Asteroid ast:asteroidTracker){
-            ast.offSet = new Point();
-            ast.dVect = new Point();
-            ast.time = 0;
-            ast.startTime = 0;
-            ast.curTime = 0;
         }
         updateAsteroids();
     }
@@ -43,21 +41,34 @@ public class AsteroidManager {
     ///////////////////////////
 
     public void updateAsteroids() {
-
-             for(Asteroid ast:asteroidTracker){
-                 if(ast.curTime -ast.startTime < 250)
-                 ast.isHit = false;
-                 if(ast.isHit){
-                     destroyAsteroid();
-                 }
-                 if(ast.reDraw)
-                     ast.initAsteroid(resX, resY);
-                    ast.setNewPos();
+        Vector<Asteroid> temp = new Vector<Asteroid>();
+         for(Asteroid ast:asteroidTracker){
+             if(ast.curTime -ast.startTime < 250)
+             ast.isHit = false;
+             if(ast.isHit){
+                 destroyAsteroid(ast, temp);
+             }
+             if(ast.reDraw)
+                 ast.initAsteroid(resX, resY);
+             if(!remove){
+                 temp.addElement(ast);
+                 ast.setNewPos();
+             }
+             remove = false;
         }
+         asteroidTracker = temp;
     }
 
-    public void destroyAsteroid(){
-
+    public void destroyAsteroid(Asteroid ast, Vector<Asteroid> temp){
+        if(ast.asteroidType <= 3){
+            temp.add(new Asteroid(blockSize));
+            temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
+        }
+        else if(ast.asteroidType <= 6){
+            temp.add(new Asteroid(blockSize));
+            temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
+        }
+            remove = true;
     }
 
     public void updateScore(){
