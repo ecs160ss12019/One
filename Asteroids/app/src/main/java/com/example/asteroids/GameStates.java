@@ -70,10 +70,10 @@ class NewGameState implements GameState {
         /*TODO: Add sound later*/
 
         //Initialize our game objects
-        env.hud = new HUD(env.blockSize);
         env.cd = new CollisionDetection(env.blockSize);
         env.projectileManager = new ProjectileManager(env.blockSize);
         env.spaceship = new Spaceship(env.blockSize, env.projectileManager);
+        env.hud = new HUD(env.blockSize, env.spaceship.numOfLives);
         env.asteroidManager = new AsteroidManager(env.blockSize);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
@@ -208,6 +208,16 @@ class PlayingGameState implements GameState {
             env.canvas.drawPath(p.draw(), env.paint);
         }
 
+        //Draw the fire button
+        // set color red, draw a filled rectangle
+        env.paint.setColor(Color.argb(200,255,0,0));
+        env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
+        // set color gray, draw stroked rectangle
+        env.paint.setColor(Color.argb(255,255,255,255));
+        env.paint.setStyle(Paint.Style.STROKE);
+        env.paint.setStrokeWidth(3);
+        env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
+
 
         //Draw the Joystick below all other objects
         //JoyStick should be drawn last to be below all other objects
@@ -215,9 +225,13 @@ class PlayingGameState implements GameState {
         env.paint.setStyle(Paint.Style.STROKE);
         env.paint.setStrokeWidth(3);
         env.canvas.drawPath(env.hud.joyStick.draw()[0], env.paint);
+
+        env.canvas.drawPath(env.hud.joyStick.draw()[1], env.paint);
         env.paint.setStyle(Paint.Style.FILL);
         env.paint.setColor(Color.argb(200,255,0,0));
         env.canvas.drawPath(env.hud.joyStick.draw()[1], env.paint);
+
+
 
     }
 
