@@ -2,7 +2,6 @@ package com.example.asteroids;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,6 +14,37 @@ interface GameState {
     public void draw(Env env);
     public void onTouch(Env env, MotionEvent e);
 }
+
+class EndGameState implements GameState{
+
+    @Override
+    public void draw(Env env) {
+
+        env.canvas.drawColor(Color.argb(255,255,0,0));
+
+        env.paint.setColor(Color.argb(255,255,255,255));
+        env.paint.setTextSize(10 * env.blockSize.x);
+        //env.paint.setStyle(Paint.Style.FILL);
+        env.canvas.drawText("EndGame\n", 30 * env.blockSize.x, 40 * env.blockSize.y, env.paint);
+        env.paint.setTextSize(7 * env.blockSize.x);
+        env.canvas.drawText("Touch Screen to Restart", 13 * env.blockSize.x, 60 * env.blockSize.y, env.paint);
+    }
+
+    @Override
+    public void onTouch(Env env, MotionEvent e) {
+        env.currState = new NewGameState();
+    }
+
+    @Override
+    public void update(Env env) {
+
+
+    }
+
+
+
+}
+
 
 
 
@@ -70,7 +100,7 @@ class NewGameState implements GameState {
 
 class PauseGameState implements GameState {
 
-    Menu menu;
+    private Menu menu;
 
     public PauseGameState(Env env) {
         menu = new Menu(env.blockSize);
@@ -237,6 +267,11 @@ class PlayingGameState implements GameState {
         env.spaceship.update(env.fps, env.hud.joyStick.getScaledStickPosition());
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
+
+        if(env.spaceship.isHit)
+            env.currState = new EndGameState();
+
+
     }
 
 }
