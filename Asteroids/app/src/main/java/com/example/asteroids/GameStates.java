@@ -32,9 +32,16 @@ class EndGameState implements GameState{
 
     @Override
     public void onTouch(Env env, MotionEvent e) {
-        env.currState = new NewGameState();
-    }
 
+        int maskedAction = e.getActionMasked();
+
+        switch (maskedAction) {
+            //If 1 touch is registered, shoot
+            case MotionEvent.ACTION_DOWN:
+                env.currState = new NewGameState();
+                break;
+        }
+    }
     @Override
     public void update(Env env) {
 

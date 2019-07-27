@@ -14,7 +14,7 @@ public class HUD {
     protected Button pauseButton;
     protected Button shootButton;
 
-    protected Path[] shapes;
+    //protected Path[] shapes;
 
     ///////////////////////////
     //      CONSTRUCTOR

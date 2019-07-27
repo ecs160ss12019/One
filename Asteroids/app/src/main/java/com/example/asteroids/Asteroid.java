@@ -27,7 +27,7 @@ public class Asteroid extends MovableObject {
         startTime = 0;
         curTime = 0;
         //projectileOwner = 3;
-        //TODO: what is this
+        //TODO: For some reason bullets go through asteroid when this isn't commentted out
 
     }
 
