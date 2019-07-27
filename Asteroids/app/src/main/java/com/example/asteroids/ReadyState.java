@@ -34,6 +34,7 @@ public class ReadyState implements State {
         }
         ufo.ufoSetPosition(side);
         context.setState(new EnterState());
+        ufo.isHit = false;
 
     }
 

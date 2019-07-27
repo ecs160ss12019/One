@@ -33,7 +33,7 @@ Acceptance Criteria.
 * When I start the game, I see at least 1 UFO.
 * When I start the game, I see all objects together.
 
-Additional tasks completed
+#### Additional tasks completed
 
 * The movement of the Space Ship
 * Implemented JoyStick feature.
@@ -55,6 +55,49 @@ Additional tasks completed
 ![Acceptance Criteria Chart 2](https://github.com/ecs160ss12019/One/blob/master/acceptance-criteria2.png)
 
 
+## Sprint 3 Update: 
 
+### Sprint 2 Short Summary
+In sprint 2 some designe changes were made to the UFO class. Before UFO states
+were implemented using a `switch case`. In the new design we used a State
+Pattern implementation. The benifit of this was the abilitly to encapsulate the
+varying behavior of the UFO objects.
+
+[UFO State](https://github.com/ecs160ss12019/One/blob/master/UFOStateDiagram.pdf)
+
+A Builder was also implemented for UFOManager because its constructor was
+starting to get long. Apart from improving readability this implemenation
+reduces the chance of new bugs from messing up the order of the arguments passed
+in.
+
+Implemenation of the *shooting* and *collision detection* systems have been
+implemented. Integration with a few other components is still necessary.
+
+Music, Sound Effects, and a game menu have also been implemented. During our
+next sprint we will further enhance thesee systems.
+
+
+#### Acceptance criteria that we met during our second sprint
+* When I press a button the space ship shoots
+* When I fly off screen I reappear from the opposite side.
+* I see the UFO periodically shoot bullets out.
+
+#### Acceptance criteria that will carry over to Sprint 3
+
+
+### Changes Made to Design
+* Added Several State classes to manage UFO state behavior
+* Added a ProjectileManager class to hold a projectile vector and handle
+  initialization and updating of projectiles.
+* Added an Explosion class to manage the drawing of an animated sprite explosion
+* Added MusicManager and SFXManager to manage music and sound effects
+* Added a Builder for the UFOManager class since its constructor was getting
+  long. 
+
+### Sprints Chart
+![Sprints Chart 3](https://github.com/ecs160ss12019/One/blob/master/Sprint3Chart.PNG)
+
+### Acceptance Criteria
+![Acceptance Criteria Chart 3](https://github.com/ecs160ss12019/One/blob/master/acceptance-criteria3.PNG)
 
 
