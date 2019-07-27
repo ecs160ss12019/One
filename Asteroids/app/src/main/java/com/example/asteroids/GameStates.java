@@ -40,10 +40,11 @@ class EndGameState implements GameState{
 
         env.canvas.drawColor(Color.argb(255,255,0,0));
 
+        env.paint.setStyle(Paint.Style.FILL);
         env.paint.setColor(Color.argb(255,255,255,255));
         env.paint.setTextSize(10 * env.blockSize.x);
         //env.paint.setStyle(Paint.Style.FILL);
-        env.canvas.drawText("EndGame\n", 30 * env.blockSize.x, 40 * env.blockSize.y, env.paint);
+        env.canvas.drawText("EndGame", 30 * env.blockSize.x, 40 * env.blockSize.y, env.paint);
         env.paint.setTextSize(7 * env.blockSize.x);
         env.canvas.drawText("Touch Screen to Restart", 13 * env.blockSize.x, 60 * env.blockSize.y, env.paint);
     }
@@ -229,15 +230,12 @@ class PlayingGameState implements GameState {
 
         //Draw the Joystick below all other objects
         //JoyStick should be drawn last to be below all other objects
-        env.paint.setColor(Color.argb(255,255,255,255));
-        env.paint.setStyle(Paint.Style.STROKE);
-        env.paint.setStrokeWidth(3);
-        env.canvas.drawPath(env.hud.joyStick.draw()[0], env.paint);
 
-        env.canvas.drawPath(env.hud.joyStick.draw()[1], env.paint);
-        env.paint.setStyle(Paint.Style.FILL);
-        env.paint.setColor(Color.argb(200,255,0,0));
-        env.canvas.drawPath(env.hud.joyStick.draw()[1], env.paint);
+        env.canvas.drawPath(env.hud.joyStick.draw(0), env.hud.joyStick.setPaint(0));
+
+        env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(0));
+
+        env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(1));
 
 
 
