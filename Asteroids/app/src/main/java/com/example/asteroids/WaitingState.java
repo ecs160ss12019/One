@@ -2,7 +2,7 @@ package com.example.asteroids;
 
 import android.util.Log;
 
-public class WaitingState implements State{
+public class WaitingState implements State {
     @Override
     public void stateAction(StateContext context, UFO ufo, long fps) {
         Log.d("UFOLife: ", "Waiting UFO ID: " + ufo.id);

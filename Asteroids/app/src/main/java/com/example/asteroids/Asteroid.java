@@ -26,7 +26,8 @@ public class Asteroid extends MovableObject {
         time = 0;
         startTime = 0;
         curTime = 0;
-        projectileOwner = 3;
+        //projectileOwner = 3;
+        //TODO: For some reason bullets go through asteroid when this isn't commentted out
 
     }
 
@@ -107,6 +108,6 @@ public class Asteroid extends MovableObject {
         }
         return tempVect;
     }
-    
- 
+
+
 }

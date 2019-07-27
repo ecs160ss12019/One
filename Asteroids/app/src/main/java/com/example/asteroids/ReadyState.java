@@ -2,6 +2,8 @@ package com.example.asteroids;
 
 import android.util.Log;
 
+
+
 import java.util.Random;
 
 public class ReadyState implements State {

@@ -17,18 +17,18 @@ public class ProjectileManager {
 
     public void fire(PointF pos1, PointF pos2, float rotation, int owner){
         projectileVector.addElement(new Projectile(this.blockSize, pos1, pos2, rotation));
-            projectileVector.lastElement().projectileOwner = owner;
+        projectileVector.lastElement().projectileOwner = owner;
     }
 
     public void updateProjectiles(long fps){
         Vector<Projectile> temp = new Vector<Projectile>(0);
         if(!projectileVector.isEmpty())
-        for(Projectile p: projectileVector){
-            p.update(fps);
-            if(System.currentTimeMillis() - p.startTime < 2000){
-                temp.addElement(p);
+            for(Projectile p: projectileVector){
+                p.update(fps);
+                if(System.currentTimeMillis() - p.startTime < 2000){
+                    temp.addElement(p);
+                }
             }
-        }
         projectileVector = null;
         projectileVector = temp;
     }

@@ -13,7 +13,7 @@ public class AsteroidManager {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-   public Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
+    public Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
     private int numAsteroids = 10;
     private PointF blockSize;
     private static int resY;
@@ -42,21 +42,21 @@ public class AsteroidManager {
 
     public void updateAsteroids() {
         Vector<Asteroid> temp = new Vector<Asteroid>();
-         for(Asteroid ast:asteroidTracker){
-             if(ast.curTime -ast.startTime < 250)
-             ast.isHit = false;
-             if(ast.isHit){
-                 destroyAsteroid(ast, temp);
-             }
-             if(ast.reDraw)
-                 ast.initAsteroid(resX, resY);
-             if(!remove){
-                 temp.addElement(ast);
-                 ast.setNewPos();
-             }
-             remove = false;
+        for(Asteroid ast:asteroidTracker){
+            if(ast.curTime -ast.startTime < 250)
+                ast.isHit = false;
+            if(ast.isHit){
+                destroyAsteroid(ast, temp);
+            }
+            if(ast.reDraw)
+                ast.initAsteroid(resX, resY);
+            if(!remove){
+                temp.addElement(ast);
+                ast.setNewPos();
+            }
+            remove = false;
         }
-         asteroidTracker = temp;
+        asteroidTracker = temp;
     }
 
     public void destroyAsteroid(Asteroid ast, Vector<Asteroid> temp){
@@ -68,7 +68,7 @@ public class AsteroidManager {
             temp.add(new Asteroid(blockSize));
             temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
         }
-            remove = true;
+        remove = true;
     }
 
     public void updateScore(){
