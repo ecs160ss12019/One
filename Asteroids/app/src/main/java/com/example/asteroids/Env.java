@@ -111,7 +111,7 @@ public class Env extends SurfaceView implements Runnable {
 
         ufoManager = new UFOManBuilder(resolution)
                         .setMaxUFO(10)
-                        .wantActive(3)
+                        .wantActive(5)
                         .setTimeOut(7000)
                         .setSpawnGap(1000)
                         .setResources(getResources())
@@ -181,7 +181,7 @@ public class Env extends SurfaceView implements Runnable {
             if(!currP.isHit)
                 checkHit(asts, currP);
         }
-        }
+    }
 
     public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
@@ -191,6 +191,10 @@ public class Env extends SurfaceView implements Runnable {
                 // collision detected, kill player
                thisObject.isHit = true;
                mov.isHit = true;
+
+               thisObject.hitBy = mov.projectileOwner;
+               mov.hitBy = thisObject.projectileOwner;
+
                thisObject.timeHit = System.currentTimeMillis();
                break;
             }
@@ -232,9 +236,6 @@ public class Env extends SurfaceView implements Runnable {
 
             ufoArr = ufoManager.getUFOS();
             for(int i = 0; i < ufoManager.maxUFO; i++){
-//                if(ufoArr[i].isHit)
-//                    paint.setColor(Color.argb(255,0,0,255));
-//                else
                 paint.setColor(Color.argb(255, 0, 255, 0));
                 if(ufoArr[i].state.isDead()){
                     canvas.drawBitmap(ufoArr[i].explosion.bitMap, ufoArr[i].explosion.frameToDraw,

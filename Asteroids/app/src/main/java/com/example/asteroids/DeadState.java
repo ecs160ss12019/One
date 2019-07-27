@@ -15,7 +15,6 @@ public class DeadState implements State{
             ufo.explosion.resetExplosion();
         }
         ufo.isHit = false;
-
     }
 
     @Override

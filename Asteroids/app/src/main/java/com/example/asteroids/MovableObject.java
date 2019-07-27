@@ -27,6 +27,7 @@ abstract class MovableObject {
     private PointF force;
     protected int mass;
     public int projectileOwner = 0;//0 for default 1 for player 2 for ufo
+    public int hitBy = 0;
     protected PointF currVelocity;
     protected float rotation; //Value in degrees. 0 is pointing upwards
 
