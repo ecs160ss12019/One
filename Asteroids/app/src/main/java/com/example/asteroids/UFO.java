@@ -83,13 +83,12 @@ public class UFO extends MovableObject {
     void update(long fps){
         phase = false;
 
-
+        if(astHitUfo){
+            astHitUfo = false;
+            phase = true;
+        }else{
+            phase = false;
         if(!state.isDead()){
-            if(astHitUfo){
-                astHitUfo = false;
-                phase = true;
-            }else{
-                phase = false;
             }
             if (this.isHit){
                 state.setState(new DeadState());
