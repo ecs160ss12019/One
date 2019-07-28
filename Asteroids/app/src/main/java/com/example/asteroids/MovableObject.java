@@ -25,6 +25,7 @@ abstract class MovableObject {
     public boolean isHit = false;
     public long timeHit = 0;
     private PointF force;
+    protected boolean astHitUfo = false;
     protected int mass;
     protected int projectileOwner = 0;//0 for default 1 for player 2 for ufo
     protected PointF currVelocity;

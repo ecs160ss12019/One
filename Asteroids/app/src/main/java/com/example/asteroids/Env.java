@@ -166,15 +166,15 @@ public class Env extends SurfaceView implements Runnable {
                 // collision detected, kill player
                thisObject.isHit = true;
                mov.isHit = true;
-
-//               thisObject.hitBy = mov.projectileOwner;
-//               mov.hitBy = thisObject.projectileOwner;
-
                thisObject.timeHit = System.currentTimeMillis();
                break;
             }
             if((thisObject.projectileOwner == 2 && mov.projectileOwner == 3)
                     || (thisObject.projectileOwner == 3 && mov.projectileOwner == 2) ){
+                if(thisObject.projectileOwner == 3)
+                    mov.astHitUfo = true;
+                else
+                    thisObject.astHitUfo = true;
                 mov.isHit = false;
                 thisObject.isHit = false;
             }
