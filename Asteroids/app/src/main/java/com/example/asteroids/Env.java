@@ -167,8 +167,8 @@ public class Env extends SurfaceView implements Runnable {
                thisObject.isHit = true;
                mov.isHit = true;
 
-               thisObject.hitBy = mov.projectileOwner;
-               mov.hitBy = thisObject.projectileOwner;
+//               thisObject.hitBy = mov.projectileOwner;
+//               mov.hitBy = thisObject.projectileOwner;
 
                thisObject.timeHit = System.currentTimeMillis();
                break;

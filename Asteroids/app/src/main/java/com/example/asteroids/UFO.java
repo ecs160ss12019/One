@@ -81,13 +81,13 @@ public class UFO extends MovableObject {
     void update(long fps){
         if(this.isHit && !state.isDead()){
 
-            if(this.hitBy == 3){
+//            if(this.hitBy == 3){
                 //do nothing;
-                this.isHit = false;
-            }
-            else{
+//                this.isHit = false;
+//            }
+//            else{
                 state.setState(new DeadState());
-            }
+//            }
         }
         state.stateAction(this, fps);
     }
