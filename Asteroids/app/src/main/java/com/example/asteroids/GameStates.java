@@ -186,13 +186,16 @@ class PlayingGameState implements GameState {
 
         //Draw the UFO's
         env.paint.setStyle(Paint.Style.FILL);
-        env.paint.setColor(Color.argb(255,0,255,0));
         for(UFO ufo : env.ufoManager.getUFOS()){
             if(ufo.state.isDead()){
                 env.canvas.drawBitmap(ufo.explosion.bitMap, ufo.explosion.frameToDraw,
                         ufo.explosion.whereToDraw, env.paint);
             }
             else if(ufo.state.isDrawable()){
+                if(ufo.phase)
+                    env.paint.setColor(Color.argb(100,0,255,0));
+                else
+                    env.paint.setColor(Color.argb(255,0,255,0));
                 env.canvas.drawPath(ufo.draw(), env.paint);
             }
         }

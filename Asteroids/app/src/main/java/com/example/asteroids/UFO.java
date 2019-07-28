@@ -20,6 +20,7 @@ public class UFO extends MovableObject {
     private float bodyWidth, bodyHeight;
     private float circleX, circleY, radius;
     private float circleXOffset, circleYOffset;
+    boolean phase;
     float mXVelocity, mYVelocity;
     PointF bulletOrigin1;
     PointF bulletOrigin2;
@@ -76,16 +77,19 @@ public class UFO extends MovableObject {
         bulletOrigin2 = new PointF();
         this.res = new Point();
         this.res.set(res.x,res.y);
+        phase = false;
     }
 
     void update(long fps){
-        if(this.isHit && !state.isDead()){
+        phase = false;
 
+        if(this.isHit && !state.isDead()){
             if(this.hitBy == 3){
-                //do nothing;
                 this.isHit = false;
+                phase = true;
             }
             else{
+                phase = false;
                 state.setState(new DeadState());
             }
         }
