@@ -5,7 +5,7 @@ import android.util.Log;
 public class WaitingState implements State {
     @Override
     public void stateAction(StateContext context, UFO ufo, long fps) {
-        Log.d("UFOLife: ", "Waiting UFO ID: " + ufo.id);
+        Log.d("UFOLife: ", "Waiting UFO ID: " );
         ufo.isHit = false;
 
     }
