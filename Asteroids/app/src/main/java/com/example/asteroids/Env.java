@@ -160,24 +160,26 @@ public class Env extends SurfaceView implements Runnable {
         for(MovableObject mov : (Vector<MovableObject>)object) {
             if(mov == thisObject
                     || ((thisObject.projectileOwner == mov.projectileOwner)
-                    && (thisObject.projectileOwner != 3)))
+                    && (thisObject.projectileOwner != 3))){
                 continue;
+            }
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
                thisObject.isHit = true;
                mov.isHit = true;
                thisObject.timeHit = System.currentTimeMillis();
-               break;
+                if((thisObject.projectileOwner == 2 && mov.projectileOwner == 3)
+                        || (thisObject.projectileOwner == 3 && mov.projectileOwner == 2) ){
+                    if(thisObject.projectileOwner == 3)
+                        mov.astHitUfo = true;
+                    else
+                        thisObject.astHitUfo = true;
+                    mov.isHit = false;
+                    thisObject.isHit = false;
+                }
+                break;
             }
-            if((thisObject.projectileOwner == 2 && mov.projectileOwner == 3)
-                    || (thisObject.projectileOwner == 3 && mov.projectileOwner == 2) ){
-                if(thisObject.projectileOwner == 3)
-                    mov.astHitUfo = true;
-                else
-                    thisObject.astHitUfo = true;
-                mov.isHit = false;
-                thisObject.isHit = false;
-            }
+
         }
     }
 
