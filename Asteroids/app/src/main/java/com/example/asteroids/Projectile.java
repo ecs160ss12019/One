@@ -66,8 +66,8 @@ public class Projectile extends MovableObject{
 
 
     public void update(long fps){
-        if(System.currentTimeMillis() - startTime  < 100)
-            isHit = false;
+//        if(System.currentTimeMillis() - startTime  < 100)
+//            isHit = false;
         for(PointF s: shapeCoords){
             s.x += directionVector.x;
             s.y += directionVector.y;

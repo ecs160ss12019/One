@@ -63,10 +63,22 @@ public class AsteroidManager {
         if(ast.asteroidType <= 3){
             temp.add(new Asteroid(blockSize));
             temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
+            temp.lastElement().offSet = ast.offSet;
+//            temp.lastElement().randDirection(temp.lastElement().offSet);
+            temp.add(new Asteroid(blockSize));
+            temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
+            temp.lastElement().offSet = ast.offSet;
+ //           temp.lastElement().randDirection(temp.lastElement().offSet);
         }
         else if(ast.asteroidType <= 6){
             temp.add(new Asteroid(blockSize));
             temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
+            temp.lastElement().offSet = ast.offSet;
+//            temp.lastElement().randDirection(temp.lastElement().offSet);
+            temp.add(new Asteroid(blockSize));
+            temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
+            temp.lastElement().offSet = ast.offSet;
+//            temp.lastElement().randDirection(temp.lastElement().offSet);
         }
         remove = true;
     }

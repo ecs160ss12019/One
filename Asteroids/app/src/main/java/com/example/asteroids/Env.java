@@ -158,7 +158,9 @@ public class Env extends SurfaceView implements Runnable {
 
     public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
-            if(mov == thisObject || (thisObject.projectileOwner == mov.projectileOwner))
+            if(mov == thisObject
+                    || ((thisObject.projectileOwner == mov.projectileOwner)
+                    && (thisObject.projectileOwner != 3)))
                 continue;
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
