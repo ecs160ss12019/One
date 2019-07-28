@@ -83,6 +83,7 @@ public class UFO extends MovableObject {
     void update(long fps){
         phase = false;
 
+
         if(this.isHit && !state.isDead()){
             if(this.hitBy == 3){
                 this.isHit = false;
