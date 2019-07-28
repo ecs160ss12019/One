@@ -164,10 +164,14 @@ public class Env extends SurfaceView implements Runnable {
                 continue;
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
-                thisObject.isHit = true;
-                mov.isHit = true;
-                thisObject.timeHit = System.currentTimeMillis();
-                break;
+               thisObject.isHit = true;
+               mov.isHit = true;
+
+               thisObject.hitBy = mov.projectileOwner;
+               mov.hitBy = thisObject.projectileOwner;
+
+               thisObject.timeHit = System.currentTimeMillis();
+               break;
             }
             if((thisObject.projectileOwner == 2 && mov.projectileOwner == 3)
                     || (thisObject.projectileOwner == 3 && mov.projectileOwner == 2) ){
