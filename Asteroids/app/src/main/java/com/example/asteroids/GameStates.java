@@ -88,7 +88,7 @@ class NewGameState implements GameState {
         env.cd = new CollisionDetection(env.blockSize);
         env.projectileManager = new ProjectileManager(env.blockSize);
         env.spaceship = new Spaceship(env.blockSize, env.projectileManager);
-        env.hud = new HUD(env.blockSize, env.spaceship.numOfLives);
+        env.hud = new HUD(env.blockSize, 3);
         env.asteroidManager = new AsteroidManager(env.blockSize);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
@@ -113,9 +113,7 @@ class NewGameState implements GameState {
 
     @Override
     public void onTouch(Env env, MotionEvent e) {
-        /*if(pauseButton was touched)
-            setState(new PausedState)
-        */
+
     }
 
 }
@@ -173,6 +171,9 @@ class PauseGameState implements GameState {
 }
 
 class PlayingGameState implements GameState {
+
+    public int score;
+
 
     @Override
     public void draw(Env env) {
@@ -295,13 +296,14 @@ class PlayingGameState implements GameState {
         env.ufoManager.update(env.fps);
         env.ufoManager.spawnUFO();
         env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
-        env.spaceship.update(env.fps, env.hud.joyStick.getScaledStickPosition());
+
+        env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
 
-        if(env.spaceship.isHit)
+        if(env.hud.numOfLives == 0) {
             env.currState = new EndGameState();
-
+        }
 
     }
 
