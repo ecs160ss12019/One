@@ -1,26 +1,37 @@
 package com.example.asteroids;
 
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.util.Log;
-import android.view.MotionEvent;
 
-
+//Simple class that just holds a button's information
 public class Button {
 
     public RectF button;
-    protected PointF size;
+    public String textBox;
+    public Path shape;
+
+    //The position of the button accounting for screenResolution
+    public Point pos;
 
 
-    public Button(PointF buttonPos, PointF blockSize) {
 
-        //Standard button size is 1/10th screen res in both x & y
-        size = new PointF(10, 10);
+    public Button(Point buttonPos, PointF blockSize, String text) {
+        //The button is 1/10th screen res in both x & y
+        PointF size = new PointF(10, 10);
+        pos = new Point(buttonPos.x * (int)blockSize.x, buttonPos.y * (int)blockSize.y);
 
         button = new RectF(buttonPos.x * blockSize.x, buttonPos.y * blockSize.y,
                 (buttonPos.x + size.x) * blockSize.x, (buttonPos.y + size.y) * blockSize.y);
+
+        this.shape = new Path();
     }
 
+    public Path draw() {
+        this.shape.addRect(button, Path.Direction.CW);
+        return this.shape;
+    }
 
 
 }

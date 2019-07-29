@@ -13,8 +13,8 @@ public class AsteroidManager {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
-   public Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
-    private int numAsteroids = 10;
+    public Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
+    private int numAsteroids = 5;
     private PointF blockSize;
     private static int resY;
     private static int resX;
@@ -42,33 +42,45 @@ public class AsteroidManager {
 
     public void updateAsteroids() {
         Vector<Asteroid> temp = new Vector<Asteroid>();
-         for(Asteroid ast:asteroidTracker){
-             if(ast.curTime -ast.startTime < 250)
-             ast.isHit = false;
-             if(ast.isHit){
-                 destroyAsteroid(ast, temp);
-             }
-             if(ast.reDraw)
-                 ast.initAsteroid(resX, resY);
-             if(!remove){
-                 temp.addElement(ast);
-                 ast.setNewPos();
-             }
-             remove = false;
+        for(Asteroid ast:asteroidTracker){
+            if(ast.curTime -ast.startTime < 250)
+                ast.isHit = false;
+            if(ast.isHit){
+                destroyAsteroid(ast, temp);
+            }
+            if(ast.reDraw)
+                ast.initAsteroid(resX, resY);
+            if(!remove){
+                temp.addElement(ast);
+                ast.setNewPos();
+            }
+            remove = false;
         }
-         asteroidTracker = temp;
+        asteroidTracker = temp;
     }
 
     public void destroyAsteroid(Asteroid ast, Vector<Asteroid> temp){
         if(ast.asteroidType <= 3){
             temp.add(new Asteroid(blockSize));
             temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
+            temp.lastElement().offSet = ast.offSet;
+//            temp.lastElement().randDirection(temp.lastElement().offSet);
+            temp.add(new Asteroid(blockSize));
+            temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
+            temp.lastElement().offSet = ast.offSet;
+ //           temp.lastElement().randDirection(temp.lastElement().offSet);
         }
         else if(ast.asteroidType <= 6){
             temp.add(new Asteroid(blockSize));
             temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
+            temp.lastElement().offSet = ast.offSet;
+//            temp.lastElement().randDirection(temp.lastElement().offSet);
+            temp.add(new Asteroid(blockSize));
+            temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
+            temp.lastElement().offSet = ast.offSet;
+//            temp.lastElement().randDirection(temp.lastElement().offSet);
         }
-            remove = true;
+        remove = true;
     }
 
     public void updateScore(){

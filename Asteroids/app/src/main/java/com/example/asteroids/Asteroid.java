@@ -27,6 +27,7 @@ public class Asteroid extends MovableObject {
         startTime = 0;
         curTime = 0;
         projectileOwner = 3;
+        //TODO: For some reason bullets go through asteroid when this isn't commentted out
 
     }
 
@@ -92,21 +93,21 @@ public class Asteroid extends MovableObject {
         return tempOffSet;
     }
 
-    private Point randDirection(Point oSet){
+    public Point randDirection(Point oSet){
         // pick where to generate
         Point tempVect = new Point();
         if(oSet.x <= resX/2){
-            tempVect.x = new Random().nextInt(resY / (scalar*4));
+            tempVect.x = new Random().nextInt(Math.abs(resY) / (scalar*5));
         }else if(oSet.x > resX/2) {
-            tempVect.x = -new Random().nextInt(resX / (scalar*4));
+            tempVect.x = -new Random().nextInt(Math.abs(resX) / (scalar*5));
         }
         if(oSet.y <= resY/2) {
-            tempVect.y = new Random().nextInt(resY / (scalar*5));
+            tempVect.y = new Random().nextInt(Math.abs(resY) / (scalar*6));
         }else if(oSet.y > resY/2) {
-            tempVect.y = -new Random().nextInt(resX / (scalar*5));
+            tempVect.y = -new Random().nextInt(Math.abs(resX) / (scalar*6));
         }
         return tempVect;
     }
-    
- 
+
+
 }

@@ -1,8 +1,9 @@
 package com.example.asteroids;
 
-// Kyle Muldoon
 
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -25,8 +26,9 @@ abstract class MovableObject {
     public boolean isHit = false;
     public long timeHit = 0;
     private PointF force;
+    protected boolean astHitUfo = false;
     protected int mass;
-    public int projectileOwner = 0;//0 for default 1 for player 2 for ufo
+    protected int projectileOwner = 0;//0 for default 1 for player 2 for ufo
     protected PointF currVelocity;
     protected float rotation; //Value in degrees. 0 is pointing upwards
 
@@ -36,6 +38,7 @@ abstract class MovableObject {
     PointF[] shapeCoords;
     // Shape of the object needs to be a path which can form any polygon
     protected Path shape;
+    protected Paint paint;
 
     ///////////////////////////
     //      Constructor
@@ -49,6 +52,7 @@ abstract class MovableObject {
         //Initialize our shape
         shape = new Path();
         shape.reset(); //TODO: Might not be needed
+        paint = new Paint();
     }
 
     ///////////////////////////
@@ -60,7 +64,6 @@ abstract class MovableObject {
         for(PointF i : shapeCoords) {
             i.x += ((currVelocity.x * 1/fps) + 1/2 * (force.x / mass) * Math.pow(1/ Math.max(1, (int) fps), 2));
             i.y += ((currVelocity.y * 1/fps) + 1/2 * (force.y / mass) * Math.pow(1/ Math.max(1, (int) fps), 2)) * blockSize.x / blockSize.y;
-            Log.d("Pos", "CurPos: (" + i.x + ", " + i.y + ")");
         }
     }
 
@@ -92,10 +95,14 @@ abstract class MovableObject {
         for(int i = 1; i < shapeCoords.length; ++i)
             shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.y);
 
-        calcRotation();
+        if (rotation != 0)
+            calcRotation();
         return shape;
     }
 
+    public Paint getPaint(){
+            return paint;
+    }
 
     private void setForce(PointF forceVector) {
         //force.y needs to be * -1 since we are drawing from top of screen
@@ -117,8 +124,6 @@ abstract class MovableObject {
                 force.y = 0;
 
         }
-
-        Log.d("Force", "Force: (" + force.x + ", " + force.y + ")");
     }
 
     public void updatePhysics(long fps, PointF force) {

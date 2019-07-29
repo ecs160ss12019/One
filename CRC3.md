@@ -87,6 +87,24 @@
 | - | Moveable Object
 | - | HUD 
 
+## NewGameState:
+|Responsibilities | Interacts with |
+| --- | --- |
+| Resets all variables for a new game | Env 
+
+## PlayingGameState:
+|Responsibilities | Interacts with |
+| --- | --- |
+| Keeps track of all objects on the screen | Env
+| Draws all objects to the screen | - 
+| Keeps track of user's multi touch input for joystick and shoot | -
+
+## PauseGameState:
+|Responsibilities | Interacts with |
+| --- | --- |
+| Draws the menu | Env
+| Responds to player's touch input | -  
+
 
 ## HUD.java:
 | Responsibilites | Intracts with |

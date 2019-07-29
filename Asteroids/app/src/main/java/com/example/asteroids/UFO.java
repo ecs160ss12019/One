@@ -2,6 +2,8 @@ package com.example.asteroids;
 
 // Jose Torres-Vargas
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -13,6 +15,8 @@ import java.util.Random;
 enum UFO_Origin{
     LEFT, TOP, RIGHT, BOTTOM
 }
+
+
 public class UFO extends MovableObject {
 
     //UFO body
@@ -20,29 +24,32 @@ public class UFO extends MovableObject {
     private float bodyWidth, bodyHeight;
     private float circleX, circleY, radius;
     private float circleXOffset, circleYOffset;
+    boolean phase;
     float mXVelocity, mYVelocity;
     PointF bulletOrigin1;
     PointF bulletOrigin2;
     Point res;
     Resources resources;
     StateContext state;
-
     Explosion explosion;
     UFO_Origin enterFrom;
-
+    UFO_Type difficulty;
     //Max Boundary for UFO
     float xLBound, xRBound;
     float yTBound, yBBound;
     //Screen has four sides
     private int[] ufoEntry = new int[4];
-    int id;
+
     Random random = new Random();
     ProjectileManager projectileManager;
+    SFXManager sfxManager;
 
-    UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager) {
+    Paint paint;
+    UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager,
+            SFXManager sfxManager) {
         super(blockSize);
         this.resources = resources;
-
+        this.sfxManager = sfxManager;
         projectileOwner = 2;
 
         body = new RectF();
@@ -76,12 +83,27 @@ public class UFO extends MovableObject {
         bulletOrigin2 = new PointF();
         this.res = new Point();
         this.res.set(res.x,res.y);
-        id = -1;
+        phase = false;
+        difficulty = UFO_Type.GREEN;//Easy by default
+        paint = new Paint();
+        paint.setColor(Color.argb(255,0,255,0));
     }
 
     void update(long fps){
-        if(this.isHit && !state.isDead()){
-            state.setState(new DeadState());
+        phase = false;
+
+        if(astHitUfo){
+            astHitUfo = false;
+            phase = true;
+        }else{
+            phase = false;
+            if(!state.isDead()) {
+
+                if (this.isHit) {
+                    sfxManager.playExplosion();
+                    state.setState(new DeadState());
+                }
+            }
         }
         state.stateAction(this, fps);
     }
@@ -113,28 +135,22 @@ public class UFO extends MovableObject {
     void isOut(){
         //Top
         if(body.bottom < yTBound){
-            Log.d("UFOLife: ", "UFO ID: " + id + " has left state is WAITING");
+
             state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Right
         else if(body.left > xRBound){
-            Log.d("UFOLife: ", "UFO ID: " + id + " has left state is WAITING");
-
             state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Bottom
         else if((body.top - radius) > yBBound ){
-            Log.d("UFOLife: ", "UFO ID: " + id + " has left state is WAITING");
-
             state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
         //Left
         else if(body.right < xLBound){
-            Log.d("UFOLife: ", "UFO ID: " + id + " has left state is WAITING");
-
             state.setState(new WaitingState());
             Log.d("isOut: ", "changing state to " + state);
         }
@@ -185,6 +201,14 @@ public class UFO extends MovableObject {
 
     private void reverseYVelocity(){
         mYVelocity = -mYVelocity;
+    }
+
+    void phaseThrough(){
+        paint.setAlpha(100);
+    }
+
+    void solidUFO(){
+        paint.setAlpha(255);
     }
 
 }
