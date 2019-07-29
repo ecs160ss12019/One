@@ -23,7 +23,6 @@ public class UFOManager {
     private long gapTime;
     private long lastTime = 0;
     private long timeOut;
-    private SFXManager sfx;
     private UFO_Type currentDifficulty;
     Paint paint;
     UFOManager(Point res, PointF blockSize, Resources resources,
@@ -35,11 +34,10 @@ public class UFOManager {
 
         this.timeOut = timeOut;
         gapTime = ufoGapTime;
-        this.sfx = sfx;
         timers = new Timers(maxUFO, timeOut);
 
         for(int i = 0; i < this.maxUFO; i++){
-            ufoArray[i] = new UFO(res, blockSize, resources, projectileManager);
+            ufoArray[i] = new UFO(res, blockSize, resources, projectileManager, sfx);
         }
         alive = 0;
         paint = new Paint();

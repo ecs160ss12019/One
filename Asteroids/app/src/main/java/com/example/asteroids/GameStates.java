@@ -90,6 +90,7 @@ class NewGameState implements GameState {
         env.spaceship = new Spaceship(env.blockSize, env.projectileManager);
         env.hud = new HUD(env.blockSize, 3);
         env.asteroidManager = new AsteroidManager(env.blockSize);
+        env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
                 .wantActive(5)
@@ -97,7 +98,7 @@ class NewGameState implements GameState {
                 .setSpawnGap(1000)
                 .setResources(env.getResources())
                 .setProjectileManager(env.projectileManager)
-                //.setSFXManager(sfxManager)
+                .setSFXManager(env.sfxManager)
                 .setBlockSize(env.blockSize)
                 .build();
 

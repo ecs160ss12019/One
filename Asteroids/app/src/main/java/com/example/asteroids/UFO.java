@@ -40,11 +40,12 @@ public class UFO extends MovableObject {
 
     Random random = new Random();
     ProjectileManager projectileManager;
-
-    UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager) {
+    SFXManager sfxManager;
+    UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager,
+            SFXManager sfxManager) {
         super(blockSize);
         this.resources = resources;
-
+        this.sfxManager = sfxManager;
         projectileOwner = 2;
 
         body = new RectF();
@@ -90,10 +91,12 @@ public class UFO extends MovableObject {
             phase = true;
         }else{
             phase = false;
-        if(!state.isDead()){
-            }
-            if (this.isHit){
-                state.setState(new DeadState());
+            if(!state.isDead()) {
+
+                if (this.isHit) {
+                    sfxManager.playExplosion();
+                    state.setState(new DeadState());
+                }
             }
         }
         state.stateAction(this, fps);
