@@ -15,18 +15,21 @@ public class PowerUpManager {
     public PowerUpManager(PointF blockSize) {
         rand = new Random();
         this.blockSize = blockSize;
+        genNewPowerUp();
     }
 
+    private void genNewPowerUp() {
+        PointF newPos = new PointF(rand.nextFloat() * 100, rand.nextFloat() * 100);
+        powerUpObject = new PowerUpObject(newPos, rand.nextInt(3), blockSize);
+
+
+    }
 
     public void update() {
 
-        PointF newPos = new PointF(rand.nextFloat() * 100, rand.nextFloat() * 100);
+        if(powerUpObject.isHit)
+            genNewPowerUp();
 
-
-        powerUpObject = new PowerUpObject(newPos, rand.nextInt(3), blockSize);
 
     }
-
-
-
 }

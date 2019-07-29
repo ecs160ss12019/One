@@ -75,7 +75,7 @@ public class Env extends SurfaceView implements Runnable {
     AsteroidManager asteroidManager;
     ProjectileManager projectileManager;
     UFOManager ufoManager;
-    PowerUpObject powerUpObject;
+    PowerUpManager powerUpManager;
 
     //Here is the thread and two control variables
     Thread gameThread = null;
