@@ -13,6 +13,8 @@ import java.util.Random;
 enum UFO_Origin{
     LEFT, TOP, RIGHT, BOTTOM
 }
+
+
 public class UFO extends MovableObject {
 
     //UFO body
@@ -27,10 +29,9 @@ public class UFO extends MovableObject {
     Point res;
     Resources resources;
     StateContext state;
-
     Explosion explosion;
     UFO_Origin enterFrom;
-
+    UFO_Type difficulty;
     //Max Boundary for UFO
     float xLBound, xRBound;
     float yTBound, yBBound;
@@ -78,6 +79,7 @@ public class UFO extends MovableObject {
         this.res = new Point();
         this.res.set(res.x,res.y);
         phase = false;
+        difficulty = UFO_Type.GREEN;//Easy by default
     }
 
     void update(long fps){
@@ -190,6 +192,14 @@ public class UFO extends MovableObject {
 
     private void reverseYVelocity(){
         mYVelocity = -mYVelocity;
+    }
+
+    void phaseThrough(){
+        paint.setAlpha(100);
+    }
+
+    void solidUFO(){
+        paint.setAlpha(255);
     }
 
 }

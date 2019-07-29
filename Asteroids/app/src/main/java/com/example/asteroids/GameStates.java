@@ -193,10 +193,10 @@ class PlayingGameState implements GameState {
             }
             else if(ufo.state.isDrawable()){
                 if(ufo.phase)
-                    env.paint.setColor(Color.argb(100,0,255,0));
+                    ufo.phaseThrough();
                 else
-                    env.paint.setColor(Color.argb(255,0,255,0));
-                env.canvas.drawPath(ufo.draw(), env.paint);
+                    ufo.solidUFO();
+                env.canvas.drawPath(ufo.draw(), ufo.paint);
             }
         }
 
@@ -294,6 +294,7 @@ class PlayingGameState implements GameState {
         env.asteroidManager.updateAsteroids();
         env.ufoManager.update(env.fps);
         env.ufoManager.spawnUFO();
+        env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
         env.spaceship.update(env.fps, env.hud.joyStick.getScaledStickPosition());
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
