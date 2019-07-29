@@ -97,14 +97,14 @@ public class Asteroid extends MovableObject {
         // pick where to generate
         Point tempVect = new Point();
         if(oSet.x <= resX/2){
-            tempVect.x = new Random().nextInt(Math.abs(resY) / (scalar*4));
+            tempVect.x = new Random().nextInt(Math.abs(resY) / (scalar*5));
         }else if(oSet.x > resX/2) {
-            tempVect.x = -new Random().nextInt(Math.abs(resX) / (scalar*4));
+            tempVect.x = -new Random().nextInt(Math.abs(resX) / (scalar*5));
         }
         if(oSet.y <= resY/2) {
-            tempVect.y = new Random().nextInt(Math.abs(resY) / (scalar*5));
+            tempVect.y = new Random().nextInt(Math.abs(resY) / (scalar*6));
         }else if(oSet.y > resY/2) {
-            tempVect.y = -new Random().nextInt(Math.abs(resX) / (scalar*5));
+            tempVect.y = -new Random().nextInt(Math.abs(resX) / (scalar*6));
         }
         return tempVect;
     }
