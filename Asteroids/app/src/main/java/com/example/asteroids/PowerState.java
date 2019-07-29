@@ -17,8 +17,20 @@ public interface PowerState {
     void fire(Spaceship ship);
 }
 
-class ExtraLifePowerState implements PowerState {
+class BurstFirePowerState implements  PowerState{
+    public void fire(Spaceship ship) {
+        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation - 10, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation + 10, ship.projectileOwner);
+        ship.firing = false;
+    }
+    public void update(Spaceship ship) {
+        Log.d("Powerstate", "BurstFirePowerState");
 
+    }
+}
+
+class ExtraLifePowerState implements PowerState {
     public void fire(Spaceship ship) {
         ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
         ship.firing = false;
@@ -29,34 +41,27 @@ class ExtraLifePowerState implements PowerState {
         ship.numLives++;
         ship.currPowerState = new DefaultPowerState();
     }
-
-
-
 }
 
+/*Default Powerstate*/
 class DefaultPowerState implements PowerState {
-
     public void fire(Spaceship ship) {
         ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
         ship.firing = false;
     }
-
     public void update(Spaceship ship) {
         Log.d("Powerstate", "DefaultPowerState");
 
     }
-
 }
 
+/*Invulnerable to anything*/
 class ShieldPowerState implements PowerState {
-
     public void fire(Spaceship ship) {
         ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
         ship.firing = false;
     }
-
     public void update(Spaceship ship) {
-
         //TODO: Draw Shield around ship
         Log.d("Powerstate", "ShieldPowerState");
         ship.isHit = false;

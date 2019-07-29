@@ -24,7 +24,7 @@ public class Spaceship extends MovableObject {
     public ProjectileManager projectileManager;
 
     public PowerState currPowerState;
-    public int PowerUpTime;
+    private long powerUpTime;
 
 
 
@@ -43,27 +43,18 @@ public class Spaceship extends MovableObject {
         thrust = new PointF(0,0);
         genShape();
 
-        currPowerState = new ExtraLifePowerState();
+        //TODO: Remove when implemented powerups in game
+        setPowerUp(System.currentTimeMillis(), new BurstFirePowerState());
 
     }
 
     ///////////////////////////
     //      METHODS
     ///////////////////////////
-    public void calcRotation(PointF joyStickPos, long fps) {
-
-        rotation += ROTATION_SCALAR * joyStickPos.x/fps;
+    public void checkPowerUpTime() {
+        if(System.currentTimeMillis() - powerUpTime >= 15000)
+            currPowerState = new DefaultPowerState();
     }
-
-
-    public void genShape() {
-        shapeCoords[0] = new PointF(50, 50);
-        shapeCoords[1] = new PointF(51, 53);
-        shapeCoords[2] = new PointF(50, 52);
-        shapeCoords[3] = new PointF(49, 53);
-        shapeCoords[4] = new PointF(50, 50);
-    }
-
 
 
     public void checkBounds() {
@@ -85,6 +76,15 @@ public class Spaceship extends MovableObject {
                     j.y += 100;
             }
         }
+    }
+
+
+    public void genShape() {
+        shapeCoords[0] = new PointF(50, 50);
+        shapeCoords[1] = new PointF(51, 53);
+        shapeCoords[2] = new PointF(50, 52);
+        shapeCoords[3] = new PointF(49, 53);
+        shapeCoords[4] = new PointF(50, 50);
     }
 
 
@@ -138,6 +138,11 @@ public class Spaceship extends MovableObject {
     }
 
 
+    public void setPowerUp(long currTime, PowerState powerUp) {
+        currPowerState = powerUp;
+        powerUpTime = currTime;
+    }
+
     public void update(long fps, HUD hud) {
 
         rotateShip(hud.joyStick.getScaledStickPosition());
@@ -149,7 +154,7 @@ public class Spaceship extends MovableObject {
             currPowerState.fire(this);
 
         currPowerState.update(this);
-
+        checkPowerUpTime();
 
         hud.numOfLives = numLives;
         if(isHit) {
