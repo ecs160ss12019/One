@@ -65,7 +65,6 @@ public class UFOManager {
         timers.startTimer(ret);
 
         if(currentDifficulty != ufoArray[ret].difficulty) {
-            ufoArray[ret].difficulty = currentDifficulty;
             configureUFO(ret);
         }
 
@@ -132,9 +131,8 @@ public class UFOManager {
     }
 
     void configureUFO(int index){
-        Log.d("ConfigureUFO: ", "Index: " + index);
+
         ufoArray[index].difficulty = currentDifficulty;
-        Log.d("ConfigureUFO: ", "Do we make it here: ");
 
         switch (ufoArray[index].difficulty){
             case GREEN:
@@ -142,13 +140,13 @@ public class UFOManager {
                 break;
             case RED:
                 ufoArray[index].paint.setColor(Color.argb(255, 255, 0, 0));
-                ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*1.15f;
-                ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*1.15f;
+                ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*2.0f;
+                ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*2.0f;
                 break;
             case YELLOW:
                 ufoArray[index].paint.setColor(Color.argb(255, 255, 255, 0));
-                ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*1.10f;
-                ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*1.10f;
+                ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*1.50f;
+                ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*1.50f;
                 break;
             default:
                 ufoArray[index].paint.setColor(Color.argb(255, 0, 0, 255));
