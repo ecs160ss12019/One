@@ -1,6 +1,7 @@
 package com.example.asteroids;
 
 
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -63,7 +64,6 @@ abstract class MovableObject {
         for(PointF i : shapeCoords) {
             i.x += ((currVelocity.x * 1/fps) + 1/2 * (force.x / mass) * Math.pow(1/ Math.max(1, (int) fps), 2));
             i.y += ((currVelocity.y * 1/fps) + 1/2 * (force.y / mass) * Math.pow(1/ Math.max(1, (int) fps), 2)) * blockSize.x / blockSize.y;
-            Log.d("Pos", "CurPos: (" + i.x + ", " + i.y + ")");
         }
     }
 
@@ -95,12 +95,13 @@ abstract class MovableObject {
         for(int i = 1; i < shapeCoords.length; ++i)
             shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.y);
 
-        calcRotation();
+        if (rotation != 0)
+            calcRotation();
         return shape;
     }
 
     public Paint getPaint(){
-        return paint;
+            return paint;
     }
 
     private void setForce(PointF forceVector) {
@@ -123,8 +124,6 @@ abstract class MovableObject {
                 force.y = 0;
 
         }
-
-        Log.d("Force", "Force: (" + force.x + ", " + force.y + ")");
     }
 
     public void updatePhysics(long fps, PointF force) {
