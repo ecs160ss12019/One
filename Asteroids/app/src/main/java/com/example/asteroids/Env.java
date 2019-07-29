@@ -52,10 +52,10 @@ public class Env extends SurfaceView implements Runnable {
     Paint paint;
 
     //Sound objects
-    //MusicManager musicManager;
-    //boolean MusicMute = true;
-    //SFXManager sfxManager;
-    //boolean SFXMute = true;
+    MusicManager musicManager;
+    boolean MusicMute = true;
+    SFXManager sfxManager;
+    boolean SFXMute = true;
 
     //FPS
     long fps;
@@ -91,6 +91,7 @@ public class Env extends SurfaceView implements Runnable {
     public Env(Context context, Point res) {
         super(context);
 
+        musicManager = new MusicManager(context, MusicMute);
         //Pass the resolution to our local variables, and set our fontsize
         resolution = new Point();
         resolution = res;
@@ -226,7 +227,7 @@ public class Env extends SurfaceView implements Runnable {
             Log.e("Error", "Joining Thread");
         }
 
-        //musicManager.pause();
+        musicManager.pause();
     }
 
 
@@ -237,8 +238,8 @@ public class Env extends SurfaceView implements Runnable {
         //Initialize the instance of the thread
         gameThread = new Thread(this);
         gameThread.start();
-        //music.start();
-        //musicManager.play();
+        musicManager.loadSong(0);
+        musicManager.play();
     }
 
 

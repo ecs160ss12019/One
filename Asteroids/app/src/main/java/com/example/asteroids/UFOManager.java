@@ -1,8 +1,14 @@
 package com.example.asteroids;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Point;
 import android.util.Log;
+
+enum UFO_Type{
+    GREEN, YELLOW, RED
+}
 
 
 public class UFOManager {
@@ -17,8 +23,8 @@ public class UFOManager {
     private long gapTime;
     private long lastTime = 0;
     private long timeOut;
-    private SFXManager sfx;
-
+    private UFO_Type currentDifficulty;
+    Paint paint;
     UFOManager(Point res, PointF blockSize, Resources resources,
                ProjectileManager projectileManager, SFXManager sfx,
                int maxUFO, int wantActive, long timeOut, long ufoGapTime){
@@ -28,14 +34,17 @@ public class UFOManager {
 
         this.timeOut = timeOut;
         gapTime = ufoGapTime;
-        this.sfx = sfx;
         timers = new Timers(maxUFO, timeOut);
 
         for(int i = 0; i < this.maxUFO; i++){
-            ufoArray[i] = new UFO(res, blockSize, resources, projectileManager);
+            ufoArray[i] = new UFO(res, blockSize, resources, projectileManager, sfx);
         }
         alive = 0;
+        paint = new Paint();
+        currentDifficulty = UFO_Type.GREEN;
     }
+
+
     int spawnUFO(){
         Log.d("spawnUFO: ", "Entering fcn");
         int ret;
@@ -52,13 +61,16 @@ public class UFOManager {
         lastTime = time;
         alive++;
         ret = findAvailableUFO();
-        timers.startTimer(ret);
         if(ret == -1){
             return -1;
         }
+        timers.startTimer(ret);
+        configureUFO(ret);
         Log.d("UFOLife: ", "alive: " + alive);
         return 0;
     }
+
+
     int update(long fps){
 
         timers.updateTimers();
@@ -111,4 +123,32 @@ public class UFOManager {
     UFO[] getUFOS(){
         return ufoArray;
     }
+
+    void setCurrentDifficulty(UFO_Type difficulty){
+        currentDifficulty = difficulty;
+    }
+
+    void configureUFO(int index){
+        Log.d("ConfigureUFO: ", "Index: " + index);
+        ufoArray[index].difficulty = currentDifficulty;
+        Log.d("ConfigureUFO: ", "Do we make it here: ");
+
+        switch (ufoArray[index].difficulty){
+            case GREEN:
+                ufoArray[index].paint.setColor(Color.argb(255, 0, 255, 0));
+                break;
+            case RED:
+                ufoArray[index].paint.setColor(Color.argb(255, 255, 0, 0));
+                break;
+            case YELLOW:
+                ufoArray[index].paint.setColor(Color.argb(255, 255, 255, 0));
+                break;
+            default:
+                ufoArray[index].paint.setColor(Color.argb(255, 0, 0, 255));
+                break;
+        }
+    }
+
+
+
 }
