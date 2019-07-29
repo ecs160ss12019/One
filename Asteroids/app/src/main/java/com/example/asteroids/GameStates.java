@@ -175,7 +175,6 @@ class PlayingGameState implements GameState {
 
     public int score;
 
-
     @Override
     public void draw(Env env) {
         //Draws the playing game
