@@ -20,6 +20,8 @@
 
 package com.example.asteroids;
 
+//Martin Petrov
+
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -180,7 +182,7 @@ class PlayingGameState implements GameState {
         //Draws the playing game
 
         //Fill game with solid black background
-        env.canvas.drawColor(Color.argb(255,0,0,0));
+        env.canvas.drawColor(Color.BLACK);
 
 
         env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
@@ -206,7 +208,7 @@ class PlayingGameState implements GameState {
         env.paint.setStrokeWidth(1);
         for(Asteroid ast : env.asteroidManager.asteroidTracker){
             if(ast.isHit)
-                env.paint.setColor(Color.argb(255,255,0,0));
+                env.paint.setColor(Color.RED);
             else
                 env.paint.setColor(Color.argb(255,200,255,255));
             env.canvas.drawPath(ast.draw(), env.paint);
@@ -226,7 +228,7 @@ class PlayingGameState implements GameState {
         env.paint.setColor(Color.argb(200,255,0,0));
         env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
         // set color gray, draw stroked rectangle
-        env.paint.setColor(Color.argb(255,255,255,255));
+        env.paint.setColor(Color.WHITE);
         env.paint.setStyle(Paint.Style.STROKE);
         env.paint.setStrokeWidth(3);
         env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
@@ -236,12 +238,16 @@ class PlayingGameState implements GameState {
         //JoyStick should be drawn last to be below all other objects
 
         env.canvas.drawPath(env.hud.joyStick.draw(0), env.hud.joyStick.setPaint(0));
-
         env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(0));
-
         env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(1));
 
+        //Draw Score and NumLives
+        env.paint.setStyle(Paint.Style.FILL);
+        env.paint.setTextSize(env.fontSize);
+        env.paint.setColor(Color.WHITE);
+        env.canvas.drawText("Lives: " + env.hud.numOfLives, 10 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
 
+        env.canvas.drawText("Score: " + env.hud.score, 80 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
 
     }
 
@@ -299,7 +305,7 @@ class PlayingGameState implements GameState {
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
 
-        if(env.hud.numOfLives == 0) {
+        if(env.spaceship.numLives == 0) {
             env.currState = new EndGameState();
         }
 

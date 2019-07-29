@@ -179,6 +179,7 @@ public class Env extends SurfaceView implements Runnable {
                 if (thisObject.projectileOwner == 1) {
                     hud.score += 10;
                     Log.d("score", "Score: " + hud.score);
+                    //TODO:
                 }
                 break;
             }

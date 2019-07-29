@@ -1,6 +1,6 @@
 package com.example.asteroids;
 
-// AUTHOR NAME HERE
+// Martin Petrov
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,11 +12,20 @@ public class Spaceship extends MovableObject {
     ///////////////////////////
     //      VARIABLES
     ///////////////////////////
+    public int numLives = 3;
 
+
+    //Variables dealing with ship's controls
     protected PointF thrust;
     private float steeringInput;
-    public ProjectileManager projectileManager;
     public boolean firing;
+
+
+    public ProjectileManager projectileManager;
+
+    public PowerState currPowerState;
+    public int PowerUpTime;
+
 
 
     ///////////////////////////
@@ -30,8 +39,11 @@ public class Spaceship extends MovableObject {
         projectileOwner = 1;
         mass = 10;
         shapeCoords = new PointF[5];
+        setPaint();
         thrust = new PointF(0,0);
         genShape();
+
+        currPowerState = new ExtraLifePowerState();
 
     }
 
@@ -42,7 +54,6 @@ public class Spaceship extends MovableObject {
 
         rotation += ROTATION_SCALAR * joyStickPos.x/fps;
     }
-
 
 
     public void genShape() {
@@ -76,16 +87,11 @@ public class Spaceship extends MovableObject {
         }
     }
 
-    public void checkLives() {
-
-
-    }
 
     private void rotateShip(PointF joyStick) {
 
         if (joyStick.x == 0 && joyStick.y == 0)
             return;
-
 
             //Unit circle
         else if (joyStick.x > 0) {
@@ -117,7 +123,6 @@ public class Spaceship extends MovableObject {
                 rotation -= 10;
 
         }
-
     }
 
 
@@ -126,30 +131,29 @@ public class Spaceship extends MovableObject {
         paint.setStrokeWidth(3);
 
         if(isHit)
-            paint.setColor(Color.argb(255,255,0,0));
+            paint.setColor(Color.RED);
         else
-            paint.setColor(Color.argb(255,255,255,255));
+            paint.setColor(Color.WHITE);
 
     }
 
 
     public void update(long fps, HUD hud) {
 
-        //Log.d("Joy", "Force: (" + joyStickPos.x + ", " + joyStickPos.y + ")");
-
         rotateShip(hud.joyStick.getScaledStickPosition());
         updatePhysics(fps, hud.joyStick.getScaledStickPosition());
-
-
         checkBounds();
-        if(firing){
-            projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation, projectileOwner);
-        }
-        firing = false;
-        setPaint(); //TODO: move to constructor when we don't need ship to be drawn red if hit
 
-        if(isHit && hud.numOfLives != 0) {
-            --hud.numOfLives;
+
+        if(firing)
+            currPowerState.fire(this);
+
+        currPowerState.update(this);
+
+
+        hud.numOfLives = numLives;
+        if(isHit) {
+            --numLives;
             isHit = false;
             genShape();
             currVelocity = new PointF(0,0);
