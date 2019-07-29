@@ -19,23 +19,20 @@ public class Projectile extends MovableObject{
                       PointF pos2, float rotate) {
         super(blockSize);
         isHit = false;
-        int addWx = 0;
-        int addWy = 0;
-        float rotateRads = (float)(Math.toRadians(rotate));// + 3.14/2);
+        float addWx = 0;
+        float addWy = 0;
+        float rotateRads = (float)(Math.toRadians(rotate));
         directionVector = new PointF();
+        setDirectionVector(pos2, pos1, rotateRads);
 
-        if(rotate > 0  && rotate <= 90){
-            setDirectionVector(pos2, pos1, rotateRads);
-            addWx =1;
-        }else if(rotate > 90 && rotate <= 180){
-            setDirectionVector(pos2, pos1, rotateRads);
-            addWy =1;
-        }else if(rotate > 180 && rotate <= 270){
-            setDirectionVector(pos2, pos1, rotateRads);
-            addWx =1;
-        }else if(rotate > 270 && rotate <= 360){
-            setDirectionVector(pos2, pos1, rotateRads);
-            addWy =1;
+        if(rotate >= 0  && rotate < 90){
+            addWx = 1/blockSize.x;
+        }else if(rotate >= 90 && rotate <= 180){
+            addWy = 1/blockSize.y;
+        }else if(rotate > 180 && rotate < 270){
+            addWx = -1/blockSize.x;
+        }else if(rotate >= 270 && rotate <= 360){
+            addWy = -1/blockSize.x;
         }
 
 
@@ -55,8 +52,10 @@ public class Projectile extends MovableObject{
     ///////////////////////////
 
     public void setDirectionVector(PointF pos1, PointF pos2, float rotateRads){
-        directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))-((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
-        directionVector.y = ((float)Math.cos(rotateRads)*(pos2.y - pos1.y))+((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
+        directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))
+                -((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
+        directionVector.y = ((float)Math.cos(rotateRads)*(pos2.y - pos1.y))
+                +((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
         float mag = (float)Math.sqrt(directionVector.x*directionVector.x +
                 directionVector.y*directionVector.y);
         directionVector.x = directionVector.x/mag;
