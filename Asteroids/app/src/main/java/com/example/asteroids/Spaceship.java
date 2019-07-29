@@ -79,7 +79,7 @@ public class Spaceship extends MovableObject {
     }
 
 
-    public void genShape() {
+    private void genShape() {
         shapeCoords[0] = new PointF(50, 50);
         shapeCoords[1] = new PointF(51, 53);
         shapeCoords[2] = new PointF(50, 52);

@@ -104,6 +104,8 @@ class NewGameState implements GameState {
                 .setBlockSize(env.blockSize)
                 .build();
 
+        env.powerUpObject = new PowerUpObject(new PointF(20,20), 0, env.blockSize);
+
         //After creating a new game, we should move to playGameState
         env.currState = new PlayingGameState();
 
@@ -222,6 +224,9 @@ class PlayingGameState implements GameState {
             Log.d("projectile", "FIRE!! " + p.shapeCoords[0]);//            if( System.nanoTime() / 1000000 - p.startTime < 10000)
             env.canvas.drawPath(p.draw(), env.paint);
         }
+
+        //Draw powerup
+        env.canvas.drawPath(env.powerUpObject.draw(), env.powerUpObject.paint);
 
         //Draw the fire button
         // set color red, draw a filled rectangle

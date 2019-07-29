@@ -30,6 +30,18 @@ class BurstFirePowerState implements  PowerState{
     }
 }
 
+/*Default Powerstate*/
+class DefaultPowerState implements PowerState {
+    public void fire(Spaceship ship) {
+        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
+        ship.firing = false;
+    }
+    public void update(Spaceship ship) {
+        Log.d("Powerstate", "DefaultPowerState");
+
+    }
+}
+
 class ExtraLifePowerState implements PowerState {
     public void fire(Spaceship ship) {
         ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
@@ -43,17 +55,6 @@ class ExtraLifePowerState implements PowerState {
     }
 }
 
-/*Default Powerstate*/
-class DefaultPowerState implements PowerState {
-    public void fire(Spaceship ship) {
-        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
-        ship.firing = false;
-    }
-    public void update(Spaceship ship) {
-        Log.d("Powerstate", "DefaultPowerState");
-
-    }
-}
 
 /*Invulnerable to anything*/
 class ShieldPowerState implements PowerState {
