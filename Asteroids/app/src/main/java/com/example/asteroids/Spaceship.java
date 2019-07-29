@@ -17,7 +17,6 @@ public class Spaceship extends MovableObject {
     private float steeringInput;
     public ProjectileManager projectileManager;
     public boolean firing;
-    public int numOfLives;
 
 
     ///////////////////////////
@@ -27,7 +26,6 @@ public class Spaceship extends MovableObject {
     public Spaceship(PointF blockSize, ProjectileManager projectileManager) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector are the parameters
         super(blockSize);
-        this.numOfLives = 3;
         this.projectileManager = projectileManager;
         projectileOwner = 1;
         mass = 10;
@@ -76,6 +74,11 @@ public class Spaceship extends MovableObject {
                     j.y += 100;
             }
         }
+    }
+
+    public void checkLives() {
+
+
     }
 
     private void rotateShip(PointF joyStick) {
@@ -130,18 +133,31 @@ public class Spaceship extends MovableObject {
     }
 
 
-    public void update(long fps, PointF joyStickPos) {
+    public void update(long fps, HUD hud) {
 
         //Log.d("Joy", "Force: (" + joyStickPos.x + ", " + joyStickPos.y + ")");
 
-        rotateShip(joyStickPos);
-        updatePhysics(fps, joyStickPos);
+        rotateShip(hud.joyStick.getScaledStickPosition());
+        updatePhysics(fps, hud.joyStick.getScaledStickPosition());
+
+
         checkBounds();
         if(firing){
             projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation, projectileOwner);
         }
         firing = false;
         setPaint(); //TODO: move to constructor when we don't need ship to be drawn red if hit
+
+        if(isHit && hud.numOfLives != 0) {
+            --hud.numOfLives;
+            isHit = false;
+            genShape();
+            currVelocity = new PointF(0,0);
+            rotation = 0;
+
+        }
+
+
     }
 
 }

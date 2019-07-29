@@ -13,6 +13,8 @@ import java.util.Random;
 enum UFO_Origin{
     LEFT, TOP, RIGHT, BOTTOM
 }
+
+
 public class UFO extends MovableObject {
 
     //UFO body
@@ -27,10 +29,9 @@ public class UFO extends MovableObject {
     Point res;
     Resources resources;
     StateContext state;
-
     Explosion explosion;
     UFO_Origin enterFrom;
-
+    UFO_Type difficulty;
     //Max Boundary for UFO
     float xLBound, xRBound;
     float yTBound, yBBound;
@@ -39,11 +40,12 @@ public class UFO extends MovableObject {
 
     Random random = new Random();
     ProjectileManager projectileManager;
-
-    UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager) {
+    SFXManager sfxManager;
+    UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager,
+            SFXManager sfxManager) {
         super(blockSize);
         this.resources = resources;
-
+        this.sfxManager = sfxManager;
         projectileOwner = 2;
 
         body = new RectF();
@@ -78,6 +80,7 @@ public class UFO extends MovableObject {
         this.res = new Point();
         this.res.set(res.x,res.y);
         phase = false;
+        difficulty = UFO_Type.GREEN;//Easy by default
     }
 
     void update(long fps){
@@ -88,10 +91,12 @@ public class UFO extends MovableObject {
             phase = true;
         }else{
             phase = false;
-        if(!state.isDead()){
-            }
-            if (this.isHit){
-                state.setState(new DeadState());
+            if(!state.isDead()) {
+
+                if (this.isHit) {
+                    sfxManager.playExplosion();
+                    state.setState(new DeadState());
+                }
             }
         }
         state.stateAction(this, fps);
@@ -190,6 +195,14 @@ public class UFO extends MovableObject {
 
     private void reverseYVelocity(){
         mYVelocity = -mYVelocity;
+    }
+
+    void phaseThrough(){
+        paint.setAlpha(100);
+    }
+
+    void solidUFO(){
+        paint.setAlpha(255);
     }
 
 }

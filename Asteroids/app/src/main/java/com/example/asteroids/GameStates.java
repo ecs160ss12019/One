@@ -88,8 +88,9 @@ class NewGameState implements GameState {
         env.cd = new CollisionDetection(env.blockSize);
         env.projectileManager = new ProjectileManager(env.blockSize);
         env.spaceship = new Spaceship(env.blockSize, env.projectileManager);
-        env.hud = new HUD(env.blockSize, env.spaceship.numOfLives);
+        env.hud = new HUD(env.blockSize, 3);
         env.asteroidManager = new AsteroidManager(env.blockSize);
+        env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
                 .wantActive(5)
@@ -97,7 +98,7 @@ class NewGameState implements GameState {
                 .setSpawnGap(1000)
                 .setResources(env.getResources())
                 .setProjectileManager(env.projectileManager)
-                //.setSFXManager(sfxManager)
+                .setSFXManager(env.sfxManager)
                 .setBlockSize(env.blockSize)
                 .build();
 
@@ -113,9 +114,7 @@ class NewGameState implements GameState {
 
     @Override
     public void onTouch(Env env, MotionEvent e) {
-        /*if(pauseButton was touched)
-            setState(new PausedState)
-        */
+
     }
 
 }
@@ -174,6 +173,9 @@ class PauseGameState implements GameState {
 
 class PlayingGameState implements GameState {
 
+    public int score;
+
+
     @Override
     public void draw(Env env) {
         //Draws the playing game
@@ -193,10 +195,10 @@ class PlayingGameState implements GameState {
             }
             else if(ufo.state.isDrawable()){
                 if(ufo.phase)
-                    env.paint.setColor(Color.argb(100,0,255,0));
+                    ufo.phaseThrough();
                 else
-                    env.paint.setColor(Color.argb(255,0,255,0));
-                env.canvas.drawPath(ufo.draw(), env.paint);
+                    ufo.solidUFO();
+                env.canvas.drawPath(ufo.draw(), ufo.paint);
             }
         }
 
@@ -294,13 +296,15 @@ class PlayingGameState implements GameState {
         env.asteroidManager.updateAsteroids();
         env.ufoManager.update(env.fps);
         env.ufoManager.spawnUFO();
-        env.spaceship.update(env.fps, env.hud.joyStick.getScaledStickPosition());
+        env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
+
+        env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
 
-        if(env.spaceship.isHit)
+        if(env.hud.numOfLives == 0) {
             env.currState = new EndGameState();
-
+        }
 
     }
 
