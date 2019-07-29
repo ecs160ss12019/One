@@ -78,6 +78,11 @@ public class Spaceship extends MovableObject {
         }
     }
 
+    public void checkLives() {
+
+
+    }
+
     private void rotateShip(PointF joyStick) {
 
         if (joyStick.x == 0 && joyStick.y == 0)
@@ -136,12 +141,25 @@ public class Spaceship extends MovableObject {
 
         rotateShip(joyStickPos);
         updatePhysics(fps, joyStickPos);
+
+
         checkBounds();
         if(firing){
             projectileManager.fire(shapeCoords[1], shapeCoords[3], rotation, projectileOwner);
         }
         firing = false;
         setPaint(); //TODO: move to constructor when we don't need ship to be drawn red if hit
+
+        if(isHit) {
+            --numOfLives;
+            isHit = false;
+            genShape();
+            currVelocity = new PointF(0,0);
+            rotation = 0;
+
+        }
+
+
     }
 
 }

@@ -83,7 +83,6 @@ public class Env extends SurfaceView implements Runnable {
     * and false when it is in the background
     * */
     volatile boolean isGameOnFocus;
-    boolean paused = false;
 
 
     ///////////////////////////
@@ -144,8 +143,8 @@ public class Env extends SurfaceView implements Runnable {
         for(Asteroid currAst : asts) {
             if(!currAst.isHit)
                 checkHit(projs, currAst);
-            if(!currAst.isHit)
-                checkHit(asts, currAst);
+            //if(!currAst.isHit)
+                //checkHit(asts, currAst);
         }
 
         for(Projectile currP : projs) {
@@ -176,6 +175,10 @@ public class Env extends SurfaceView implements Runnable {
                         thisObject.astHitUfo = true;
                     mov.isHit = false;
                     thisObject.isHit = false;
+                }
+                if (thisObject.projectileOwner == 1) {
+                    hud.score += 10;
+                    Log.d("score", "Score: " + hud.score);
                 }
                 break;
             }

@@ -16,6 +16,8 @@ public class HUD {
     protected Path shipIcon;
     protected int numOfLives;
 
+    public int score;
+
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
@@ -24,7 +26,7 @@ public class HUD {
 
         // Setting JoyStick to 50% of screen, with baseRad of 20% of screen, and hatRadius of 8% of screen
         Point pos = new Point(20,70);
-        joyStick = new JoyStick(pos, 10, 4, blockSize);
+        joyStick = new JoyStick(pos, 15, 4, blockSize);
 
         // Setting location of fire button
         pos = new Point(80, 70);

@@ -113,9 +113,7 @@ class NewGameState implements GameState {
 
     @Override
     public void onTouch(Env env, MotionEvent e) {
-        /*if(pauseButton was touched)
-            setState(new PausedState)
-        */
+
     }
 
 }
@@ -173,6 +171,9 @@ class PauseGameState implements GameState {
 }
 
 class PlayingGameState implements GameState {
+
+    public int score;
+
 
     @Override
     public void draw(Env env) {
@@ -298,7 +299,7 @@ class PlayingGameState implements GameState {
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
 
-        if(env.spaceship.isHit)
+        if(env.spaceship.numOfLives == 0)
             env.currState = new EndGameState();
 
 
