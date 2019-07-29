@@ -71,4 +71,10 @@ public class HUD {
         return ship;
     }
 
+
+    void updateLives(int numofLives) {
+       this.numOfLives = numofLives;
+
+    }
+
 }
