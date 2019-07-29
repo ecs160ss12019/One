@@ -316,6 +316,8 @@ class PlayingGameState implements GameState {
             env.currState = new EndGameState();
         }
 
+        Log.d("FPS", "FPS: " + env.fps);
+
     }
 
 }
