@@ -19,9 +19,9 @@ public interface PowerState {
 
 class BurstFirePowerState implements  PowerState{
     public void fire(Spaceship ship) {
-        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation - 10, ship.projectileOwner);
-        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
-        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation + 10, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation - 10, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation + 10, ship.projectileOwner);
         ship.firing = false;
     }
     public void update(Spaceship ship) {
@@ -33,7 +33,7 @@ class BurstFirePowerState implements  PowerState{
 /*Default Powerstate*/
 class DefaultPowerState implements PowerState {
     public void fire(Spaceship ship) {
-        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation, ship.projectileOwner);
         ship.firing = false;
     }
     public void update(Spaceship ship) {
@@ -44,7 +44,7 @@ class DefaultPowerState implements PowerState {
 
 class ExtraLifePowerState implements PowerState {
     public void fire(Spaceship ship) {
-        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation, ship.projectileOwner);
         ship.firing = false;
     }
 
@@ -71,7 +71,7 @@ class MachineGunPowerState implements PowerState {
 /*Invulnerable to anything*/
 class ShieldPowerState implements PowerState {
     public void fire(Spaceship ship) {
-        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation, ship.projectileOwner);
         ship.firing = false;
     }
     public void update(Spaceship ship) {

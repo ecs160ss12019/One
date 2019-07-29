@@ -14,7 +14,7 @@ public class AsteroidManager {
     //      VARIABLES
     ///////////////////////////
     public Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
-    private int numAsteroids = 10;
+    private int numAsteroids = 5;
     private PointF blockSize;
     private static int resY;
     private static int resX;

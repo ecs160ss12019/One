@@ -306,7 +306,7 @@ class PlayingGameState implements GameState {
         env.asteroidManager.updateAsteroids();
         env.ufoManager.update(env.fps);
         env.ufoManager.spawnUFO();
-        env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
+        env.ufoManager.setCurrentDifficulty(UFO_Type.YELLOW);
 
         env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
