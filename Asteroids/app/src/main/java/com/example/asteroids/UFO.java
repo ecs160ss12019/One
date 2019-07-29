@@ -2,6 +2,8 @@ package com.example.asteroids;
 
 // Jose Torres-Vargas
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -41,6 +43,8 @@ public class UFO extends MovableObject {
     Random random = new Random();
     ProjectileManager projectileManager;
     SFXManager sfxManager;
+
+    Paint paint;
     UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager,
             SFXManager sfxManager) {
         super(blockSize);
@@ -81,6 +85,8 @@ public class UFO extends MovableObject {
         this.res.set(res.x,res.y);
         phase = false;
         difficulty = UFO_Type.GREEN;//Easy by default
+        paint = new Paint();
+        paint.setColor(Color.argb(255,0,255,0));
     }
 
     void update(long fps){

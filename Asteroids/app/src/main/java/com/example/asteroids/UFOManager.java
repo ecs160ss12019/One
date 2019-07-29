@@ -7,7 +7,7 @@ import android.graphics.Point;
 import android.util.Log;
 
 enum UFO_Type{
-    GREEN, YELLOW, RED
+    GREEN, YELLOW, RED, NONE
 }
 
 
@@ -17,14 +17,13 @@ public class UFOManager {
     int maxUFO;
     private int alive;
     private int wantActive;
-
     //Time stuff
     private Timers timers;
     private long gapTime;
     private long lastTime = 0;
     private long timeOut;
     private UFO_Type currentDifficulty;
-    Paint paint;
+
     UFOManager(Point res, PointF blockSize, Resources resources,
                ProjectileManager projectileManager, SFXManager sfx,
                int maxUFO, int wantActive, long timeOut, long ufoGapTime){
@@ -40,7 +39,6 @@ public class UFOManager {
             ufoArray[i] = new UFO(res, blockSize, resources, projectileManager, sfx);
         }
         alive = 0;
-        paint = new Paint();
         currentDifficulty = UFO_Type.GREEN;
     }
 
@@ -65,7 +63,12 @@ public class UFOManager {
             return -1;
         }
         timers.startTimer(ret);
-        configureUFO(ret);
+
+        if(currentDifficulty != ufoArray[ret].difficulty) {
+            ufoArray[ret].difficulty = currentDifficulty;
+            configureUFO(ret);
+        }
+
         Log.d("UFOLife: ", "alive: " + alive);
         return 0;
     }
@@ -139,9 +142,13 @@ public class UFOManager {
                 break;
             case RED:
                 ufoArray[index].paint.setColor(Color.argb(255, 255, 0, 0));
+                ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*1.15f;
+                ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*1.15f;
                 break;
             case YELLOW:
                 ufoArray[index].paint.setColor(Color.argb(255, 255, 255, 0));
+                ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*1.10f;
+                ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*1.10f;
                 break;
             default:
                 ufoArray[index].paint.setColor(Color.argb(255, 0, 0, 255));
