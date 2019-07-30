@@ -70,15 +70,13 @@ class EndGameState implements GameState{
 }
 
 
-
-
 class NewGameState implements GameState {
     @Override
     public void update(Env env) {
         //handles the new game (resetting all objects, etc)
 
         env.blockSize = new PointF((float) env.resolution.x/ 100, (float) env.resolution.y / 100);
-        env.fontSize = 5 * env.blockSize.x;
+        env.fontSize = 4 * env.blockSize.x;
 
         env.surfaceHolder = env.getHolder();
         env.paint = new Paint();
@@ -229,14 +227,6 @@ class PlayingGameState implements GameState {
         env.canvas.drawPath(env.powerUpManager.powerUpObject.draw(), env.powerUpManager.powerUpObject.paint);
 
 
-        /*
-        //Draw NumLives
-        env.paint.setStyle(Paint.Style.FILL);
-        env.paint.setTextSize(env.fontSize);
-        env.paint.setColor(Color.WHITE);
-        env.canvas.drawText("Lives: " + env.hud.numOfLives, 10 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
-        */
-
         //Draw number of lives
         env.hud.updateLives(env.spaceship.numLives);
         env.paint.setStyle(Paint.Style.STROKE);
@@ -247,6 +237,9 @@ class PlayingGameState implements GameState {
         env.canvas.drawPath(env.hud.shipIcon, env.paint);
 
         //Draw the score
+        env.paint.setStyle(Paint.Style.FILL);
+        env.paint.setTextSize(env.fontSize);
+        env.paint.setColor(Color.WHITE);
         env.canvas.drawText("Score: " + env.hud.score, 80 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
 
         //Draw the fire button
