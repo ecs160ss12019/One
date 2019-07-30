@@ -325,7 +325,7 @@ class PlayingGameState implements GameState {
         env.ufoManager.update(env.fps);
         //have env.ufoManager.setCurrentlyDifficulty() called by env proportional to score
         env.ufoManager.spawnUFO();
-
+        env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
         env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
