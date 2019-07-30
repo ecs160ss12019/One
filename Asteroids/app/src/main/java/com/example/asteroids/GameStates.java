@@ -197,8 +197,10 @@ class PlayingGameState implements GameState {
         //Fill game with solid black background
         env.canvas.drawColor(Color.BLACK);
 
-
-        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
+        //Testing other PAINT
+        //env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
+        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.blurPaint);
+        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.normalPaint);
 
         //Draw the UFO's
         env.paint.setStyle(Paint.Style.FILL);

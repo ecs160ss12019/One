@@ -2,6 +2,7 @@ package com.example.asteroids;
 
 // Martin Petrov
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -20,6 +21,9 @@ public class Spaceship extends MovableObject {
     private float steeringInput;
     public boolean firing;
 
+    //Testing new PAINT
+    Paint normalPaint;
+    Paint blurPaint;
 
     public ProjectileManager projectileManager;
 
@@ -45,6 +49,21 @@ public class Spaceship extends MovableObject {
 
         //TODO: Remove when implemented powerups in game
         setPowerUp(System.currentTimeMillis(), new BurstFirePowerState());
+        normalPaint = new Paint();
+        normalPaint.setAntiAlias(true);
+        normalPaint.setDither(true);
+        normalPaint.setColor(Color.argb(248, 255, 255, 255));
+        normalPaint.setStyle(Paint.Style.STROKE);
+        normalPaint.setStrokeJoin(Paint.Join.ROUND);
+        normalPaint.setStrokeCap(Paint.Cap.ROUND);
+        normalPaint.setStrokeWidth(20f);
+
+        blurPaint = new Paint();
+        blurPaint.set(normalPaint);
+        blurPaint.setColor(Color.argb(235,74,138,255));
+        blurPaint.setStrokeWidth(30f);
+        blurPaint.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL));
+
 
     }
 
