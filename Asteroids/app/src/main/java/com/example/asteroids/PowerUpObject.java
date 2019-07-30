@@ -14,6 +14,7 @@ public class PowerUpObject extends MovableObject {
     public PowerUpObject(PointF position, int powerUpType, PointF blockSize) {
         super(blockSize);
         createPowerUp(powerUpType);
+        projectileOwner = 5;
 
         this.position = position;
         shapeCoords = new PointF[5];
