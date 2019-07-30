@@ -110,7 +110,6 @@ class MainMenuState implements GameState {
             //If 1 touch is registered, shoot
             case MotionEvent.ACTION_DOWN:
 
-
                 if (menu.buttons[0].touchBox.contains((int) e.getX(), (int) e.getY()))
                     env.currState = new PlayingGameState();
 
