@@ -128,6 +128,12 @@ public class Env extends SurfaceView implements Runnable {
             checkHit(ufos, spaceship);
         if(!spaceship.isHit)
             checkHit(projs, spaceship);
+        if(!spaceship.isHit){
+            Vector<MovableObject> temp = new Vector<MovableObject>();
+            temp.addElement(powerUpManager.powerUpObject);
+            checkHit(temp, spaceship);
+            checkHit(projs, powerUpManager.powerUpObject);
+        }
 
 
         // CHECK WHAT HIT THE UFOS
@@ -182,6 +188,12 @@ public class Env extends SurfaceView implements Runnable {
                     hud.score += 10;
                     Log.d("score", "Score: " + hud.score);
                     //TODO:
+                }
+                if(mov.projectileOwner == 5 && thisObject.projectileOwner == 1){
+                    mov.isHit = true;
+                    thisObject.isHit = false;
+                    if(thisObject.projectileOwner == 5 && mov.projectileOwner == 1)
+                        thisObject.isHit = true;
                 }
                 break;
             }

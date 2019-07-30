@@ -10,6 +10,8 @@ public class Projectile extends MovableObject{
     ///////////////////////////
     private PointF directionVector;
     public long startTime;
+    float mag;
+    float speed = 100;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -20,13 +22,15 @@ public class Projectile extends MovableObject{
         super(blockSize);
         isHit = false;
         PointF addW = new PointF(0,0);
-        float rotateRads = (float)(Math.toRadians(rotate));
+        float rotateRads = (float)(Math.toRadians(rotate) + 3.14);
         directionVector = new PointF();
         setDirectionVector(pos2, pos1, rotateRads);
         setWidth(rotate, addW);
         setDraw(pos1, pos2, addW);
         startTime = System.currentTimeMillis();
         mass = 10;
+        rotation = rotate;
+//        currVelocity = new PointF (pos2.x - pos1.x, pos2.y - pos1.y);
 
     }
 
@@ -39,10 +43,10 @@ public class Projectile extends MovableObject{
                 -((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
         directionVector.y = ((float)Math.cos(rotateRads)*(pos2.y - pos1.y))
                 +((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
-        float mag = (float)Math.sqrt(directionVector.x*directionVector.x +
+        mag = (float)Math.sqrt(directionVector.x*directionVector.x +
                 directionVector.y*directionVector.y);
-        directionVector.x = directionVector.x/mag;
-        directionVector.y = directionVector.y/mag;
+        directionVector.x = -directionVector.x/mag;
+        directionVector.y =  directionVector.y/mag;
     }
 
     private void setDraw(PointF pos1, PointF pos2, PointF addW){
@@ -57,21 +61,24 @@ public class Projectile extends MovableObject{
     private void setWidth(float rotate, PointF addW){
         if(rotate >= 0  && rotate < 90){
             addW.x = 1/blockSize.x;
-        }else if(rotate >= 90 && rotate <= 180){
+        }else if(rotate >= 90 && rotate < 180){
             addW.y = 1/blockSize.y;
-        }else if(rotate > 180 && rotate < 270){
+//            directionVector = new PointF(directionVector.y, directionVector.x);
+        }else if(rotate >= 180 && rotate < 270){
             addW.x = -1/blockSize.x;
         }else if(rotate >= 270 && rotate <= 360){
             addW.y = -1/blockSize.x;
+  //          directionVector = new PointF(directionVector.y, directionVector.x);
         }
 
     }
 
     public void update(long fps){
         for(PointF s: shapeCoords){
-            s.x += directionVector.x;
-            s.y += directionVector.y;
-//            updatePhysics(fps, directionVector);
+//            s.x += directionVector.x;
+  //          s.y += directionVector.y;
         }
+        updatePhysics(fps, new PointF (directionVector.x*mag*speed,directionVector.y*mag*speed));
+
     }
 }

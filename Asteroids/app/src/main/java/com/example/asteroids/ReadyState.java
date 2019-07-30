@@ -6,6 +6,10 @@ import android.util.Log;
 
 import java.util.Random;
 
+/**
+ * ReadyState gets the UFO "ready" by randomly deciding from which
+ * edge the UFO will come in and placing it outside the screen.
+ */
 public class ReadyState implements State {
     Random random;
     ReadyState(){
