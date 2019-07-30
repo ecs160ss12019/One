@@ -1,18 +1,32 @@
 package com.example.asteroids;
 
-import android.graphics.Point;
 import android.graphics.PointF;
 
 public class Menu {
 
-    public Button resume;
-    public Button newGame;
+    protected Button[] buttons;
+    protected PointF blockSize;
 
-    public Menu(PointF blockSize) {
 
-        resume = new Button(new Point(50,40), blockSize, "Resume" );
+    public Menu(PointF blockSize, String menuSelect) {
+        if (menuSelect == "mainMenu") {
+            int numOfButtons = 1;
+            buttons = new Button[numOfButtons];
+            // Point buttonPos, PointF blockSize, String text
 
-        newGame = new Button(new Point(50, 60), blockSize, "New Game");
+            /*
+            addRect(float left, float top, float right, float bottom, Path.Direction dir)
+             */
+
+            Path
+
+            buttons[0] = new Button(_, blockSize, "Start game")
+
+
+        } else if (menuSelect == "pauseMenu") {
+
+
+        }
 
     }
 
