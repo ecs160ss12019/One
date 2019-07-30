@@ -115,7 +115,7 @@ class NewGameState implements GameState {
                 .setBlockSize(env.blockSize)
                 .build();
 
-        env.powerUpManager = new PowerUpManager(env.blockSize);
+        env.powerUpManager = new PowerUpManager(env.blockSize, env.spaceship);
 
         //After creating a new game, we should move to playGameState
         env.currState = new PlayingGameState();
@@ -199,8 +199,8 @@ class PlayingGameState implements GameState {
 
         //Testing other PAINT
         //env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
-        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.blurPaint);
-        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.normalPaint);
+        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.paint);
+        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.paint);
 
         //Draw the UFO's
         env.paint.setStyle(Paint.Style.FILL);

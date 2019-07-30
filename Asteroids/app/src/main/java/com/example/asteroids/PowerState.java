@@ -9,6 +9,8 @@ package com.example.asteroids;
 //Martin Petrov
 
 
+import android.graphics.Color;
+import android.graphics.PointF;
 import android.util.Log;
 
 public interface PowerState {
@@ -26,7 +28,7 @@ class BurstFirePowerState implements  PowerState{
     }
     public void update(Spaceship ship) {
         Log.d("Powerstate", "BurstFirePowerState");
-
+        ship.paint.setColor(Color.RED);
     }
 }
 
@@ -38,6 +40,7 @@ class DefaultPowerState implements PowerState {
     }
     public void update(Spaceship ship) {
         Log.d("Powerstate", "DefaultPowerState");
+        ship.paint.setColor(Color.WHITE);
 
     }
 }
@@ -51,6 +54,7 @@ class ExtraLifePowerState implements PowerState {
     public void update(Spaceship ship) {
         Log.d("Powerstate", "ExtraLifePowerState");
         ship.numLives++;
+        ship.paint.setColor(Color.GREEN);
         ship.currPowerState = new DefaultPowerState();
     }
 }
@@ -62,6 +66,7 @@ class MachineGunPowerState implements PowerState {
     }
     public void update(Spaceship ship) {
         Log.d("Powerstate", "BurstFirePowerState");
+
 
     }
 
@@ -77,7 +82,10 @@ class ShieldPowerState implements PowerState {
     public void update(Spaceship ship) {
         //TODO: Draw Shield around ship
         Log.d("Powerstate", "ShieldPowerState");
+        ship.paint.setColor(Color.BLUE);
         ship.isHit = false;
+
+
     }
 
 

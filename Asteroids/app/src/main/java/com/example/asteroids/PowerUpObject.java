@@ -4,6 +4,7 @@ package com.example.asteroids;
 
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.util.Log;
 
 
 public class PowerUpObject extends MovableObject {
@@ -13,6 +14,8 @@ public class PowerUpObject extends MovableObject {
 
     public PowerUpObject(PointF position, int powerUpType, PointF blockSize) {
         super(blockSize);
+        Log.d("Rand", "powerup: " + powerUpType);
+
         createPowerUp(powerUpType);
         projectileOwner = 5;
 
@@ -30,13 +33,17 @@ public class PowerUpObject extends MovableObject {
             case 0:
                 powerType = new BurstFirePowerState();
                 paint.setColor(Color.RED);
+                break;
 
             case 1:
                 powerType = new ExtraLifePowerState();
                 paint.setColor(Color.GREEN);
+                break;
+
             case 2:
                 powerType = new ShieldPowerState();
                 paint.setColor(Color.BLUE);
+                break;
         }
 
     }
