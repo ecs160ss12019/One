@@ -8,28 +8,36 @@ import android.graphics.RectF;
 //Simple class that just holds a button's information
 public class Button {
 
-    public RectF button;
+    public RectF box;
     public String textBox;
     public Path shape;
+    public PointF dimensions;
 
     //The position of the button accounting for screenResolution
     public Point pos;
 
 
+    public Button(Point buttonPos, int xSize, int ySize, PointF blockSize, String text) {
 
-    public Button(Point buttonPos, PointF blockSize, String text) {
-        //The button is 1/10th screen res in both x & y
-        PointF size = new PointF(10, 10);
+        // set position of button in terms of blockSize
         pos = new Point(buttonPos.x * (int)blockSize.x, buttonPos.y * (int)blockSize.y);
 
-        button = new RectF(buttonPos.x * blockSize.x, buttonPos.y * blockSize.y,
-                (buttonPos.x + size.x) * blockSize.x, (buttonPos.y + size.y) * blockSize.y);
+        // set dimensions of button in terms of blockSize
+        dimensions = new PointF(xSize * blockSize.x, ySize * blockSize.y);
 
-        this.shape = new Path();
+        // generate rectangle corresponding to position and dimensions
+        box = new RectF(pos.x, pos.y, (pos.x + dimensions.x), (pos.y + dimensions.y));
+
+        // now create path us
+        shape = new Path();
+        shape.addRect(box, Path.Direction.CW);
+
+        // give the button a text field
+        textBox = text;
+
     }
 
     public Path draw() {
-        this.shape.addRect(button, Path.Direction.CW);
         return this.shape;
     }
 
