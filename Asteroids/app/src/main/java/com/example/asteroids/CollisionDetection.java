@@ -36,11 +36,7 @@ public class CollisionDetection {
         r1.setPath(p1, clip);
         r2.setPath(p2, clip);
 
-        if (!r1.quickReject(r2) && r1.op(r2, Region.Op.INTERSECT) ) {
-            return true;
-        } else {
-            return false;
-        }
+        return !r1.quickReject(r2) && r1.op(r2, Region.Op.INTERSECT);
     }
 
 
