@@ -177,15 +177,10 @@ class PauseGameState implements GameState {
         for (int i = 0; i < menu.numOfButtons; i++) {
             env.paint.setColor(Color.argb(255, 255, 255, 255));
             env.canvas.drawPath(menu.buttons[i].shape, env.paint);
-
             env.paint.setColor(Color.argb(255, 0, 0, 0));
-
-
             env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 75,
                     menu.buttons[i].pos.y + 50, env.paint);
         }
-
-
     }
 
     @Override
@@ -197,6 +192,15 @@ class PauseGameState implements GameState {
             //If 1 touch is registered, shoot
             case MotionEvent.ACTION_DOWN:
 
+
+                if (menu.buttons[0].touchBox.contains((int) e.getX(), (int) e.getY()))
+                    env.currState = new PlayingGameState();
+                if (menu.buttons[1].touchBox.contains((int) e.getX(), (int) e.getY()))
+                    env.currState = new NewGameState();
+
+
+
+/*
                 //Touches on top of screen restates the game
                 if (e.getY() / env.blockSize.y > 50)
                     env.currState = new NewGameState();
@@ -204,7 +208,7 @@ class PauseGameState implements GameState {
                 //Touches on bottom resumes the current game
                 if (e.getY() / env.blockSize.y < 50)
                     env.currState = new PlayingGameState();
-
+*/
                 break;
         }
 
@@ -222,10 +226,8 @@ class PlayingGameState implements GameState {
         //Fill game with solid black background
         env.canvas.drawColor(Color.BLACK);
 
-        //Testing other PAINT
-        //env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
-        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.paint);
-        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.paint);
+
+        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
 
         //Draw the UFO's
         env.paint.setStyle(Paint.Style.FILL);
@@ -360,8 +362,6 @@ class PlayingGameState implements GameState {
         if(env.spaceship.numLives == 0) {
             env.currState = new EndGameState();
         }
-
-        Log.d("FPS", "FPS: " + env.fps);
 
     }
 
