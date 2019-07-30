@@ -74,32 +74,48 @@ class MainMenuState implements GameState {
     private Menu menu;
 
     public MainMenuState(Env env) {
+
         menu = new Menu(env.blockSize, "mainMenu");
     }
 
 
     public void update(Env env) {
-
+        if (env.restarting)
+            env.currState = new PlayingGameState();
     }
 
     public void draw(Env env) {
+        if (!env.restarting) {
+            //Draws the menu
+            env.canvas.drawColor(Color.argb(255, 0, 0, 0));
 
-        //Draws the menu
-        env.canvas.drawColor(Color.argb(255, 0, 0, 0));
+            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.paint.setStyle(Paint.Style.FILL);
 
-        env.paint.setColor(Color.argb(255, 255, 255, 255));
-        env.paint.setStyle(Paint.Style.FILL);
-
-        for (int i = 0; i < menu.numOfButtons; i++) {
-            env.canvas.drawPath(menu.buttons[i].shape, env.paint);
-            //env.canvas.drawText();
+            for (int i = 0; i < menu.numOfButtons; i++) {
+                env.paint.setColor(Color.argb(255, 255, 255, 255));
+                env.canvas.drawPath(menu.buttons[i].shape, env.paint);
+                env.paint.setColor(Color.argb(255, 0, 0, 0));
+                env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 75,
+                        menu.buttons[i].pos.y + 50, env.paint);
+            }
         }
-
-
     }
 
     public void onTouch(Env env, MotionEvent e) {
+        //Interface with the menu
 
+        switch (e.getActionMasked()) {
+
+            //If 1 touch is registered, shoot
+            case MotionEvent.ACTION_DOWN:
+
+
+                if (menu.buttons[0].touchBox.contains((int) e.getX(), (int) e.getY()))
+                    env.currState = new PlayingGameState();
+
+                break;
+        }
     }
 }
 
@@ -138,7 +154,7 @@ class NewGameState implements GameState {
         env.powerUpManager = new PowerUpManager(env.blockSize, env.spaceship);
 
         //After creating a new game, we should move to playGameState
-        env.currState = new PlayingGameState();
+        env.currState = new MainMenuState(env);
 
     }
 
@@ -195,20 +211,16 @@ class PauseGameState implements GameState {
 
                 if (menu.buttons[0].touchBox.contains((int) e.getX(), (int) e.getY()))
                     env.currState = new PlayingGameState();
-                if (menu.buttons[1].touchBox.contains((int) e.getX(), (int) e.getY()))
+                if (menu.buttons[1].touchBox.contains((int) e.getX(), (int) e.getY())) {
+                    env.restarting = true;
                     env.currState = new NewGameState();
-
-
-
-/*
-                //Touches on top of screen restates the game
-                if (e.getY() / env.blockSize.y > 50)
+                }
+                if (menu.buttons[2].touchBox.contains((int) e.getX(), (int) e.getY())) {
+                    env.restarting = false;
                     env.currState = new NewGameState();
+                }
 
-                //Touches on bottom resumes the current game
-                if (e.getY() / env.blockSize.y < 50)
-                    env.currState = new PlayingGameState();
-*/
+
                 break;
         }
 
