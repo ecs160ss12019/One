@@ -317,8 +317,8 @@ class PlayingGameState implements GameState {
     public void update(Env env) {
         env.asteroidManager.updateAsteroids();
         env.ufoManager.update(env.fps);
+        //have env.ufoManager.setCurrentlyDifficulty() called by env proportional to score
         env.ufoManager.spawnUFO();
-        env.ufoManager.setCurrentDifficulty(UFO_Type.YELLOW);
 
         env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
