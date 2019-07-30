@@ -2,6 +2,10 @@ package com.example.asteroids;
 
 import android.util.Log;
 
+/**
+ * Timers that are used to keep track of how long a
+ * UFO has been alive.
+ */
 public class Timers {
     private final long INACTIVE = -1;
     private final long DONE = -2;
@@ -35,8 +39,8 @@ public class Timers {
         prevTime[index] = System.currentTimeMillis();
     }
 
+
     void updateTimers(){
-        Log.d("updateIimers: ", "entering");
         currentTime = System.currentTimeMillis();
 
         for(int i = 0; i < numTimers; i++){
@@ -54,6 +58,10 @@ public class Timers {
 
     }
 
+    /**
+     * Boolean array parallel to "Timers" array used to keep
+     * track of which timer has finished
+     */
     void checkTimers(){
 
         for(int i = 0; i < numTimers; i++){

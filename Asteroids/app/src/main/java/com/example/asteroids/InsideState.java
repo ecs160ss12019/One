@@ -2,6 +2,9 @@ package com.example.asteroids;
 
 import android.util.Log;
 
+/**
+ * InsideState represents state when UFO is inside the screen
+ */
 public class InsideState implements State {
     private long lastTime;
     private long time;
@@ -10,6 +13,14 @@ public class InsideState implements State {
         lastTime = 0;
         time = 0;
     }
+
+    /**
+     * State action is to update UFO position within a boudned region. UFO
+     * also fires in a random direction periodically.
+     * @param context
+     * @param ufo UFO object
+     * @param fps Frames Per Second
+     */
     @Override
     public void stateAction(StateContext context, UFO ufo, long fps) {
         ufo.ufoUpdateX(fps);
