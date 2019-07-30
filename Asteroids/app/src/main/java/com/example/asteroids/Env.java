@@ -132,6 +132,7 @@ public class Env extends SurfaceView implements Runnable {
             Vector<MovableObject> temp = new Vector<MovableObject>();
             temp.addElement(powerUpManager.powerUpObject);
             checkHit(temp, spaceship);
+            checkHit(projs, powerUpManager.powerUpObject);
         }
 
 
@@ -164,8 +165,10 @@ public class Env extends SurfaceView implements Runnable {
 
     public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
-            if(mov.projectileOwner == 5){
+            if(mov.projectileOwner == 5 && thisObject.projectileOwner == 1){
                 mov.isHit = true;
+                if(thisObject.projectileOwner == 5 && mov.projectileOwner == 1)
+                    thisObject.isHit = true;
                 break;
             }
             if(mov == thisObject
