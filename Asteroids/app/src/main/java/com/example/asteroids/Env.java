@@ -165,12 +165,6 @@ public class Env extends SurfaceView implements Runnable {
 
     public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
-            if(mov.projectileOwner == 5 && thisObject.projectileOwner == 1){
-                mov.isHit = true;
-                if(thisObject.projectileOwner == 5 && mov.projectileOwner == 1)
-                    thisObject.isHit = true;
-                break;
-            }
             if(mov == thisObject
                     || ((thisObject.projectileOwner == mov.projectileOwner)
                     && (thisObject.projectileOwner != 3))){
@@ -194,6 +188,11 @@ public class Env extends SurfaceView implements Runnable {
                     hud.score += 10;
                     Log.d("score", "Score: " + hud.score);
                     //TODO:
+                }
+                if(mov.projectileOwner == 5 && thisObject.projectileOwner == 1){
+                    mov.isHit = true;
+                    if(thisObject.projectileOwner == 5 && mov.projectileOwner == 1)
+                        thisObject.isHit = true;
                 }
                 break;
             }
