@@ -2,7 +2,13 @@ package com.example.asteroids;
 
 import android.util.Log;
 
+/**
+ * Represents the Dead state of the UFO. In the Dead state
+ * the UFO should simply explode on screen.
+ * @author Jose Torres-Vargas
+ */
 public class DeadState implements State {
+    //Current frame of sprite sheet
     int curFrame;
 
     @Override

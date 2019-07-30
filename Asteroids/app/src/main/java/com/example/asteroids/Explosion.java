@@ -6,8 +6,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import com.example.asteroids.R;
-
+/**
+ *
+ * Contains logic related to Sprite explosion.
+ * @author Jose Torres-Vargas
+ */
 public class Explosion {
 
     Bitmap bitMap;
@@ -24,6 +27,12 @@ public class Explosion {
     int currentFrame = 0;
     int numFrames;
 
+    /**
+     * Initializes necessary variables.
+     * @param numCol: number of columns in sprite sheet.
+     * @param numRow: number of rows in sprite sheet.
+     * @param resources: project resources
+     */
     Explosion(int numCol, int numRow, Resources resources){
         this.numCol = numCol;
         this.numRow = numRow;
@@ -38,6 +47,13 @@ public class Explosion {
         numFrames = this.numCol*this.numRow;
     }
 
+    /**
+     * returns current frame of sprite animation.
+     * For example if sprite sheet is 4 x 4 it has
+     * 16 sprites or "frames". Method ensures that there
+     * is a time gap before current frame is updated.
+     * @return
+     */
     int getCurrentFrame(){
         long time = System.currentTimeMillis();
         if(time > lastFrameTime + frameLenghtMS){
@@ -53,10 +69,19 @@ public class Explosion {
         return currentFrame;
     }
 
+    /**
+     * position explosion on screen
+     * @param x: x position in terms of resolution
+     * @param y: y position in terms of resolution
+     */
     void placeExplosion(float x, float y){
         whereToDraw.set(x,y,x+frameWidth, y+frameHeight);
     }
 
+    /**
+     * Allow for explosion to be called again later.
+     * Resets variables.
+     */
     void resetExplosion(){
         currentRow = 0;
         currentCol = 0;

@@ -2,8 +2,19 @@ package com.example.asteroids;
 
 import android.util.Log;
 
+/**
+ * EnterState represents the state when the UFO is entering the
+ * UFO from the outside of the screen.
+ * @author Jose Torres-Vargas
+ */
 public class EnterState implements State {
     @Override
+
+    /**
+     * Make UFO enter the screen. Must ensure that the velocity is
+     * in the right direction so that it goes into the screen and not
+     * away. Once inside state is changed to InsideState
+     */
     public void stateAction(StateContext context, UFO ufo, long fps) {
         Log.d("EnterState: ", "inside stateAction");
         ufo.isHit = false;
