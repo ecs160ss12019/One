@@ -75,17 +75,7 @@ class MainMenu implements GameState {
     }
 
     public void draw(Env env) {
-        //Draws the menu
-        env.canvas.drawColor(Color.argb(255, 0, 0, 0));
 
-        env.paint.setColor(Color.argb(255, 255, 255, 255));
-        env.canvas.drawRect(menu.resume.button, env.paint);
-        env.canvas.drawRect(menu.newGame.button, env.paint);
-
-        //TODO: Make buttons have text
-        //env.paint.setColor(Color.argb(255,0,0,0));
-        //env.canvas.drawText(menu.resume.textBox, menu.resume.absPosition.x, menu.resume.absPosition.y, env.paint);
-        //env.canvas.drawText(menu.resume.textBox, menu.resume.absPosition.x, menu.resume.absPosition.y, env.paint);
     }
 
     public void onTouch(Env env, MotionEvent e) {
@@ -149,7 +139,7 @@ class PauseGameState implements GameState {
     private Menu menu;
 
     public PauseGameState(Env env) {
-        menu = new Menu(env.blockSize);
+        menu = new Menu(env.blockSize, "pauseMenu");
     }
 
     @Override
@@ -163,8 +153,8 @@ class PauseGameState implements GameState {
         env.canvas.drawColor(Color.argb(255,0,0,0));
 
         env.paint.setColor(Color.argb(255,255,255,255));
-        env.canvas.drawRect(menu.resume.button, env.paint);
-        env.canvas.drawRect(menu.newGame.button, env.paint);
+        // env.canvas.drawRect(menu.resume.button, env.paint);
+        ///env.canvas.drawRect(menu.newGame.button, env.paint);
 
         //TODO: Make buttons have text
         //env.paint.setColor(Color.argb(255,0,0,0));

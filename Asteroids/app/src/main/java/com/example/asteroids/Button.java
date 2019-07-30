@@ -40,6 +40,4 @@ public class Button {
     public Path draw() {
         return this.shape;
     }
-
-
 }
