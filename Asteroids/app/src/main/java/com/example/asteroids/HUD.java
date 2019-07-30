@@ -15,14 +15,18 @@ public class HUD {
     protected Button shootButton;
     protected Path shipIcon;
     protected int numOfLives;
-
+    PointF[] shapeCoords;
     public int score;
+    int startX;
+    int startY;
+    PointF blockSize;
 
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
 
     public HUD(PointF blockSize, int numOfLives) {
+        this.blockSize = blockSize;
 
         // Setting JoyStick to 50% of screen, with baseRad of 20% of screen, and hatRadius of 8% of screen
         Point pos = new Point(20,70);
@@ -32,10 +36,15 @@ public class HUD {
         pos = new Point(80, 70);
         shootButton = new Button(pos, blockSize, "Fire");
 
+        // allocate coord array to hold ship icon for displaying lives
+        shapeCoords = new PointF[5];
+
         // Setting the number of lives
         this.numOfLives = numOfLives;
 
         // Generating ship icon for HUD
+        startX = 5 * (int) blockSize.x;
+        startY = 5 * (int) blockSize.y;
         this.shipIcon = generateShipIcon(blockSize);
 
 
@@ -56,17 +65,29 @@ public class HUD {
     //      METHODS
     ///////////////////////////
     public Path generateShipIcon(PointF blockSize) {
-        PointF[] shapeCoords = new PointF[5];
-        shapeCoords[0] = new PointF(50, 50);
-        shapeCoords[1] = new PointF(51, 53);
-        shapeCoords[2] = new PointF(50, 52);
-        shapeCoords[3] = new PointF(49, 53);
-        shapeCoords[4] = new PointF(50, 50);
+        shapeCoords[0] = new PointF(startX, startY);
+        shapeCoords[1] = new PointF(startX + (1 * blockSize.x), startY + (3 * blockSize.y));
+        shapeCoords[2] = new PointF(startX, startY + (2 * blockSize.y));
+        shapeCoords[3] = new PointF(startX - (1 * blockSize.x), startY + (3 * blockSize.y));
+        shapeCoords[4] = new PointF(startX, startY);
 
         Path ship = new Path();
 
-        for(int i = 1; i < shapeCoords.length; ++i)
-            ship.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.y);
+
+        ///////
+        int xOffset = 4 * (int) blockSize.x;
+
+        for (int i = 0; i < this.numOfLives; i++) {
+            ship.moveTo(startX + (i * xOffset), startY);
+
+
+            for (int j = 1; j < shapeCoords.length; j++) {
+                ship.lineTo(shapeCoords[j].x, shapeCoords[j].y);
+                shapeCoords[j].x += xOffset;
+            }
+
+
+        }
 
         return ship;
     }
@@ -74,7 +95,7 @@ public class HUD {
 
     void updateLives(int numofLives) {
        this.numOfLives = numofLives;
-
+        shipIcon = generateShipIcon(this.blockSize);
     }
 
 }
