@@ -17,10 +17,12 @@ public class Button {
     public Point pos;
 
 
-    public Button(Point buttonPos, int xSize, int ySize, PointF blockSize, String text) {
+    public Button(Point pos, int xSize, int ySize, PointF blockSize, String text) {
 
         // set position of button in terms of blockSize
-        pos = new Point(buttonPos.x * (int)blockSize.x, buttonPos.y * (int)blockSize.y);
+        //pos = new Point(buttonPos.x * (int)blockSize.x, buttonPos.y * (int)blockSize.y);
+        //pos = new Point(buttonPos.x, buttonPos.y);
+        this.pos = pos;
 
         // set dimensions of button in terms of blockSize
         dimensions = new PointF(xSize * blockSize.x, ySize * blockSize.y);

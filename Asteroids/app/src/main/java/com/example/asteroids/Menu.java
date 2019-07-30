@@ -42,14 +42,14 @@ public class Menu {
             xSize = 40;
             ySize = 15;
             textField = "Restart";
-            buttons[0] = new Button(buttonPos, xSize, ySize, blockSize, textField);
+            buttons[1] = new Button(buttonPos, xSize, ySize, blockSize, textField);
 
             // Button 3 - Main Menu
             buttonPos = new Point((int) (blockSize.x * 30), (int) (blockSize.y * 65));
             xSize = 40;
             ySize = 15;
             textField = "Main Menu";
-            buttons[0] = new Button(buttonPos, xSize, ySize, blockSize, textField);
+            buttons[2] = new Button(buttonPos, xSize, ySize, blockSize, textField);
 
 
         }

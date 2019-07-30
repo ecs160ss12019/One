@@ -69,12 +69,32 @@ class EndGameState implements GameState{
     }
 }
 
-class MainMenu implements GameState {
+class MainMenuState implements GameState {
+
+    private Menu menu;
+
+    public MainMenuState(Env env) {
+        menu = new Menu(env.blockSize, "mainMenu");
+    }
+
+
     public void update(Env env) {
 
     }
 
     public void draw(Env env) {
+
+        //Draws the menu
+        env.canvas.drawColor(Color.argb(255, 0, 0, 0));
+
+        env.paint.setColor(Color.argb(255, 255, 255, 255));
+        env.paint.setStyle(Paint.Style.FILL);
+
+        for (int i = 0; i < menu.numOfButtons; i++) {
+            env.canvas.drawPath(menu.buttons[i].shape, env.paint);
+            //env.canvas.drawText();
+        }
+
 
     }
 
@@ -152,14 +172,19 @@ class PauseGameState implements GameState {
         //Draws the menu
         env.canvas.drawColor(Color.argb(255,0,0,0));
 
-        env.paint.setColor(Color.argb(255,255,255,255));
-        // env.canvas.drawRect(menu.resume.button, env.paint);
-        ///env.canvas.drawRect(menu.newGame.button, env.paint);
+        env.paint.setStyle(Paint.Style.FILL);
 
-        //TODO: Make buttons have text
-        //env.paint.setColor(Color.argb(255,0,0,0));
-        //env.canvas.drawText(menu.resume.textBox, menu.resume.absPosition.x, menu.resume.absPosition.y, env.paint);
-        //env.canvas.drawText(menu.resume.textBox, menu.resume.absPosition.x, menu.resume.absPosition.y, env.paint);
+        for (int i = 0; i < menu.numOfButtons; i++) {
+            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.canvas.drawPath(menu.buttons[i].shape, env.paint);
+
+            env.paint.setColor(Color.argb(255, 0, 0, 0));
+
+
+            env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 75,
+                    menu.buttons[i].pos.y + 50, env.paint);
+        }
+
 
     }
 

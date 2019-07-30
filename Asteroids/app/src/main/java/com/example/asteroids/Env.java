@@ -99,6 +99,7 @@ public class Env extends SurfaceView implements Runnable {
 
         //Set the state to new game to reset all variables
         currState = new NewGameState();
+        //currState = new MainMenuState(this);
         currState.update(this);
     }
 
