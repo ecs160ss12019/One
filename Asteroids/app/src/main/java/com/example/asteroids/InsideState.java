@@ -29,7 +29,24 @@ public class InsideState implements State {
         setShot(ufo);
         time = System.currentTimeMillis();
         if(time > lastTime + gapTime) {
-            ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, ufo.projectileOwner);
+            if(ufo.difficulty == UFO_Type.GREEN) {
+                setShot(ufo);
+                ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, ufo.projectileOwner);
+            }
+            else if(ufo.difficulty == UFO_Type.YELLOW){
+                setShot(ufo);
+                ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, ufo.projectileOwner);
+                setShot(ufo);
+                ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, ufo.projectileOwner);
+            }
+            else if(ufo.difficulty == UFO_Type.RED){
+                setShot(ufo);
+                ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, ufo.projectileOwner);
+                setShot(ufo);
+                ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, ufo.projectileOwner);
+                setShot(ufo);
+                ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, ufo.projectileOwner);
+            }
             lastTime = time;
         }
     }
