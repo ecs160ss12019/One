@@ -11,7 +11,7 @@ public class Projectile extends MovableObject{
     private PointF directionVector;
     public long startTime;
     float mag;
-    float speed = 100;
+    float speed = 200;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -75,10 +75,10 @@ public class Projectile extends MovableObject{
 
     public void update(long fps){
         for(PointF s: shapeCoords){
-//            s.x += directionVector.x;
-  //          s.y += directionVector.y;
+            s.x += directionVector.x;
+            s.y += directionVector.y;
         }
-        updatePhysics(fps, new PointF (directionVector.x*mag*speed,directionVector.y*mag*speed));
+        //updatePhysics(fps, new PointF (directionVector.x*mag*speed,directionVector.y*mag*speed));
 
     }
 }

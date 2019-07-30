@@ -2,6 +2,7 @@ package com.example.asteroids;
 
 // Martin Petrov
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -20,6 +21,9 @@ public class Spaceship extends MovableObject {
     private float steeringInput;
     public boolean firing;
 
+    //Testing new PAINT
+    Paint normalPaint;
+    Paint blurPaint;
 
     public ProjectileManager projectileManager;
 
@@ -44,7 +48,24 @@ public class Spaceship extends MovableObject {
         genShape();
 
         //TODO: Remove when implemented powerups in game
-        setPowerUp(System.currentTimeMillis(), new BurstFirePowerState());
+        setPowerUp(new DefaultPowerState());
+
+        normalPaint = new Paint();
+        normalPaint.setAntiAlias(true);
+       // normalPaint.setDither(true);
+        normalPaint.setColor(Color.argb(248, 255, 255, 255));
+        normalPaint.setStyle(Paint.Style.STROKE);
+        //normalPaint.setStrokeJoin(Paint.Join.ROUND);
+        //normalPaint.setStrokeCap(Paint.Cap.ROUND);
+        //normalPaint.setStrokeWidth(20f);
+
+        blurPaint = new Paint();
+        blurPaint.set(normalPaint);
+        blurPaint.setStyle(Paint.Style.FILL);
+        blurPaint.setColor(Color.argb(255,255,255,255));
+        blurPaint.setStrokeWidth(10f);
+        blurPaint.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.NORMAL));
+
 
     }
 
@@ -138,9 +159,9 @@ public class Spaceship extends MovableObject {
     }
 
 
-    public void setPowerUp(long currTime, PowerState powerUp) {
+    public void setPowerUp(PowerState powerUp) {
         currPowerState = powerUp;
-        powerUpTime = currTime;
+        powerUpTime = System.currentTimeMillis();
     }
 
     public void update(long fps, HUD hud) {
