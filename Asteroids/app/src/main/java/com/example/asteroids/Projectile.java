@@ -10,6 +10,7 @@ public class Projectile extends MovableObject{
     ///////////////////////////
     private PointF directionVector;
     public long startTime;
+    float mag;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -27,6 +28,8 @@ public class Projectile extends MovableObject{
         setDraw(pos1, pos2, addW);
         startTime = System.currentTimeMillis();
         mass = 10;
+        rotation = rotate;
+//        currVelocity = new PointF (pos2.x - pos1.x, pos2.y - pos1.y);
 
     }
 
@@ -39,7 +42,7 @@ public class Projectile extends MovableObject{
                 -((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
         directionVector.y = ((float)Math.cos(rotateRads)*(pos2.y - pos1.y))
                 +((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
-        float mag = (float)Math.sqrt(directionVector.x*directionVector.x +
+        mag = (float)Math.sqrt(directionVector.x*directionVector.x +
                 directionVector.y*directionVector.y);
         directionVector.x = directionVector.x/mag;
         directionVector.y = directionVector.y/mag;
@@ -69,9 +72,10 @@ public class Projectile extends MovableObject{
 
     public void update(long fps){
         for(PointF s: shapeCoords){
-            s.x += directionVector.x;
-            s.y += directionVector.y;
-//            updatePhysics(fps, directionVector);
+//            s.x += directionVector.x;
+  //          s.y += directionVector.y;
         }
+        updatePhysics(fps, new PointF (directionVector.x*mag*100,directionVector.y*mag*100));
+
     }
 }
