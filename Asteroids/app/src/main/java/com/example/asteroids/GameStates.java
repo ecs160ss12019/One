@@ -228,6 +228,27 @@ class PlayingGameState implements GameState {
         //Draw powerup
         env.canvas.drawPath(env.powerUpManager.powerUpObject.draw(), env.powerUpManager.powerUpObject.paint);
 
+
+        /*
+        //Draw NumLives
+        env.paint.setStyle(Paint.Style.FILL);
+        env.paint.setTextSize(env.fontSize);
+        env.paint.setColor(Color.WHITE);
+        env.canvas.drawText("Lives: " + env.hud.numOfLives, 10 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
+        */
+
+        //Draw number of lives
+        env.hud.updateLives(env.spaceship.numLives);
+        env.paint.setStyle(Paint.Style.STROKE);
+        env.paint.setColor(Color.WHITE);
+        env.paint.setStrokeWidth(3);
+        //env.hud.shipIcon.moveTo(20 * (int)env.blockSize.x, 20 * (int)env.blockSize.y);
+        //env.hud.shipIcon.rewind();
+        env.canvas.drawPath(env.hud.shipIcon, env.paint);
+
+        //Draw the score
+        env.canvas.drawText("Score: " + env.hud.score, 80 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
+
         //Draw the fire button
         // set color red, draw a filled rectangle
         env.paint.setColor(Color.argb(200,255,0,0));
@@ -239,21 +260,12 @@ class PlayingGameState implements GameState {
         env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
 
 
-        //Draw the Joystick below all other objects
+        //Draw the Joystick on top of all other objects
         //JoyStick should be drawn last to be below all other objects
 
         env.canvas.drawPath(env.hud.joyStick.draw(0), env.hud.joyStick.setPaint(0));
         env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(0));
         env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(1));
-
-        //Draw Score and NumLives
-        env.paint.setStyle(Paint.Style.FILL);
-        env.paint.setTextSize(env.fontSize);
-        env.paint.setColor(Color.WHITE);
-        env.canvas.drawText("Lives: " + env.hud.numOfLives, 10 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
-
-        env.canvas.drawText("Score: " + env.hud.score, 80 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
-
     }
 
     @Override
