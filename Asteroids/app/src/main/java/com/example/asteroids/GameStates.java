@@ -69,6 +69,19 @@ class EndGameState implements GameState{
     }
 }
 
+class MainMenu implements GameState {
+    public void update(Env env) {
+
+    }
+
+    public void draw(Env env) {
+
+    }
+
+    public void onTouch(Env env, MotionEvent e) {
+
+    }
+}
 
 class NewGameState implements GameState {
     @Override
@@ -126,7 +139,7 @@ class PauseGameState implements GameState {
     private Menu menu;
 
     public PauseGameState(Env env) {
-        menu = new Menu(env.blockSize);
+        menu = new Menu(env.blockSize, "pauseMenu");
     }
 
     @Override
@@ -140,8 +153,8 @@ class PauseGameState implements GameState {
         env.canvas.drawColor(Color.argb(255,0,0,0));
 
         env.paint.setColor(Color.argb(255,255,255,255));
-        env.canvas.drawRect(menu.resume.button, env.paint);
-        env.canvas.drawRect(menu.newGame.button, env.paint);
+        // env.canvas.drawRect(menu.resume.button, env.paint);
+        ///env.canvas.drawRect(menu.newGame.button, env.paint);
 
         //TODO: Make buttons have text
         //env.paint.setColor(Color.argb(255,0,0,0));
@@ -184,8 +197,10 @@ class PlayingGameState implements GameState {
         //Fill game with solid black background
         env.canvas.drawColor(Color.BLACK);
 
-
-        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
+        //Testing other PAINT
+        //env.canvas.drawPath(env.spaceship.draw(), env.spaceship.getPaint());
+        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.blurPaint);
+        env.canvas.drawPath(env.spaceship.draw(), env.spaceship.normalPaint);
 
         //Draw the UFO's
         env.paint.setStyle(Paint.Style.FILL);
@@ -312,7 +327,7 @@ class PlayingGameState implements GameState {
         env.ufoManager.update(env.fps);
         //have env.ufoManager.setCurrentlyDifficulty() called by env proportional to score
         env.ufoManager.spawnUFO();
-
+        env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
         env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();

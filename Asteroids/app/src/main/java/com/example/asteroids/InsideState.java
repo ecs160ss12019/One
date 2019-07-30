@@ -29,7 +29,18 @@ public class InsideState implements State {
         setShot(ufo);
         time = System.currentTimeMillis();
         if(time > lastTime + gapTime) {
-            ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, 1, ufo.projectileOwner);
+            if(ufo.difficulty == UFO_Type.GREEN) {
+                takeShot(ufo);
+            }
+            else if(ufo.difficulty == UFO_Type.YELLOW){
+                takeShot(ufo);
+                takeShot(ufo);
+            }
+            else if(ufo.difficulty == UFO_Type.RED){
+                takeShot(ufo);
+                takeShot(ufo);
+                takeShot(ufo);
+            }
             lastTime = time;
         }
     }
@@ -62,5 +73,10 @@ public class InsideState implements State {
         x = xMin + ufo.random.nextFloat()*(xMax - xMin);
         y = yMin + ufo.random.nextFloat()*(yMax - yMin);
         ufo.bulletOrigin2.set((x/ufo.res.x)*100, (y/ufo.res.y)*100);
+    }
+
+    private void takeShot(UFO ufo){
+        setShot(ufo);
+        ufo.projectileManager.fire(ufo.bulletOrigin1, ufo.bulletOrigin2, ufo.random.nextInt(), ufo.projectileOwner);
     }
 }
