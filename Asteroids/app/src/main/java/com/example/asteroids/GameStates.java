@@ -77,17 +77,24 @@ class MainMenuState implements GameState {
 
     public MainMenuState(Env env) {
 
+        env.blockSize = new PointF((float) env.resolution.x/ 100, (float) env.resolution.y / 100);
         menu = new Menu(env.blockSize, "mainMenu");
+
+
+        env.fontSize = 4 * env.blockSize.x;
+
+        env.surfaceHolder = env.getHolder();
+        env.paint = new Paint();
     }
 
 
     public void update(Env env) {
-        if (env.restarting)
-            env.currState = new PlayingGameState();
+        //if (env.restarting)
+          //  env.currState = new PlayingGameState();
     }
 
     public void draw(Env env) {
-        if (!env.restarting) {
+
             //Draws the menu
             env.canvas.drawColor(Color.argb(255, 0, 0, 0));
 
@@ -102,7 +109,7 @@ class MainMenuState implements GameState {
                         menu.buttons[i].pos.y + 50, env.paint);
             }
         }
-    }
+
 
     public void onTouch(Env env, MotionEvent e) {
         //Interface with the menu
@@ -113,7 +120,7 @@ class MainMenuState implements GameState {
             case MotionEvent.ACTION_DOWN:
 
                 if (menu.buttons[0].touchBox.contains((int) e.getX(), (int) e.getY()))
-                    env.currState = new PlayingGameState();
+                    env.currState = new NewGameState();
 
                 break;
         }
@@ -125,10 +132,7 @@ class NewGameState implements GameState {
     public void update(Env env) {
         //handles the new game (resetting all objects, etc)
 
-        env.blockSize = new PointF((float) env.resolution.x/ 100, (float) env.resolution.y / 100);
-        env.fontSize = 4 * env.blockSize.x;
-        env.surfaceHolder = env.getHolder();
-        env.paint = new Paint();
+
 
         //Initialize sound objects
         /*TODO: Add sound later*/
@@ -154,7 +158,7 @@ class NewGameState implements GameState {
         env.powerUpManager = new PowerUpManager(env.blockSize, env.spaceship);
 
         //After creating a new game, we should move to playGameState
-        env.currState = new MainMenuState(env);
+        env.currState = new PlayingGameState();
 
     }
 
@@ -212,11 +216,11 @@ class PauseGameState implements GameState {
                 if (menu.buttons[0].touchBox.contains((int) e.getX(), (int) e.getY()))
                     env.currState = new PlayingGameState();
                 if (menu.buttons[1].touchBox.contains((int) e.getX(), (int) e.getY())) {
-                    env.restarting = true;
+                   // env.restarting = true;
                     env.currState = new NewGameState();
                 }
                 if (menu.buttons[2].touchBox.contains((int) e.getX(), (int) e.getY())) {
-                    env.restarting = false;
+                    //env.restarting = false;
                     env.currState = new NewGameState();
                 }
 
@@ -259,13 +263,13 @@ class PlayingGameState implements GameState {
         }
 
         //Draw the Asteroids
-        env.paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        env.paint.setStyle(Paint.Style.STROKE);
         env.paint.setStrokeWidth(1);
         for(Asteroid ast : env.asteroidManager.asteroidTracker){
             if(ast.isHit)
                 env.paint.setColor(Color.RED);
             else
-                env.paint.setColor(Color.argb(255,200,255,255));
+                env.paint.setColor(Color.argb(255,255,255,255));
             env.canvas.drawPath(ast.draw(), env.paint);
         }
 
