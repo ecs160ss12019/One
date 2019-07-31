@@ -195,13 +195,13 @@ public class UFOManager {
                 break;
             case RED:
                 ufoArray[index].normalPaint.setColor(Color.argb(255, 255, 0, 0));
-                ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*2.0f;
-                ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*2.0f;
+                ufoArray[index].velocity.x = ufoArray[index].velocity.x*2.0f;
+                ufoArray[index].velocity.y = ufoArray[index].velocity.y*2.0f;
                 break;
             case YELLOW:
                 ufoArray[index].normalPaint.setColor(Color.argb(255, 255, 255, 0));
-                ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*1.50f;
-                ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*1.50f;
+                ufoArray[index].velocity.x = ufoArray[index].velocity.x*1.50f;
+                ufoArray[index].velocity.y = ufoArray[index].velocity.y*1.50f;
                 break;
             default:
                 ufoArray[index].paint.setColor(Color.argb(255, 0, 0, 255));
