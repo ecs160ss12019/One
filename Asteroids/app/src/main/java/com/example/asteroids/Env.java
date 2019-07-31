@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -65,6 +66,7 @@ public class Env extends SurfaceView implements Runnable {
     //Resolution and font sizes
     protected Point resolution;
     protected float fontSize;
+    Typeface gameFont;
 
     //Using blockSize to make a consistent ui that scales resolutions
     //To place an object at 50% of screen width, do 50 * blockSize.x
@@ -97,6 +99,7 @@ public class Env extends SurfaceView implements Runnable {
         super(context);
 
         musicManager = new MusicManager(context, MusicMute);
+        gameFont = Typeface.createFromAsset(context.getAssets(), "fonts/ARCADECLASSIC.TTF");
         //Pass the resolution to our local variables, and set our fontsize
         resolution = new Point();
         resolution = res;
