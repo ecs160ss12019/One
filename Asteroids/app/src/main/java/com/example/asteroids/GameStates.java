@@ -300,7 +300,7 @@ class PlayingGameState implements GameState {
         env.paint.setTextSize(env.fontSize);
         env.paint.setColor(Color.WHITE);
         env.paint.setTypeface(env.gameFont);
-        env.canvas.drawText("Score: " + env.hud.score, 80 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
+        env.canvas.drawText("Score: " + env.hud.score, 50 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
 
         //Draw the fire button
         // set color red, draw a filled rectangle
