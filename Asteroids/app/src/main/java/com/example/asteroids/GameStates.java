@@ -59,6 +59,7 @@ class EndGameState implements GameState{
         switch (maskedAction) {
             //If 1 touch is registered, shoot
             case MotionEvent.ACTION_DOWN:
+                env.musicManager.nextSong();
                 env.currState = new NewGameState();
                 break;
         }
