@@ -141,7 +141,7 @@ class NewGameState implements GameState {
         env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
-                .wantActive(3)
+                .wantActive(1)
                 .setTimeOut(15000)
                 .setSpawnGap(1000)
                 .setResources(env.getResources())
