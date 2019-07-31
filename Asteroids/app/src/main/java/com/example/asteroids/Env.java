@@ -113,8 +113,7 @@ public class Env extends SurfaceView implements Runnable {
     //      METHODS
     ///////////////////////////
     public void calcGlobalCollisions() {
-        //cd.checkBinaryCollision(spaceship.draw())
-        //see first if spaceship collides with any asteroids
+        //creating list of all objects that need to be checked
         Vector<Projectile> projs = projectileManager.projectileVector;
         Vector<UFO> ufos = new Vector(Arrays.asList(ufoManager.getUFOS()));
         Vector<Asteroid> asts = asteroidManager.asteroidTracker;
@@ -127,7 +126,6 @@ public class Env extends SurfaceView implements Runnable {
         }
 
         // CHECK WHAT HIT PLAYER'S SHIP
-        // adds ship to objectsHit if collision
         if(!spaceship.isHit)
             checkHit(asts, spaceship);
         if(!spaceship.isHit)
@@ -143,7 +141,6 @@ public class Env extends SurfaceView implements Runnable {
 
 
         // CHECK WHAT HIT THE UFOS
-        // adds currUFO to objectsHit if collision
         for(UFO currUFO : ufos) {
             if(!currUFO.isHit)
                 checkHit(projs, currUFO);
@@ -153,7 +150,6 @@ public class Env extends SurfaceView implements Runnable {
 
 
         // CHECK WHAT HIT THE ASTEROIDS
-        // adds currAst to objectsHit if collision
         for(Asteroid currAst : asts) {
             if(!currAst.isHit)
                 checkHit(projs, currAst);
@@ -161,12 +157,13 @@ public class Env extends SurfaceView implements Runnable {
                 //checkHit(asts, currAst);
         }
 
+/*      //TODO: Could be wrong, but this seems like it might not be needed
         for(Projectile currP : projs) {
             if(!currP.isHit)
                 checkHit(ufos, currP);
             if(!currP.isHit)
                 checkHit(asts, currP);
-        }
+        } */
     }
 
     public void checkHit(Vector object, MovableObject thisObject){
