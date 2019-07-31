@@ -30,4 +30,9 @@ public class LeavingState implements State {
     public boolean isDrawable() {
         return true;
     }
+
+    @Override
+    public boolean isInside() {
+        return false;
+    }
 }

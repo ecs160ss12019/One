@@ -127,7 +127,8 @@ public class UFO extends MovableObject {
             phase = false;
             if(!state.isDead()) {
                 //If ufo was hit by something other than asteroid
-                if (this.isHit) {
+                if (this.isHit && state.isInside()) {
+                    Log.d("UFOLife: ", "UFO set to DeadState");
                     sfxManager.playExplosion();
                     state.setState(new DeadState());
                 }
