@@ -2,6 +2,7 @@ package com.example.asteroids;
 
 // Jose Torres-Vargas
 import android.content.res.Resources;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -63,7 +64,8 @@ public class UFO extends MovableObject {
     ProjectileManager projectileManager;
     SFXManager sfxManager;
 
-    Paint paint;
+    Paint normalPaint;
+    Paint blurPaint;
     UFO(Point res, PointF blockSize, Resources resources, ProjectileManager projectileManager,
             SFXManager sfxManager) {
         super(blockSize);
@@ -107,8 +109,7 @@ public class UFO extends MovableObject {
         this.res.set(res.x,res.y);
         phase = false;
         difficulty = UFO_Type.GREEN;//Easy by default
-        paint = new Paint();
-        paint.setColor(Color.argb(255,0,255,0));
+        setUpPaint();
     }
 
 
@@ -143,8 +144,8 @@ public class UFO extends MovableObject {
      */
     public Path draw(){
         shape.rewind();
-        shape.addOval(body, Path.Direction.CW);
         shape.addCircle(circleX, circleY, radius, Path.Direction.CW );
+        shape.addOval(body, Path.Direction.CW);
         return shape;
     }
 
@@ -266,14 +267,32 @@ public class UFO extends MovableObject {
      * makes the UFO transparent
      */
     void phaseThrough(){
-        paint.setAlpha(100);
+        normalPaint.setAlpha(100);
     }
 
     /**
      * makes UFO visible
      */
     void solidUFO(){
-        paint.setAlpha(255);
+        normalPaint.setAlpha(248);
+    }
+
+    void setUpPaint(){
+        normalPaint = new Paint();
+        normalPaint.setAntiAlias(true);
+        normalPaint.setDither(true);
+        normalPaint.setColor(Color.argb(248, 0, 255, 0));
+        normalPaint.setStyle(Paint.Style.STROKE);
+        normalPaint.setStrokeJoin(Paint.Join.ROUND);
+        normalPaint.setStrokeCap(Paint.Cap.ROUND);
+        normalPaint.setStrokeWidth(20f);
+
+        blurPaint = new Paint();
+        blurPaint.set(normalPaint);
+        blurPaint.setColor(Color.argb(235,74,138,255));
+        blurPaint.setStrokeWidth(30f);
+        blurPaint.setMaskFilter(new BlurMaskFilter(15, BlurMaskFilter.Blur.NORMAL));
+
     }
 
 }

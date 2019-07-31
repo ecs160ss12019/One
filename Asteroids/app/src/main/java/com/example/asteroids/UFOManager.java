@@ -191,15 +191,15 @@ public class UFOManager {
 
         switch (ufoArray[index].difficulty){
             case GREEN:
-                ufoArray[index].paint.setColor(Color.argb(255, 0, 255, 0));
+                ufoArray[index].normalPaint.setColor(Color.argb(255, 0, 255, 0));
                 break;
             case RED:
-                ufoArray[index].paint.setColor(Color.argb(255, 255, 0, 0));
+                ufoArray[index].normalPaint.setColor(Color.argb(255, 255, 0, 0));
                 ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*2.0f;
                 ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*2.0f;
                 break;
             case YELLOW:
-                ufoArray[index].paint.setColor(Color.argb(255, 255, 255, 0));
+                ufoArray[index].normalPaint.setColor(Color.argb(255, 255, 255, 0));
                 ufoArray[index].mXVelocity = ufoArray[index].mXVelocity*1.50f;
                 ufoArray[index].mYVelocity = ufoArray[index].mYVelocity*1.50f;
                 break;
