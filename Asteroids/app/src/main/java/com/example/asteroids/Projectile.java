@@ -28,7 +28,7 @@ public class Projectile extends MovableObject{
         setWidth(rotate, addW);
         setDraw(pos1, pos2, addW);
         startTime = System.currentTimeMillis();
-        mass = 10;
+        mass = 1;
         rotation = rotate;
 //        currVelocity = new PointF (pos2.x - pos1.x, pos2.y - pos1.y);
 
@@ -39,10 +39,16 @@ public class Projectile extends MovableObject{
     ///////////////////////////
 
     private void setDirectionVector(PointF pos1, PointF pos2, float rotateRads){
-        directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))
+       /* directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))
                 -((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
         directionVector.y = ((float)Math.cos(rotateRads)*(pos2.y - pos1.y))
-                +((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
+                +((float)Math.sin(rotateRads)*(pos2.x - pos1.x)); */
+
+       directionVector.x = (float) Math.sin(rotateRads) * 2;
+       directionVector.y = (float) Math.cos(rotateRads) * 2;
+
+
+
         mag = (float)Math.sqrt(directionVector.x*directionVector.x +
                 directionVector.y*directionVector.y);
         directionVector.x = -directionVector.x/mag;
@@ -75,10 +81,10 @@ public class Projectile extends MovableObject{
 
     public void update(long fps){
         for(PointF s: shapeCoords){
-            s.x += directionVector.x;
-            s.y += directionVector.y;
+            //s.x += directionVector.x;
+            //s.y += directionVector.y;
         }
-        //updatePhysics(fps, new PointF (directionVector.x*mag*speed,directionVector.y*mag*speed));
+        updatePhysics(fps, new PointF (directionVector.x*mag*speed,-directionVector.y*mag*speed));
 
     }
 }

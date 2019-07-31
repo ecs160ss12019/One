@@ -58,7 +58,7 @@ abstract class MovableObject {
         shape = new Path();
         shape.reset(); //TODO: Might not be needed
         paint = new Paint();
-        
+
         bounds = new RectF();
         transform = new Matrix();
     }
