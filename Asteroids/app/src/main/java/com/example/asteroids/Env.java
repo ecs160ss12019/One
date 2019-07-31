@@ -21,6 +21,7 @@ the constructor which will always be on top */
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -246,6 +247,12 @@ public class Env extends SurfaceView implements Runnable {
         }
 
         musicManager.pause();
+    }
+
+    public void printDebugging() {
+        Log.d("FPS", "FPS: " + fps);
+
+
     }
 
 

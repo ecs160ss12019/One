@@ -361,6 +361,7 @@ class PlayingGameState implements GameState {
 
     @Override
     public void update(Env env) {
+        env.printDebugging();
         env.asteroidManager.updateAsteroids();
         env.ufoManager.update(env.fps);
         //have env.ufoManager.setCurrentlyDifficulty() called by env proportional to score
@@ -370,6 +371,7 @@ class PlayingGameState implements GameState {
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
         env.powerUpManager.update();
+
         if(env.spaceship.numLives == 0) {
             env.currState = new EndGameState();
         }
