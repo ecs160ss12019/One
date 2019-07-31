@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -40,6 +41,10 @@ abstract class MovableObject {
     protected Path shape;
     protected Paint paint;
 
+    /*Used for calculating rotation, */
+    RectF bounds;
+    Matrix transform;
+
     ///////////////////////////
     //      Constructor
     ///////////////////////////
@@ -53,6 +58,9 @@ abstract class MovableObject {
         shape = new Path();
         shape.reset(); //TODO: Might not be needed
         paint = new Paint();
+
+        bounds = new RectF();
+        transform = new Matrix();
     }
 
     ///////////////////////////
@@ -69,8 +77,7 @@ abstract class MovableObject {
 
     private void calcRotation() {
         //Rotate shape based on the rotation value
-        Matrix transform = new Matrix();
-        RectF bounds = new RectF(); //Initialize bounds
+        transform.reset();
         shape.computeBounds(bounds, true);
         transform.postRotate(rotation, bounds.centerX(), bounds.centerY());
         shape.transform(transform);
@@ -95,7 +102,7 @@ abstract class MovableObject {
         for(int i = 1; i < shapeCoords.length; ++i)
             shape.lineTo(shapeCoords[i].x * blockSize.x, shapeCoords[i].y * blockSize.y);
 
-        if (rotation != 0)
+       if (rotation != 0)
             calcRotation();
         return shape;
     }

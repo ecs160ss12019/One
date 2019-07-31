@@ -27,4 +27,9 @@ public class WaitingState implements State {
     public boolean isDrawable() {
         return false;
     }
+
+    @Override
+    public boolean isInside() {
+        return false;
+    }
 }

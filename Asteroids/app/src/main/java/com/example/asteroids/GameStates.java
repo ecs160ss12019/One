@@ -69,6 +69,54 @@ class EndGameState implements GameState{
     }
 }
 
+class MainMenuState implements GameState {
+
+    private Menu menu;
+
+    public MainMenuState(Env env) {
+
+        menu = new Menu(env.blockSize, "mainMenu");
+    }
+
+
+    public void update(Env env) {
+        if (env.restarting)
+            env.currState = new PlayingGameState();
+    }
+
+    public void draw(Env env) {
+        if (!env.restarting) {
+            //Draws the menu
+            env.canvas.drawColor(Color.argb(255, 0, 0, 0));
+
+            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.paint.setStyle(Paint.Style.FILL);
+
+            for (int i = 0; i < menu.numOfButtons; i++) {
+                env.paint.setColor(Color.argb(255, 255, 255, 255));
+                env.canvas.drawPath(menu.buttons[i].shape, env.paint);
+                env.paint.setColor(Color.argb(255, 0, 0, 0));
+                env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 75,
+                        menu.buttons[i].pos.y + 50, env.paint);
+            }
+        }
+    }
+
+    public void onTouch(Env env, MotionEvent e) {
+        //Interface with the menu
+
+        switch (e.getActionMasked()) {
+
+            //If 1 touch is registered, shoot
+            case MotionEvent.ACTION_DOWN:
+
+                if (menu.buttons[0].touchBox.contains((int) e.getX(), (int) e.getY()))
+                    env.currState = new PlayingGameState();
+
+                break;
+        }
+    }
+}
 
 class NewGameState implements GameState {
     @Override
@@ -93,8 +141,8 @@ class NewGameState implements GameState {
         env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
-                .wantActive(5)
-                .setTimeOut(3000)
+                .wantActive(1)
+                .setTimeOut(15000)
                 .setSpawnGap(1000)
                 .setResources(env.getResources())
                 .setProjectileManager(env.projectileManager)
@@ -102,10 +150,10 @@ class NewGameState implements GameState {
                 .setBlockSize(env.blockSize)
                 .build();
 
-        env.powerUpManager = new PowerUpManager(env.blockSize);
+        env.powerUpManager = new PowerUpManager(env.blockSize, env.spaceship);
 
         //After creating a new game, we should move to playGameState
-        env.currState = new PlayingGameState();
+        env.currState = new MainMenuState(env);
 
     }
 
@@ -126,7 +174,7 @@ class PauseGameState implements GameState {
     private Menu menu;
 
     public PauseGameState(Env env) {
-        menu = new Menu(env.blockSize);
+        menu = new Menu(env.blockSize, "pauseMenu");
     }
 
     @Override
@@ -139,15 +187,15 @@ class PauseGameState implements GameState {
         //Draws the menu
         env.canvas.drawColor(Color.argb(255,0,0,0));
 
-        env.paint.setColor(Color.argb(255,255,255,255));
-        env.canvas.drawRect(menu.resume.button, env.paint);
-        env.canvas.drawRect(menu.newGame.button, env.paint);
+        env.paint.setStyle(Paint.Style.FILL);
 
-        //TODO: Make buttons have text
-        //env.paint.setColor(Color.argb(255,0,0,0));
-        //env.canvas.drawText(menu.resume.textBox, menu.resume.absPosition.x, menu.resume.absPosition.y, env.paint);
-        //env.canvas.drawText(menu.resume.textBox, menu.resume.absPosition.x, menu.resume.absPosition.y, env.paint);
-
+        for (int i = 0; i < menu.numOfButtons; i++) {
+            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.canvas.drawPath(menu.buttons[i].shape, env.paint);
+            env.paint.setColor(Color.argb(255, 0, 0, 0));
+            env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 75,
+                    menu.buttons[i].pos.y + 50, env.paint);
+        }
     }
 
     @Override
@@ -159,13 +207,18 @@ class PauseGameState implements GameState {
             //If 1 touch is registered, shoot
             case MotionEvent.ACTION_DOWN:
 
-                //Touches on top of screen restates the game
-                if (e.getY() / env.blockSize.y > 50)
-                    env.currState = new NewGameState();
 
-                //Touches on bottom resumes the current game
-                if (e.getY() / env.blockSize.y < 50)
+                if (menu.buttons[0].touchBox.contains((int) e.getX(), (int) e.getY()))
                     env.currState = new PlayingGameState();
+                if (menu.buttons[1].touchBox.contains((int) e.getX(), (int) e.getY())) {
+                    env.restarting = true;
+                    env.currState = new NewGameState();
+                }
+                if (menu.buttons[2].touchBox.contains((int) e.getX(), (int) e.getY())) {
+                    env.restarting = false;
+                    env.currState = new NewGameState();
+                }
+
 
                 break;
         }
@@ -199,7 +252,8 @@ class PlayingGameState implements GameState {
                     ufo.phaseThrough();
                 else
                     ufo.solidUFO();
-                env.canvas.drawPath(ufo.draw(), ufo.paint);
+                env.canvas.drawPath(ufo.draw(), ufo.blurPaint);
+                env.canvas.drawPath(ufo.draw(), ufo.normalPaint);
             }
         }
 
@@ -308,15 +362,17 @@ class PlayingGameState implements GameState {
 
     @Override
     public void update(Env env) {
+        env.printDebugging();
         env.asteroidManager.updateAsteroids();
         env.ufoManager.update(env.fps);
         //have env.ufoManager.setCurrentlyDifficulty() called by env proportional to score
         env.ufoManager.spawnUFO();
-
+        env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
         env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
         env.powerUpManager.update();
+
         if(env.spaceship.numLives == 0) {
             env.currState = new EndGameState();
         }

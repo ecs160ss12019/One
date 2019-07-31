@@ -21,6 +21,7 @@ the constructor which will always be on top */
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -77,6 +78,9 @@ public class Env extends SurfaceView implements Runnable {
     UFOManager ufoManager;
     PowerUpManager powerUpManager;
 
+    // This is a temporary fix to get the restart and main menu states working
+    boolean restarting;
+
     //Here is the thread and two control variables
     Thread gameThread = null;
 
@@ -98,7 +102,9 @@ public class Env extends SurfaceView implements Runnable {
         resolution = res;
 
         //Set the state to new game to reset all variables
+        restarting = false;
         currState = new NewGameState();
+        //currState = new MainMenuState(this);
         currState.update(this);
     }
 
@@ -241,6 +247,12 @@ public class Env extends SurfaceView implements Runnable {
         }
 
         musicManager.pause();
+    }
+
+    public void printDebugging() {
+        Log.d("FPS", "FPS: " + fps);
+
+
     }
 
 

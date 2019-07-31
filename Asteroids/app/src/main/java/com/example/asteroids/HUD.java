@@ -33,8 +33,8 @@ public class HUD {
         joyStick = new JoyStick(pos, 15, 4, blockSize);
 
         // Setting location of fire button
-        pos = new Point(80, 70);
-        shootButton = new Button(pos, blockSize, "Fire");
+        pos = new Point(85 * (int) blockSize.x, 85 * (int) blockSize.y);
+        shootButton = new Button(pos, 15, 15, blockSize, "Fire");
 
         // allocate coord array to hold ship icon for displaying lives
         shapeCoords = new PointF[5];
@@ -80,13 +80,10 @@ public class HUD {
         for (int i = 0; i < this.numOfLives; i++) {
             ship.moveTo(startX + (i * xOffset), startY);
 
-
             for (int j = 1; j < shapeCoords.length; j++) {
                 ship.lineTo(shapeCoords[j].x, shapeCoords[j].y);
                 shapeCoords[j].x += xOffset;
             }
-
-
         }
 
         return ship;
