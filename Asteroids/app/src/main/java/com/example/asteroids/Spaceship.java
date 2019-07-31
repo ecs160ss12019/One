@@ -48,7 +48,7 @@ public class Spaceship extends MovableObject {
         genShape();
 
         //TODO: set to default when finished debugging
-        setPowerUp(new ShieldPowerState());
+        setPowerUp(new BurstFirePowerState());
 
         normalPaint = new Paint();
         normalPaint.setAntiAlias(true);

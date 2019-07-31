@@ -11,7 +11,7 @@ public class Projectile extends MovableObject{
     private PointF directionVector;
     public long startTime;
     float mag;
-    float speed = 25;
+    float speed = 300;
 
     ///////////////////////////
     //      CONSTRUCTOR
@@ -28,7 +28,7 @@ public class Projectile extends MovableObject{
         setWidth(rotate, addW);
         setDraw(pos2, pos1, addW);
         startTime = System.currentTimeMillis();
-        mass = 10;
+        mass = 1;
         rotation = rotate;
 //        currVelocity = new PointF (pos2.x - pos1.x, pos2.y - pos1.y);
 
@@ -39,10 +39,15 @@ public class Projectile extends MovableObject{
     ///////////////////////////
 
     private void setDirectionVector(PointF pos1, PointF pos2, float rotateRads){
-        directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))
+        /*directionVector.x = ((float)Math.cos(rotateRads)*(pos2.x - pos1.x))
                 -((float)Math.sin(rotateRads)*(pos2.y - pos1.y));
         directionVector.y = ((float)Math.cos(rotateRads)*(pos2.y - pos1.y))
                 +((float)Math.sin(rotateRads)*(pos2.x - pos1.x));
+
+        */
+        directionVector.x = (float) Math.sin(rotateRads);
+        directionVector.y = -(float) Math.cos(rotateRads);
+
         mag = (float)Math.sqrt(directionVector.x*directionVector.x +
                 directionVector.y*directionVector.y);
         directionVector.x = -directionVector.x/mag;
