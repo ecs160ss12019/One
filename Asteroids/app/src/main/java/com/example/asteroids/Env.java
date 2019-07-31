@@ -79,7 +79,7 @@ public class Env extends SurfaceView implements Runnable {
     PowerUpManager powerUpManager;
 
     // This is a temporary fix to get the restart and main menu states working
-    boolean restarting;
+    //boolean restarting;
 
     //Here is the thread and two control variables
     Thread gameThread = null;
@@ -102,8 +102,8 @@ public class Env extends SurfaceView implements Runnable {
         resolution = res;
 
         //Set the state to new game to reset all variables
-        restarting = false;
-        currState = new NewGameState();
+        //restarting = false;
+        currState = new MainMenuState(this);
         //currState = new MainMenuState(this);
         currState.update(this);
     }
