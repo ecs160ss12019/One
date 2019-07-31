@@ -62,7 +62,7 @@ class ExtraLifePowerState implements PowerState {
 
 class MachineGunPowerState implements PowerState {
     public void fire(Spaceship ship) {
-        ship.projectileManager.fire(ship.shapeCoords[1], ship.shapeCoords[3], ship.rotation, ship.projectileOwner);
+        ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation, ship.projectileOwner);
     }
     public void update(Spaceship ship) {
         Log.d("Powerstate", "BurstFirePowerState");

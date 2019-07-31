@@ -26,7 +26,7 @@ public class Projectile extends MovableObject{
         directionVector = new PointF();
         setDirectionVector(pos2, pos1, rotateRads);
         setWidth(rotate, addW);
-        setDraw(pos1, pos2, addW);
+        setDraw(pos2, pos1, addW);
         startTime = System.currentTimeMillis();
         mass = 10;
         rotation = rotate;
