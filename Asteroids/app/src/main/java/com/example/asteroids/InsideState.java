@@ -60,6 +60,11 @@ public class InsideState implements State {
         return true;
     }
 
+    @Override
+    public boolean isInside() {
+        return true;
+    }
+
     private void setShot(UFO ufo){
         float x, y;
         float xMin = ufo.body.left;

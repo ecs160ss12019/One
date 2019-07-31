@@ -5,4 +5,5 @@ public interface State {
     boolean isAvailable();
     boolean isDead();
     boolean isDrawable();
+    boolean isInside();
 }

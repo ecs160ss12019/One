@@ -18,4 +18,6 @@ public class StateContext {
 
     public boolean isDrawable(){return state.isDrawable();}
 
+    public boolean isInside(){return state.isInside();}
+
 }

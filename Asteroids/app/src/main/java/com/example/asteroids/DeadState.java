@@ -37,4 +37,9 @@ public class DeadState implements State {
     public boolean isDrawable() {
         return false;
     }
+
+    @Override
+    public boolean isInside() {
+        return false;
+    }
 }
