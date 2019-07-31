@@ -112,8 +112,9 @@ public class UFOManager {
      * @param fps : Frames per second
      * @return
      */
-    int update(long fps){
+    int update(long fps, int score){
 
+        updateDifficulty(score);
         timers.updateTimers();
 
         timers.checkTimers();
@@ -179,6 +180,19 @@ public class UFOManager {
         currentDifficulty = difficulty;
     }
 
+    private void updateDifficulty(int score){
+        if(score > 5000 && (currentDifficulty == UFO_Type.YELLOW)){
+            Log.d("Difficulty: ", "change to RED");
+            setCurrentDifficulty(UFO_Type.RED);
+        }
+        else if(score > 1000 && (currentDifficulty == UFO_Type.GREEN)){
+            Log.d("Difficulty: ", "change to YELLOW");
+            setCurrentDifficulty(UFO_Type.YELLOW);
+        }
+        else{
+            //do nothing for now
+        }
+    }
 
     /**
      * UFO configuration is done here.
@@ -195,8 +209,8 @@ public class UFOManager {
                 break;
             case RED:
                 ufoArray[index].normalPaint.setColor(Color.argb(255, 255, 0, 0));
-                ufoArray[index].velocity.x = ufoArray[index].velocity.x*2.0f;
-                ufoArray[index].velocity.y = ufoArray[index].velocity.y*2.0f;
+                ufoArray[index].velocity.x = ufoArray[index].velocity.x*1.80f;
+                ufoArray[index].velocity.y = ufoArray[index].velocity.y*1.80f;
                 break;
             case YELLOW:
                 ufoArray[index].normalPaint.setColor(Color.argb(255, 255, 255, 0));

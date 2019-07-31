@@ -146,7 +146,7 @@ class NewGameState implements GameState {
         env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
-                .wantActive(1)
+                .wantActive(3)
                 .setTimeOut(15000)
                 .setSpawnGap(1000)
                 .setResources(env.getResources())
@@ -370,10 +370,8 @@ class PlayingGameState implements GameState {
     public void update(Env env) {
         env.printDebugging();
         env.asteroidManager.updateAsteroids();
-        env.ufoManager.update(env.fps);
-        //have env.ufoManager.setCurrentlyDifficulty() called by env proportional to score
+        env.ufoManager.update(env.fps, env.hud.score);
         env.ufoManager.spawnUFO();
-        env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
         env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();

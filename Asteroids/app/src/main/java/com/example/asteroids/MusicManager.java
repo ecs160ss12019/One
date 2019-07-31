@@ -54,14 +54,18 @@ public class MusicManager {
     }
 
     void update(){
-        if(!song.isPlaying()){
-            nextSong();
+        if(!mute) {
+            if (!song.isPlaying()) {
+                nextSong();
+            }
         }
     }
 
     void nextSong(){
-        currSong = (currSong + 1) % numSongs;
-        loadSong(currSong);
-        song.start();
+        if(!mute) {
+            currSong = (currSong + 1) % numSongs;
+            loadSong(currSong);
+            song.start();
+        }
     }
 }
