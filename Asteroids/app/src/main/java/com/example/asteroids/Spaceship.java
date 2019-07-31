@@ -47,8 +47,8 @@ public class Spaceship extends MovableObject {
         thrust = new PointF(0,0);
         genShape();
 
-        //TODO: Remove when implemented powerups in game
-        setPowerUp(new BurstFirePowerState());
+        //TODO: set to default when finished debugging
+        setPowerUp(new ShieldPowerState());
 
         normalPaint = new Paint();
         normalPaint.setAntiAlias(true);
@@ -176,7 +176,7 @@ public class Spaceship extends MovableObject {
             currPowerState.fire(this);
 
         currPowerState.update(this);
-        checkPowerUpTime();
+        //checkPowerUpTime();
 
         hud.numOfLives = numLives;
         if(isHit) {
