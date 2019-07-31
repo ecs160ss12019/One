@@ -25,6 +25,7 @@ package com.example.asteroids;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -125,7 +126,6 @@ class NewGameState implements GameState {
 
         env.blockSize = new PointF((float) env.resolution.x/ 100, (float) env.resolution.y / 100);
         env.fontSize = 4 * env.blockSize.x;
-
         env.surfaceHolder = env.getHolder();
         env.paint = new Paint();
 
@@ -294,6 +294,7 @@ class PlayingGameState implements GameState {
         env.paint.setStyle(Paint.Style.FILL);
         env.paint.setTextSize(env.fontSize);
         env.paint.setColor(Color.WHITE);
+        env.paint.setTypeface(env.gameFont);
         env.canvas.drawText("Score: " + env.hud.score, 80 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
 
         //Draw the fire button
