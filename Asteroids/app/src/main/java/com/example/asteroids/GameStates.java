@@ -22,6 +22,7 @@ package com.example.asteroids;
 
 //Martin Petrov
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -84,6 +85,7 @@ class MainMenuState implements GameState {
 
         env.surfaceHolder = env.getHolder();
         env.paint = new Paint();
+        env.neonPaint = new Paint();
     }
 
 
@@ -234,6 +236,7 @@ class PlayingGameState implements GameState {
 
     public int score;
 
+
     @Override
     public void draw(Env env) {
         //Draws the playing game
@@ -261,14 +264,18 @@ class PlayingGameState implements GameState {
             }
         }
 
+
+
         //Draw the Asteroids
         env.paint.setStyle(Paint.Style.STROKE);
-        env.paint.setStrokeWidth(1);
-        for(Asteroid ast : env.asteroidManager.asteroidTracker){
-            if(ast.isHit)
-                env.paint.setColor(Color.RED);
-            else
-                env.paint.setColor(Color.argb(255,255,255,255));
+        env.paint.setStrokeWidth(3);
+        env.neonPaint.setStyle(Paint.Style.STROKE);
+        env.neonPaint.setStrokeWidth(10);
+
+        env.neonPaint.setColor(Color.argb(255,255,255,255));
+        env.neonPaint.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.NORMAL));
+        for(Asteroid ast : env.asteroidManager.asteroidTracker) {
+            env.canvas.drawPath(ast.draw(), env.neonPaint);
             env.canvas.drawPath(ast.draw(), env.paint);
         }
 

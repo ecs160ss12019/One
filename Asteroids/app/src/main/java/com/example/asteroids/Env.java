@@ -52,7 +52,7 @@ public class Env extends SurfaceView implements Runnable {
     SurfaceHolder surfaceHolder;
     Canvas canvas;
     Paint paint;
-
+    public Paint neonPaint;
     //Sound objects
     MusicManager musicManager;
     boolean MusicMute = true;
