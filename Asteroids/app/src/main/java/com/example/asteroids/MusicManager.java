@@ -42,4 +42,11 @@ public class MusicManager {
         song.pause();
     }
 
+    void update(){
+        if(!song.isPlaying()){
+            currSong = (currSong + 1) % numSongs;
+            loadSong(currSong);
+            song.start();
+        }
+    }
 }

@@ -373,7 +373,7 @@ class PlayingGameState implements GameState {
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
         env.powerUpManager.update();
-
+        env.musicManager.update();
         if(env.spaceship.numLives == 0) {
             env.currState = new EndGameState();
         }
