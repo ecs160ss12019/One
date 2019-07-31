@@ -11,7 +11,7 @@ public class Projectile extends MovableObject{
     private PointF directionVector;
     public long startTime;
     float mag;
-    float speed = 100;
+    float speed = 25;
 
     ///////////////////////////
     //      CONSTRUCTOR
