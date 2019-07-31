@@ -48,7 +48,7 @@ public class Spaceship extends MovableObject {
         genShape();
 
         //TODO: Remove when implemented powerups in game
-        setPowerUp(new DefaultPowerState());
+        setPowerUp(new BurstFirePowerState());
 
         normalPaint = new Paint();
         normalPaint.setAntiAlias(true);
@@ -168,6 +168,7 @@ public class Spaceship extends MovableObject {
 
         rotateShip(hud.joyStick.getScaledStickPosition());
         updatePhysics(fps, hud.joyStick.getScaledStickPosition());
+
         checkBounds();
 
 
