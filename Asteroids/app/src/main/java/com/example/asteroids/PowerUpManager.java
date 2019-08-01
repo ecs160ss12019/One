@@ -31,7 +31,7 @@ public class PowerUpManager {
 
     private void genNewPowerUp() {
         lastPowerUpTime = System.currentTimeMillis();
-        PointF newPos = new PointF(rand.nextFloat() * 100, rand.nextFloat() * 100);
+        PointF newPos = new PointF(rand.nextFloat() * 90, rand.nextFloat() * 90);
         rand = new Random();
         this.powerUpObject = new PowerUpObject(newPos, rand.nextInt(3), blockSize);
 
