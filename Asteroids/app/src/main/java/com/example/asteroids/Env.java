@@ -160,27 +160,29 @@ public class Env extends SurfaceView implements Runnable {
                 //checkHit(asts, currAst);
         }
 
-/*      //TODO: Could be wrong, but this seems like it might not be needed
-        for(Projectile currP : projs) {
-            if(!currP.isHit)
-                checkHit(ufos, currP);
-            if(!currP.isHit)
-                checkHit(asts, currP);
-        } */
+      //TODO: Could be wrong, but this seems like it might not be needed
+//        for(Projectile currP : projs) {
+//            if(!currP.isHit)
+//                checkHit(ufos, currP);
+//            if(!currP.isHit)
+//                checkHit(asts, currP);
+//        }
     }
 
     public void checkHit(Vector object, MovableObject thisObject){
         for(MovableObject mov : (Vector<MovableObject>)object) {
-            if(mov == thisObject
-                    || ((thisObject.projectileOwner == mov.projectileOwner)
+
+            if((mov == thisObject) || ((thisObject.projectileOwner == mov.projectileOwner)
                     && (thisObject.projectileOwner != 3))){
                 continue;
             }
+
             if (cd.checkBinaryCollision(thisObject.draw(), (mov.draw()))) {
                 // collision detected, kill player
                thisObject.isHit = true;
                mov.isHit = true;
                thisObject.timeHit = System.currentTimeMillis();
+               //if UFO and Asteroid collide
                 if((thisObject.projectileOwner == 2 && mov.projectileOwner == 3)
                         || (thisObject.projectileOwner == 3 && mov.projectileOwner == 2) ){
                     if(thisObject.projectileOwner == 3)
@@ -189,11 +191,12 @@ public class Env extends SurfaceView implements Runnable {
                         thisObject.astHitUfo = true;
                     mov.isHit = false;
                     thisObject.isHit = false;
+
                 }
-                if (thisObject.projectileOwner == 1) {
+                //IF thisObject(SpaceShip) hit something
+                if (thisObject.projectileOwner == 1 || mov.projectileOwner == 1) {
                     hud.score += 10;
-                    Log.d("score", "Score: " + hud.score);
-                    //TODO:
+                    //Log.d("score", "Score: " + hud.score);
                 }
                 if(mov.projectileOwner == 5 && thisObject.projectileOwner == 1){
                     mov.isHit = true;

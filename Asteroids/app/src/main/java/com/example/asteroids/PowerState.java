@@ -36,6 +36,7 @@ class BurstFirePowerState implements  PowerState{
 class DefaultPowerState implements PowerState {
     public void fire(Spaceship ship) {
         ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation, ship.projectileOwner);
+        Log.d("Fire: ", "Owner: " + ship.projectileOwner);
         ship.firing = false;
     }
     public void update(Spaceship ship) {
