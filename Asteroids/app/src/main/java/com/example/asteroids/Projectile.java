@@ -57,9 +57,9 @@ public class Projectile extends MovableObject{
     private void setDraw(PointF pos1, PointF pos2, PointF addW){
         shapeCoords = new PointF[5];
         shapeCoords[0] = new PointF(pos2.x, pos2.y);
-        shapeCoords[1] = new PointF(pos2.x + directionVector.x, pos2.y + directionVector.y);
-        shapeCoords[2] = new PointF(pos2.x + directionVector.x, pos2.y + directionVector.y);
-        shapeCoords[3] = new PointF(pos2.x+addW.x, pos2.y+addW.y);
+        shapeCoords[1] = new PointF(pos2.x + 1, pos2.y);
+        shapeCoords[2] = new PointF(pos2.x + 1, pos2.y + 1);
+        shapeCoords[3] = new PointF(pos2.x, pos2.y + 1);
         shapeCoords[4] = new PointF(pos2.x, pos2.y);
     }
 
