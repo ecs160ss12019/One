@@ -30,7 +30,7 @@ public class AsteroidManager {
         this.blockSize = blockSize;
         resY = (int) (100 * blockSize.y);
         resX = (int) (100 * blockSize.x);
-        numAsteroids = difficulty * 10;
+        numAsteroids = difficulty * 5;
         for(int i = 0; i < numAsteroids; i++){
 
             asteroidTracker.add(new Asteroid(blockSize));
@@ -59,6 +59,11 @@ public class AsteroidManager {
             remove = false;
         }
         asteroidTracker = temp;
+
+        if(asteroidTracker.size() < numAsteroids) {
+            asteroidTracker.add(new Asteroid(blockSize));
+            temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
+        }
     }
 
     public void destroyAsteroid(Asteroid ast, Vector<Asteroid> temp){
