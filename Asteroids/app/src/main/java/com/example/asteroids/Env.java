@@ -79,7 +79,9 @@ public class Env extends SurfaceView implements Runnable {
     ProjectileManager projectileManager;
     UFOManager ufoManager;
     PowerUpManager powerUpManager;
-
+    long time = 0;
+    long spaceTime = 2000;
+    long lastTime = 0;
     // This is a temporary fix to get the restart and main menu states working
     //boolean restarting;
 
@@ -196,7 +198,11 @@ public class Env extends SurfaceView implements Runnable {
                 //IF thisObject(SpaceShip) hit something
                 if (thisObject.projectileOwner == 1 || mov.projectileOwner == 1) {
                     if(thisObject.projectileOwner == 2 || mov.projectileOwner == 2){
-                        hud.score += 20;
+                        time = System.currentTimeMillis();
+                        if(time > lastTime + spaceTime) {
+                            lastTime = time;
+                            hud.score += 20;
+                        }
                     }
                     else {
                         hud.score += 10;
@@ -209,7 +215,7 @@ public class Env extends SurfaceView implements Runnable {
                     if(thisObject.projectileOwner == 5 && mov.projectileOwner == 1)
                         thisObject.isHit = true;
                 }
-                break;
+                //break;
             }
 
         }
