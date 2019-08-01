@@ -19,6 +19,7 @@ public class Asteroid extends MovableObject {
     private int resY;
     public Point[] image;
 
+
     public Asteroid(PointF blockSize){
         super(blockSize);
         offSet = new Point();

@@ -63,6 +63,7 @@ public class AsteroidManager {
         if(asteroidTracker.size() < numAsteroids) {
             asteroidTracker.add(new Asteroid(blockSize));
             temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
+            temp.lastElement().initAsteroid(resX, resY);
         }
     }
 
@@ -72,6 +73,7 @@ public class AsteroidManager {
             temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
             Log.d("Asteroid", "asteroid create");
             temp.lastElement().offSet = ast.offSet;
+            Log.d("Offset", "Offset: " + ast.offSet);
            // temp.lastElement().
 //            temp.lastElement().randDirection(temp.lastElement().offSet);
             //temp.add(new Asteroid(blockSize));
