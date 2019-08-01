@@ -315,13 +315,13 @@ class PlayingGameState implements GameState {
 
         //Draw the fire button
         // set color red, draw a filled rectangle
-        env.paint.setColor(Color.argb(200,255,0,0));
-        env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
+       // env.paint.setColor(Color.argb(200,255,0,0));
+//        env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
         // set color gray, draw stroked rectangle
-        env.paint.setColor(Color.WHITE);
-        env.paint.setStyle(Paint.Style.STROKE);
-        env.paint.setStrokeWidth(3);
-        env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
+       // env.paint.setColor(Color.WHITE);
+        //env.paint.setStyle(Paint.Style.STROKE);
+       // env.paint.setStrokeWidth(3);
+//        env.canvas.drawPath(env.hud.shootButton.draw(), env.paint);
 
 
         //Draw the Joystick on top of all other objects

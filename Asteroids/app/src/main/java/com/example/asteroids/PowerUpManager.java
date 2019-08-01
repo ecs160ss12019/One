@@ -34,9 +34,6 @@ public class PowerUpManager {
         PointF newPos = new PointF(rand.nextFloat() * 90, rand.nextFloat() * 90);
         rand = new Random();
         this.powerUpObject = new PowerUpObject(newPos, rand.nextInt(3), blockSize);
-
-
-
     }
 
     public void update() {

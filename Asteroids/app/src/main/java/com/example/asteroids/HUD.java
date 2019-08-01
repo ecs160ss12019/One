@@ -33,8 +33,8 @@ public class HUD {
         joyStick = new JoyStick(pos, 15, 4, blockSize);
 
         // Setting location of fire button
-        pos = new Point(85 * (int) blockSize.x, 85 * (int) blockSize.y);
-        shootButton = new Button(pos, 15, 15, blockSize, "Fire");
+        //pos = new Point(85 * (int) blockSize.x, 85 * (int) blockSize.y);
+        //shootButton = new Button(pos, 15, 15, blockSize, "Fire");
 
         // allocate coord array to hold ship icon for displaying lives
         shapeCoords = new PointF[5];
