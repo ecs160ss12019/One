@@ -30,6 +30,10 @@ import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
+
 
 interface GameState {
     public void update(Env env);
@@ -144,7 +148,7 @@ class NewGameState implements GameState {
         env.projectileManager = new ProjectileManager(env.blockSize);
         env.spaceship = new Spaceship(env.blockSize, env.projectileManager);
         env.hud = new HUD(env.blockSize, 3);
-        env.asteroidManager = new AsteroidManager(env.blockSize);
+        env.asteroidManager = new AsteroidManager(env.blockSize, 2); //TODO: create difficulty in menu 0: easy, 1:medium, 2:hard
         env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
@@ -271,9 +275,9 @@ class PlayingGameState implements GameState {
         env.paint.setStyle(Paint.Style.STROKE);
         env.paint.setStrokeWidth(3);
         env.neonPaint.setStyle(Paint.Style.STROKE);
-        env.neonPaint.setStrokeWidth(10);
+        env.neonPaint.setStrokeWidth(8);
 
-        env.neonPaint.setColor(Color.argb(255,255,255,255));
+        env.neonPaint.setColor(Color.argb(255,200,200,255));
         env.neonPaint.setMaskFilter(new BlurMaskFilter(10, BlurMaskFilter.Blur.NORMAL));
         for(Asteroid ast : env.asteroidManager.asteroidTracker) {
             env.canvas.drawPath(ast.draw(), env.neonPaint);
@@ -381,6 +385,8 @@ class PlayingGameState implements GameState {
         env.ufoManager.spawnUFO();
         env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
+
+
         env.calcGlobalCollisions();
         env.powerUpManager.update();
         env.musicManager.update();

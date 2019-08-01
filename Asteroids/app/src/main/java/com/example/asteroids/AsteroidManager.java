@@ -7,6 +7,7 @@ import android.graphics.Point;
 import java.util.Random;
 import java.util.Vector;
 import android.graphics.PointF;
+import android.util.Log;
 
 public class AsteroidManager {
 
@@ -14,7 +15,7 @@ public class AsteroidManager {
     //      VARIABLES
     ///////////////////////////
     public Vector<Asteroid> asteroidTracker = new Vector<Asteroid>();
-    private int numAsteroids = 5;
+    private int numAsteroids;
     private PointF blockSize;
     private static int resY;
     private static int resX;
@@ -24,11 +25,12 @@ public class AsteroidManager {
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public AsteroidManager(PointF blockSize) {
+    public AsteroidManager(PointF blockSize, int difficulty) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         this.blockSize = blockSize;
         resY = (int) (100 * blockSize.y);
         resX = (int) (100 * blockSize.x);
+        numAsteroids = difficulty * 10;
         for(int i = 0; i < numAsteroids; i++){
 
             asteroidTracker.add(new Asteroid(blockSize));
@@ -63,21 +65,24 @@ public class AsteroidManager {
         if(ast.asteroidType <= 3){
             temp.add(new Asteroid(blockSize));
             temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
+            Log.d("Asteroid", "asteroid create");
             temp.lastElement().offSet = ast.offSet;
+           // temp.lastElement().
 //            temp.lastElement().randDirection(temp.lastElement().offSet);
-            temp.add(new Asteroid(blockSize));
-            temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
-            temp.lastElement().offSet = ast.offSet;
+            //temp.add(new Asteroid(blockSize));
+            //temp.lastElement().setAsteroid(new Random().nextInt(3)+4);
+            //temp.lastElement().offSet = ast.offSet;
  //           temp.lastElement().randDirection(temp.lastElement().offSet);
         }
         else if(ast.asteroidType <= 6){
             temp.add(new Asteroid(blockSize));
             temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
             temp.lastElement().offSet = ast.offSet;
+            Log.d("Asteroid", "asteroid create");
 //            temp.lastElement().randDirection(temp.lastElement().offSet);
-            temp.add(new Asteroid(blockSize));
-            temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
-            temp.lastElement().offSet = ast.offSet;
+            //temp.add(new Asteroid(blockSize));
+            //temp.lastElement().setAsteroid(new Random().nextInt(3)+7);
+            //temp.lastElement().offSet = ast.offSet;
 //            temp.lastElement().randDirection(temp.lastElement().offSet);
         }
         remove = true;

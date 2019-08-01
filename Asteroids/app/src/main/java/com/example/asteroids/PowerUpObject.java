@@ -32,17 +32,17 @@ public class PowerUpObject extends MovableObject {
         switch (type) {
             case 0:
                 powerType = new BurstFirePowerState();
-                paint.setColor(Color.RED);
+                paint.setColor(Color.argb(255,245,34,73));
                 break;
 
             case 1:
                 powerType = new ExtraLifePowerState();
-                paint.setColor(Color.GREEN);
+                paint.setColor(Color.argb(255,0,242,44));
                 break;
 
             case 2:
                 powerType = new ShieldPowerState();
-                paint.setColor(Color.BLUE);
+                paint.setColor(Color.argb(255,47,247,250));
                 break;
         }
 

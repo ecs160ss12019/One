@@ -28,7 +28,7 @@ class BurstFirePowerState implements  PowerState{
     }
     public void update(Spaceship ship) {
         Log.d("Powerstate", "BurstFirePowerState");
-        ship.paint.setColor(Color.RED);
+        ship.paint.setColor(Color.argb(255,245,34,73));
     }
 }
 
@@ -51,7 +51,6 @@ class ExtraLifePowerState implements PowerState {
         ship.projectileManager.fire(ship.shapeCoords[0], ship.shapeCoords[2], ship.rotation, ship.projectileOwner);
         ship.firing = false;
     }
-
     public void update(Spaceship ship) {
         Log.d("Powerstate", "ExtraLifePowerState");
         ship.numLives++;
@@ -67,10 +66,7 @@ class MachineGunPowerState implements PowerState {
     }
     public void update(Spaceship ship) {
         Log.d("Powerstate", "BurstFirePowerState");
-
-
     }
-
 }
 
 
@@ -83,7 +79,7 @@ class ShieldPowerState implements PowerState {
     public void update(Spaceship ship) {
         //TODO: Draw Shield around ship
         Log.d("Powerstate", "ShieldPowerState");
-        ship.paint.setColor(Color.BLUE);
+        ship.paint.setColor(Color.argb(255,47,247,250));
         ship.isHit = false;
 
 

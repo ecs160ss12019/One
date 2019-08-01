@@ -294,13 +294,19 @@ public class Env extends SurfaceView implements Runnable {
         //Keep running game if it is in foreground
         while(isGameOnFocus) {
             frameStartTime = System.currentTimeMillis();
-            currState.update(this);
             draw();
+            currState.update(this);
             frameTime = System.currentTimeMillis() - frameStartTime;
             if (frameTime > 0)
                 fps = MILLIS_IN_SECOND / frameTime;
 
         }
+
+
+
+
+
+
     }
 
 }
