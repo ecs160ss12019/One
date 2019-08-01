@@ -215,7 +215,7 @@ public class Env extends SurfaceView implements Runnable {
                     if(thisObject.projectileOwner == 5 && mov.projectileOwner == 1)
                         thisObject.isHit = true;
                 }
-                //break;
+                break;
             }
 
         }
