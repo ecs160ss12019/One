@@ -55,7 +55,7 @@ public class Env extends SurfaceView implements Runnable {
 
     //Sound objects
     MusicManager musicManager;
-    boolean MusicMute = false;
+    boolean MusicMute = true;
     SFXManager sfxManager;
     boolean SFXMute = true;
 
@@ -195,8 +195,13 @@ public class Env extends SurfaceView implements Runnable {
                 }
                 //IF thisObject(SpaceShip) hit something
                 if (thisObject.projectileOwner == 1 || mov.projectileOwner == 1) {
-                    hud.score += 10;
-                    //Log.d("score", "Score: " + hud.score);
+                    if(thisObject.projectileOwner == 2 || mov.projectileOwner == 2){
+                        hud.score += 20;
+                    }
+                    else {
+                        hud.score += 10;
+                    }
+                        //Log.d("score", "Score: " + hud.score);
                 }
                 if(mov.projectileOwner == 5 && thisObject.projectileOwner == 1){
                     mov.isHit = true;

@@ -181,7 +181,7 @@ public class UFOManager {
     }
 
     private void updateDifficulty(int score){
-        if(score > 5000 && (currentDifficulty == UFO_Type.YELLOW)){
+        if(score > 3000 && (currentDifficulty == UFO_Type.YELLOW)){
             Log.d("Difficulty: ", "change to RED");
             setCurrentDifficulty(UFO_Type.RED);
         }
