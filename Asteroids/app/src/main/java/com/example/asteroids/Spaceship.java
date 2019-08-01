@@ -176,7 +176,7 @@ public class Spaceship extends MovableObject {
             currPowerState.fire(this);
 
         currPowerState.update(this);
-        //checkPowerUpTime();
+        checkPowerUpTime();
 
         hud.numOfLives = numLives;
         if(isHit) {
@@ -185,6 +185,8 @@ public class Spaceship extends MovableObject {
             genShape();
             currVelocity = new PointF(0,0);
             rotation = 0;
+            setPowerUp(new ShieldPowerState());
+            powerUpTime = System.currentTimeMillis() - 13000;
 
         }
 

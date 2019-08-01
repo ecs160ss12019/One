@@ -26,7 +26,7 @@ public class Projectile extends MovableObject{
         directionVector = new PointF();
         setDirectionVector(pos2, pos1, rotateRads);
         setWidth(rotate, addW);
-        setDraw(pos2, pos1, addW);
+        setDraw(pos2);
         startTime = System.currentTimeMillis();
         mass = 1;
         rotation = rotate;
@@ -54,7 +54,7 @@ public class Projectile extends MovableObject{
         directionVector.y =  directionVector.y/mag;
     }
 
-    private void setDraw(PointF pos1, PointF pos2, PointF addW){
+    private void setDraw(PointF pos2){
         shapeCoords = new PointF[5];
         shapeCoords[0] = new PointF(pos2.x, pos2.y);
         shapeCoords[1] = new PointF((float)(pos2.x + .2), pos2.y);
