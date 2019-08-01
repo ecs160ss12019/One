@@ -56,4 +56,5 @@ public class PowerUpObject extends MovableObject {
         shapeCoords[4] = new PointF(position.x,position.y);
     }
 
+
 }
