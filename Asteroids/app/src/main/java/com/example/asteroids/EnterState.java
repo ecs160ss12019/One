@@ -19,7 +19,7 @@ public class EnterState implements State {
         Log.d("EnterState: ", "inside stateAction");
         ufo.isHit = false;
         if(ufo.enterFrom == UFO_Origin.LEFT){
-            ufo.mXVelocity = Math.abs(ufo.mXVelocity);
+            ufo.velocity.x = Math.abs(ufo.velocity.x);
             ufo.ufoUpdateX(fps);
             if(ufo.body.left > 0){
                 //Log.d("UFOLife: ", "Change state to INSIDE UFO ID: " + ufo.id );
@@ -27,7 +27,7 @@ public class EnterState implements State {
             }
         }
         else if(ufo.enterFrom == UFO_Origin.TOP){
-            ufo.mYVelocity = Math.abs(ufo.mYVelocity);
+            ufo.velocity.y = Math.abs(ufo.velocity.y);
             ufo.ufoUpdateY(fps);
             if(ufo.body.top > 0){
                 //Log.d("UFOLife: ", "Change state to INSIDE UFO ID: " + ufo.id);
@@ -35,7 +35,7 @@ public class EnterState implements State {
             }
         }
         else if(ufo.enterFrom == UFO_Origin.RIGHT){
-            ufo.mXVelocity = -1 * Math.abs(ufo.mXVelocity);
+            ufo.velocity.x = -1 * Math.abs(ufo.velocity.x);
             ufo.ufoUpdateX(fps);
             if(ufo.body.right  < ufo.xRBound){
                 //Log.d("UFOLife: ", "Change state to INSIDE UFO ID: " + ufo.id);
@@ -44,7 +44,7 @@ public class EnterState implements State {
         }
         //Bottom
         else{
-            ufo.mYVelocity = -1 * Math.abs(ufo.mYVelocity);
+            ufo.velocity.y = -1 * Math.abs(ufo.velocity.y);
             ufo.ufoUpdateY(fps);
             if(ufo.body.bottom < ufo.yBBound){
                 //Log.d("UFOLife: ", "Change state to INSIDE UFO ID: " + ufo.id);

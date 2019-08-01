@@ -60,6 +60,7 @@ class EndGameState implements GameState{
         switch (maskedAction) {
             //If 1 touch is registered, shoot
             case MotionEvent.ACTION_DOWN:
+                env.musicManager.nextSong();
                 env.currState = new NewGameState();
                 break;
         }
@@ -147,7 +148,7 @@ class NewGameState implements GameState {
         env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
-                .wantActive(1)
+                .wantActive(3)
                 .setTimeOut(15000)
                 .setSpawnGap(1000)
                 .setResources(env.getResources())
@@ -306,7 +307,7 @@ class PlayingGameState implements GameState {
         env.paint.setTextSize(env.fontSize);
         env.paint.setColor(Color.WHITE);
         env.paint.setTypeface(env.gameFont);
-        env.canvas.drawText("Score: " + env.hud.score, 80 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
+        env.canvas.drawText("Score: " + env.hud.score, 50 * env.blockSize.x, 10 * env.blockSize.y, env.paint);
 
         //Draw the fire button
         // set color red, draw a filled rectangle
@@ -376,15 +377,13 @@ class PlayingGameState implements GameState {
     public void update(Env env) {
         env.printDebugging();
         env.asteroidManager.updateAsteroids();
-        env.ufoManager.update(env.fps);
-        //have env.ufoManager.setCurrentlyDifficulty() called by env proportional to score
+        env.ufoManager.update(env.fps, env.hud.score);
         env.ufoManager.spawnUFO();
-        env.ufoManager.setCurrentDifficulty(UFO_Type.RED);
         env.spaceship.update(env.fps, env.hud);
         env.projectileManager.updateProjectiles(env.fps);
         env.calcGlobalCollisions();
         env.powerUpManager.update();
-
+        env.musicManager.update();
         if(env.spaceship.numLives == 0) {
             env.currState = new EndGameState();
         }

@@ -31,14 +31,16 @@ public class UFO extends MovableObject {
 
     //UFO body
     RectF body;
-    private float bodyWidth, bodyHeight;
-    private float circleX, circleY, radius;
-    private float circleXOffset, circleYOffset;
+    private PointF bodyDim;
+    private PointF circle;
+    private float radius;
+    private PointF circleOffsets;
 
     //Does UFO turn "invisible"
     boolean phase;
 
-    float mXVelocity, mYVelocity;
+    PointF velocity;
+    //float mXVelocity, mYVelocity;
 
     //Where does UFO shot originate from
     PointF bulletOrigin1;
@@ -75,28 +77,25 @@ public class UFO extends MovableObject {
         projectileOwner = 2;
 
         body = new RectF();
-        bodyWidth = 100;
-        bodyHeight = 40;
+        bodyDim = new PointF(100, 40);
+        circle = new PointF();
+        circleOffsets = new PointF(50,10);
         radius = 30;
-        circleXOffset = 50;
-        circleYOffset = 10;
 
-        mXVelocity = res.x / 10;
-        mYVelocity = res.x / 10;
-
+        velocity = new PointF(res.x/10, res.x/10);
         xLBound = 0;
         xRBound = res.x;
         yTBound = 0;
         yBBound = res.y;
 
         //Left
-        ufoEntry[0] = (int)xLBound - (int)bodyWidth;
+        ufoEntry[0] = (int)xLBound - (int)bodyDim.x;
         //Top
-        ufoEntry[1] = (int)yTBound - (int)bodyHeight;
+        ufoEntry[1] = (int)yTBound - (int)bodyDim.y;
         //Right
-        ufoEntry[2] = (int)xRBound + (int)bodyWidth;
+        ufoEntry[2] = (int)xRBound + (int)bodyDim.x;
         //Bottom
-        ufoEntry[3] = (int)yBBound + (int)bodyHeight;
+        ufoEntry[3] = (int)yBBound + (int)bodyDim.y;
 
         state = new StateContext();
 
@@ -144,7 +143,7 @@ public class UFO extends MovableObject {
      */
     public Path draw(){
         shape.rewind();
-        shape.addCircle(circleX, circleY, radius, Path.Direction.CW );
+        shape.addCircle(circle.x, circle.y, radius, Path.Direction.CW );
         shape.addOval(body, Path.Direction.CW);
         return shape;
     }
@@ -164,10 +163,8 @@ public class UFO extends MovableObject {
             xPosition = random.nextInt((int)xRBound);
             yPosition = ufoEntry[side];
         }
-        body.set(xPosition, yPosition, xPosition + bodyWidth, yPosition + bodyHeight );
-        circleX = xPosition + circleXOffset;
-        circleY = yPosition + circleYOffset;
-
+        body.set(xPosition, yPosition, xPosition + bodyDim.x, yPosition + bodyDim.y );
+        circle.set(xPosition + circleOffsets.x, yPosition + circleOffsets.y);
     }
 
     /**
@@ -202,9 +199,9 @@ public class UFO extends MovableObject {
      * @param fps: Frames Per Second
      */
     void ufoUpdateX(long fps){
-        body.left = body.left + (mXVelocity / fps);
-        body.right = body.left + bodyWidth;
-        circleX = circleX + (mXVelocity / fps);
+        body.left = body.left + (velocity.x / fps);
+        body.right = body.left + bodyDim.x;
+        circle.x += (velocity.x / fps);
     }
 
 
@@ -213,9 +210,9 @@ public class UFO extends MovableObject {
      * @param fps: Frames Per Second
      */
     void ufoUpdateY(long fps){
-        body.top = body.top + (mYVelocity / fps);
-        body.bottom = body.top + bodyHeight;
-        circleY = circleY + (mYVelocity / fps);
+        body.top = body.top + (velocity.y / fps);
+        body.bottom = body.top + bodyDim.y;
+        circle.y += (velocity.y / fps);
     }
 
     /**
@@ -225,26 +222,26 @@ public class UFO extends MovableObject {
     void checkBounds(){
         if(body.right > xRBound){
             body.right = xRBound;
-            body.left = body.right - bodyWidth;
-            circleX = body.left + circleXOffset;
+            body.left = body.right - bodyDim.x;
+            circle.x = body.left + circleOffsets.x;
             reverseXVelocity();
         }
         else if(body.left < xLBound){
             body.left = xLBound;
-            body.right = body.left + bodyWidth;
-            circleX = body.left + circleXOffset;
+            body.right = body.left + bodyDim.x;
+            circle.x = body.left + circleOffsets.x;
             reverseXVelocity();
         }
         else if(body.top < (yTBound + radius) ){
             body.top = yTBound + radius;
-            body.bottom = body.top + bodyHeight;
-            circleY = body.top + circleYOffset;
+            body.bottom = body.top + bodyDim.y;
+            circle.y = body.top + circleOffsets.y;
             reverseYVelocity();
         }
         else if(body.bottom > yBBound){
             body.bottom = yBBound;
-            body.top = body.bottom - bodyHeight;
-            circleY = body.top + circleYOffset;
+            body.top = body.bottom - bodyDim.y;
+            circle.y = body.top + circleOffsets.y;
             reverseYVelocity();
         }
     }
@@ -253,14 +250,14 @@ public class UFO extends MovableObject {
      * Reverse the x-axis component of UFO velocity.
      */
     private void reverseXVelocity(){
-        mXVelocity = -mXVelocity;
+        velocity.x = -velocity.x;
     }
 
     /**
      * Reverse the y-axis component of UFO velocity.
      */
     private void reverseYVelocity(){
-        mYVelocity = -mYVelocity;
+        velocity.y = -velocity.y;
     }
 
     /**
