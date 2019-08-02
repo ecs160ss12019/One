@@ -27,4 +27,13 @@ counter-fire. The game becomes harder as the number of asteroids increases.
 [CRC Cards 2](https://github.com/ecs160ss12019/One/blob/master/CRC2.md)   
 [CRC Cards 3](https://github.com/ecs160ss12019/One/blob/master/CRC3.md)
 
+# Works Cited
+Music: Erik Skiff - Chibi Ninja - A Night of Dizzy Spells - Available at 
+<http://EricSkiff.com/music>
+
+Glow Effect:
+<https://stackoverflow.com/questions/6281783/dynamically-generated-line-with-glow-effective>
+
+Packt Book:
+*Learning Java by Building Android Games*
 
