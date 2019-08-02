@@ -37,6 +37,13 @@ interface GameState {
 
 class EndGameState implements GameState{
 
+    private Menu menu;
+
+    public EndGameState(Env env) {
+        menu = new Menu(env.blockSize, "pauseMenu");
+    }
+
+
     @Override
     public void draw(Env env) {
 
@@ -47,12 +54,41 @@ class EndGameState implements GameState{
         env.paint.setTextSize(10 * env.blockSize.x);
         //env.paint.setStyle(Paint.Style.FILL);
         env.canvas.drawText("EndGame", 30 * env.blockSize.x, 40 * env.blockSize.y, env.paint);
-        env.paint.setTextSize(7 * env.blockSize.x);
-        env.canvas.drawText("Touch Screen to Restart", 13 * env.blockSize.x, 60 * env.blockSize.y, env.paint);
+        //env.paint.setTextSize(7 * env.blockSize.x);
+        //env.canvas.drawText("Touch Screen to Restart", 13 * env.blockSize.x, 60 * env.blockSize.y, env.paint);
+
+        for (int i = 1; i < menu.numOfButtons; i++) {
+            env.paint.setStyle(Paint.Style.STROKE);
+            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.canvas.drawPath(menu.buttons[i].shape, env.paint);
+            env.paint.setColor(Color.argb(255, 0, 0, 0));
+            env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 75,
+                    menu.buttons[i].pos.y + 50, env.paint);
+        }
+
+
     }
 
     @Override
     public void onTouch(Env env, MotionEvent e) {
+
+        switch (e.getActionMasked()) {
+
+            //If 1 touch is registered, shoot
+            case MotionEvent.ACTION_DOWN:
+
+
+                if (menu.buttons[1].touchBox.contains((int) e.getX(), (int) e.getY())) {
+                    // env.restarting = true;
+                    env.currState = new NewGameState();
+                }
+                if (menu.buttons[2].touchBox.contains((int) e.getX(), (int) e.getY())) {
+                    env.currState = new MainMenuState(env);
+                }
+                break;
+        }
+
+
 
         int maskedAction = e.getActionMasked();
         switch (maskedAction) {
@@ -241,7 +277,6 @@ class PauseGameState implements GameState {
                     env.currState = new NewGameState();
                 }
                 if (menu.buttons[2].touchBox.contains((int) e.getX(), (int) e.getY())) {
-                    //env.restarting = false;
                     env.currState = new MainMenuState(env);
                 }
 
@@ -342,7 +377,7 @@ class PlayingGameState implements GameState {
         //Draw the Joystick on top of all other objects
         //JoyStick should be drawn last to be below all other objects
 
-        //env.canvas.drawPath(env.hud.joyStick.draw(0), env.hud.joyStick.setPaint(0));
+        env.canvas.drawPath(env.hud.joyStick.draw(0), env.hud.joyStick.setPaint(0));
         //env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(0));
         env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(1));
     }
@@ -408,7 +443,7 @@ class PlayingGameState implements GameState {
         if(env.spaceship.numLives == 0) {
             //env.hud.score
             env.highScores.addAScore(env.hud.score);
-            env.currState = new EndGameState();
+            env.currState = new EndGameState(env);
         }
 
     }

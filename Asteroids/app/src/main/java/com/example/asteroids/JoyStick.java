@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.util.Log;
 
 public class JoyStick {
 
@@ -73,7 +72,7 @@ public class JoyStick {
 
     public Paint setPaint(int i) {
         if (i == 0) {
-            paint.setColor(Color.argb(255,255,255,255));
+            paint.setColor(Color.argb(75, 255, 255, 255));
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(3);
         } else {
