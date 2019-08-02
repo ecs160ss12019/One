@@ -9,14 +9,29 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class IO_Util {
+
+    ///////////////////////////
+    //      VARIABLES
+    ///////////////////////////
+
     String fileName;
     Context context;
 
+    ///////////////////////////
+    //      CONSTRUCTOR
+    ///////////////////////////
+
+    // sets the context to the overall environment to work with system file paths
     public IO_Util(Context context) {
         this.fileName = "scores.dat";
         this.context = context;
     }
 
+    ///////////////////////////
+    //      METHODS
+    ///////////////////////////
+
+    // This reads in a serialized array representing the high scores
     public int[] readFile() {
         FileInputStream fin;
         ObjectInputStream oin;
@@ -36,6 +51,7 @@ public class IO_Util {
         return scoreList;
     }
 
+    // This writes the serialized array of high scores to the OS file system
     public void writeFile(int[] scoreList) {
         FileOutputStream fout;
         ObjectOutputStream oos;

@@ -5,6 +5,10 @@ import android.graphics.PointF;
 
 public class Menu {
 
+    ///////////////////////////
+    //      VARIABLES
+    ///////////////////////////
+
     protected Button[] buttons;
     protected PointF blockSize;
     protected String menuType;
@@ -13,6 +17,11 @@ public class Menu {
     int xSize, ySize;
     String textField;
 
+    ///////////////////////////
+    //      CONSTRUCTOR
+    ///////////////////////////
+
+    // Initializes the layout of both the main and pause menus
 
     public Menu(PointF blockSize, String menuSelect) {
         if (menuSelect == "mainMenu") {
@@ -53,10 +62,6 @@ public class Menu {
 
 
         }
-    }
-
-    public void draw(String menuType) {
-
     }
 
 

@@ -6,6 +6,11 @@ import android.graphics.PointF;
 import java.io.Serializable;
 
 public class HighScores implements Serializable {
+
+    ///////////////////////////
+    //      VARIABLES
+    ///////////////////////////
+
     protected int numOfScores;
     protected int[] scoreList;
     protected Path[] scoreBoxes;
@@ -13,6 +18,10 @@ public class HighScores implements Serializable {
     protected float yStart;
     protected float xOffset;
     protected float yOffset;
+
+    ///////////////////////////
+    //      CONSTRUCTOR
+    ///////////////////////////
 
     public HighScores(PointF blockSize) {
         this.numOfScores = 3;
@@ -42,6 +51,11 @@ public class HighScores implements Serializable {
 
     }
 
+    ///////////////////////////
+    //      METHODS
+    ///////////////////////////
+
+    // Add test a single score to see if it is in the top 3 of high scores and eject the lowest one
     public void addAScore(int score) {
         boolean added = false;
         boolean contained = false;

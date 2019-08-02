@@ -1,14 +1,11 @@
 package com.example.asteroids;
 
 
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 
 abstract class MovableObject {
     ///////////////////////////
@@ -49,7 +46,7 @@ abstract class MovableObject {
     //      Constructor
     ///////////////////////////
 
-
+    // initialize the simulated physical properties of any movable object
     public MovableObject(PointF blockSize) {
         this.blockSize = blockSize;
         force = new PointF(0,0);
@@ -67,6 +64,7 @@ abstract class MovableObject {
     //      METHODS
     ///////////////////////////
 
+    // Gets the next position of the ship for drawing the next frame based on physics
     //X=x0 + v0t + 1/2at^2
     private void calcPos(long fps) {
         for(PointF i : shapeCoords) {
@@ -75,6 +73,7 @@ abstract class MovableObject {
         }
     }
 
+    // Rotate the ship depending on the orientation of the joystick
     private void calcRotation() {
         //Rotate shape based on the rotation value
         transform.reset();

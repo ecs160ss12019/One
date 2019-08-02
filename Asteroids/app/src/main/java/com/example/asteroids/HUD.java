@@ -64,6 +64,9 @@ public class HUD {
     ///////////////////////////
     //      METHODS
     ///////////////////////////
+
+    // Generates the path og the ship for use as an icon , representing number of lives
+
     public Path generateShipIcon(PointF blockSize) {
         shapeCoords[0] = new PointF(startX, startY);
         shapeCoords[1] = new PointF(startX + (1 * blockSize.x), startY + (3 * blockSize.y));
@@ -74,7 +77,7 @@ public class HUD {
         Path ship = new Path();
 
 
-        ///////
+        // connect the verticies to generate a closed path AND DRAW THE ICONS
         int xOffset = 4 * (int) blockSize.x;
 
         for (int i = 0; i < this.numOfLives; i++) {
@@ -89,7 +92,7 @@ public class HUD {
         return ship;
     }
 
-
+    // Set the number of lives
     void updateLives(int numofLives) {
        this.numOfLives = numofLives;
         shipIcon = generateShipIcon(this.blockSize);

@@ -28,6 +28,8 @@ public class JoyStick {
     //      CONSTRUCTOR
     ///////////////////////////
 
+    // Constructs the joystic with the given parameters (size of the two circles)
+
     public JoyStick(Point position, int baseRadius, int hatRadius, PointF blockSize) {
 
         //NOTE: Just trust that base center must have (blockSize.y / blockSize.x). Long story. . .
@@ -63,6 +65,8 @@ public class JoyStick {
         return scaledOutput;
     }
 
+
+    // draws the hat in the center when no longer being touched
     public void resetJoyStick() {
         hat.reset();
         hat.addCircle(baseCenter.x * blockSize.x, baseCenter.y * blockSize.x, hatRadius * blockSize.x, Path.Direction.CW);
@@ -83,6 +87,7 @@ public class JoyStick {
     }
 
 
+    // Takes the touch position and moves the hat to its location
     //X and Y have values of 0-100 mapped to domain of screen
     public void updateStick(float x, float y) {
 
