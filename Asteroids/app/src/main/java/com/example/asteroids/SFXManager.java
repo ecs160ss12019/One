@@ -12,6 +12,8 @@ import java.io.IOException;
 public class SFXManager {
     SoundPool soundPool;
     int explosionID = -1;
+    int asteroidID = -1;
+    int powerUpID = -1;
     private AudioAttributes audioAttributes;
     boolean mute;
 
@@ -35,6 +37,12 @@ public class SFXManager {
 
             descriptor = assetManager.openFd("exp.ogg");
             explosionID = soundPool.load(descriptor, 0);
+
+            descriptor = assetManager.openFd("asteroidexp.ogg");
+            asteroidID = soundPool.load(descriptor,0 );
+
+            descriptor = assetManager.openFd("powerup.ogg");
+            powerUpID = soundPool.load(descriptor, 0);
         }catch (IOException e){
             e.getCause();
             Log.e("error", e.getMessage());
@@ -46,5 +54,15 @@ public class SFXManager {
     public void playExplosion(){
         if(!mute)
             soundPool.play(explosionID, .2f, .2f, 0, 0, 1);
+    }
+
+    public void playAstExplosion(){
+        if(!mute)
+            soundPool.play(asteroidID, .2f, .2f, 0, 0, 1);
+    }
+
+    public void playPowerUpSound(){
+        if(!mute)
+            soundPool.play(powerUpID, .2f, .2f, 0, 0, 1);
     }
 }

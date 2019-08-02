@@ -144,12 +144,12 @@ class NewGameState implements GameState {
         /*TODO: Add sound later*/
 
         //Initialize our game objects
+        env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
         env.cd = new CollisionDetection(env.blockSize);
         env.projectileManager = new ProjectileManager(env.blockSize);
         env.spaceship = new Spaceship(env.blockSize, env.projectileManager);
         env.hud = new HUD(env.blockSize, 3);
-        env.asteroidManager = new AsteroidManager(env.blockSize, 2); //TODO: create difficulty in menu 0: easy, 1:medium, 2:hard
-        env.sfxManager = new SFXManager(env.getContext(), env.SFXMute);
+        env.asteroidManager = new AsteroidManager(env.blockSize, 2, env.sfxManager); //TODO: create difficulty in menu 0: easy, 1:medium, 2:hard
         env.ufoManager = new UFOManBuilder(env.resolution)
                 .setMaxUFO(10)
                 .wantActive(3)
