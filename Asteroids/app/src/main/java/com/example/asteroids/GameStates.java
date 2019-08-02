@@ -327,8 +327,8 @@ class PlayingGameState implements GameState {
         //Draw the Joystick on top of all other objects
         //JoyStick should be drawn last to be below all other objects
 
-        env.canvas.drawPath(env.hud.joyStick.draw(0), env.hud.joyStick.setPaint(0));
-        env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(0));
+        //env.canvas.drawPath(env.hud.joyStick.draw(0), env.hud.joyStick.setPaint(0));
+        //env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(0));
         env.canvas.drawPath(env.hud.joyStick.draw(1), env.hud.joyStick.setPaint(1));
     }
 
