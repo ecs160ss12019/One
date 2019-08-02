@@ -57,13 +57,15 @@ class EndGameState implements GameState{
         //env.paint.setTextSize(7 * env.blockSize.x);
         //env.canvas.drawText("Touch Screen to Restart", 13 * env.blockSize.x, 60 * env.blockSize.y, env.paint);
 
+        env.paint.setTextSize(env.fontSize);
+
         for (int i = 1; i < menu.numOfButtons; i++) {
             env.paint.setStyle(Paint.Style.STROKE);
+            env.paint.setStrokeWidth(5);
             env.paint.setColor(Color.argb(255, 255, 255, 255));
             env.canvas.drawPath(menu.buttons[i].shape, env.paint);
-            env.paint.setColor(Color.argb(255, 0, 0, 0));
-            env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 75,
-                    menu.buttons[i].pos.y + 50, env.paint);
+            env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + (env.blockSize.x * 9),
+                    menu.buttons[i].pos.y + (env.blockSize.y * 10), env.paint);
         }
 
 
