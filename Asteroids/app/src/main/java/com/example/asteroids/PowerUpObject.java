@@ -3,6 +3,8 @@ package com.example.asteroids;
 //Martin Petrov
 
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.util.Log;
 
@@ -24,6 +26,13 @@ public class PowerUpObject extends MovableObject {
         shapeCoords = new PointF[5];
         genShape();
 
+
+
+        paint.setDither(true);                    // set the dither to true
+        paint.setStrokeJoin(Paint.Join.ROUND);    // set the join to round you want
+        paint.setStrokeCap(Paint.Cap.ROUND);      // set the paint cap to round too
+        paint.setPathEffect(new CornerPathEffect(50) );   // set the path effect when they join.
+        paint.setAntiAlias(true);
 
     }
 

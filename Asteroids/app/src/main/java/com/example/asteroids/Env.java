@@ -27,6 +27,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -262,6 +263,17 @@ public class Env extends SurfaceView implements Runnable {
 
         musicManager.pause();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)){
+            spaceship.firing = true;
+            Log.d("volume", "working");
+        }
+        return true;
+    }
+
+
 
     public void printDebugging() {
         Log.d("FPS", "FPS: " + fps);
