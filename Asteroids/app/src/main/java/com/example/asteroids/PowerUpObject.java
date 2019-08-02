@@ -2,6 +2,11 @@ package com.example.asteroids;
 
 //Martin Petrov
 
+/*
+    This class contains a context variable for the powerUpState. The PowerUpManager is in charge
+    of creating a new instance of this class. The object's paint color depends on the powerUpType,
+ */
+
 import android.graphics.Color;
 import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
@@ -16,26 +21,24 @@ public class PowerUpObject extends MovableObject {
 
     public PowerUpObject(PointF position, int powerUpType, PointF blockSize) {
         super(blockSize);
-        Log.d("Rand", "powerup: " + powerUpType);
 
         createPowerUp(powerUpType);
         projectileOwner = 5;
-
         this.position = position;
         shapeCoords = new PointF[5];
         genShape();
 
-        //Make Powerups more rounded
-        paint.setDither(true);                    // set the dither to true
-        paint.setStrokeJoin(Paint.Join.ROUND);    // set the join to round you want
-        paint.setStrokeCap(Paint.Cap.ROUND);      // set the paint cap to round too
-        paint.setPathEffect(new CornerPathEffect(50) );   // set the path effect when they join.
+        //Make Powerups' paint render to screen with rounded corners
+        paint.setDither(true);
+        paint.setStrokeJoin(Paint.Join.ROUND);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setPathEffect(new CornerPathEffect(50) );
         paint.setAntiAlias(true);
-
     }
 
-    private void createPowerUp(int type) {
 
+    /*Creates a different type of powerup based on the int that is passed to it.*/
+    private void createPowerUp(int type) {
         switch (type) {
             case 0:
                 powerType = new BurstFirePowerState();
@@ -52,7 +55,6 @@ public class PowerUpObject extends MovableObject {
                 paint.setColor(Color.argb(255,47,247,250));
                 break;
         }
-
     }
 
     private void genShape() {

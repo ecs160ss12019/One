@@ -1,4 +1,11 @@
-/* Use the fire method if you are changing the shooting of the spaceship. If creating
+/*
+Both the power up object and the ship contain a variable of type power state
+The power up object uses this context variable so that power up manager can act as a
+factory design pattern while the ship uses it to be able to implement a state design pattern.
+
+
+
+Use the fire method if you are changing the shooting of the spaceship. If creating
 a new PowerUp, you have to define the shoot method as the DefaultPowerState method since
 our version of Android doesn't support default methods
 *  Otherwise use the update method to do anything else you want with the ship
