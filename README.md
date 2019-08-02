@@ -5,6 +5,8 @@ Team One- Asteroids
 Recreate the Asteroids game from the Atari-2600, using the processes learned in
 our software engineering class.
 
+# Yo this is the one with the Joystick
+
 
 # Members
 * Brian Coe, a CS major, enjoys video game and table-top RPGs, reading science
