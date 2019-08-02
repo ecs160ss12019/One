@@ -26,13 +26,8 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
 
 
 interface GameState {
@@ -86,11 +81,11 @@ class MainMenuState implements GameState {
         menu = new Menu(env.blockSize, "mainMenu");
 
 
-        env.fontSize = 4 * env.blockSize.x;
-
         env.surfaceHolder = env.getHolder();
         env.paint = new Paint();
         env.neonPaint = new Paint();
+        env.fontSize = 4 * env.blockSize.x;
+        env.paint.setTextSize(env.fontSize);
     }
 
 
@@ -107,13 +102,16 @@ class MainMenuState implements GameState {
             env.paint.setColor(Color.argb(255, 255, 255, 255));
             env.paint.setStyle(Paint.Style.FILL);
 
+        // Draw the clickable button to enter the game
             for (int i = 0; i < menu.numOfButtons; i++) {
                 env.paint.setColor(Color.argb(255, 255, 255, 255));
                 env.canvas.drawPath(menu.buttons[i].shape, env.paint);
-                env.paint.setColor(Color.argb(255, 0, 0, 0));
-                env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 75,
-                        menu.buttons[i].pos.y + 50, env.paint);
+                env.paint.setColor(Color.argb(255, 190, 0, 0));
+                env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 100,
+                        menu.buttons[i].pos.y + 350, env.paint);
             }
+
+        // Draw the High score list
         }
 
 
