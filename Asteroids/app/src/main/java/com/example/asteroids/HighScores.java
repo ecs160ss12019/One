@@ -3,7 +3,9 @@ package com.example.asteroids;
 import android.graphics.Path;
 import android.graphics.PointF;
 
-public class HighScores {
+import java.io.Serializable;
+
+public class HighScores implements Serializable {
     protected int numOfScores;
     protected int[] scoreList;
     protected Path[] scoreBoxes;
