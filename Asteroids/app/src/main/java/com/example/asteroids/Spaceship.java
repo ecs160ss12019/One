@@ -15,7 +15,6 @@ public class Spaceship extends MovableObject {
     ///////////////////////////
     public int numLives = 3;
 
-
     //Variables dealing with ship's controls
     protected PointF thrust;
     private float steeringInput;
@@ -123,15 +122,12 @@ public class Spaceship extends MovableObject {
             steeringInput -= 270;
         }
         steeringInput *= -1;
-        Log.d("rotation", "rotation: " +rotation);
-        Log.d("rotation", "steering input: " + steeringInput);
 
         //Accounting from movement from 360-0 && 0-360
         rotation = rotation % 360;
         if (rotation < 0) {
             rotation = 360 + rotation;
         }
-
 
         if (rotation > 270 && steeringInput < 90) {
             rotation += 5;
@@ -150,12 +146,7 @@ public class Spaceship extends MovableObject {
     public void setPaint(){
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(3);
-
-        if(isHit)
-            paint.setColor(Color.RED);
-        else
-            paint.setColor(Color.WHITE);
-
+        paint.setColor(Color.WHITE);
     }
 
 
@@ -164,13 +155,11 @@ public class Spaceship extends MovableObject {
         powerUpTime = System.currentTimeMillis();
     }
 
-    public void update(long fps, HUD hud) {
 
+    public void update(long fps, HUD hud) {
         rotateShip(hud.joyStick.getScaledStickPosition());
         updatePhysics(fps, hud.joyStick.getScaledStickPosition());
-
         checkBounds();
-
 
         if(firing)
             currPowerState.fire(this);
@@ -178,6 +167,7 @@ public class Spaceship extends MovableObject {
         currPowerState.update(this);
         checkPowerUpTime();
 
+        //Check if the ship was hit, and reset ship if necessary
         hud.numOfLives = numLives;
         if(isHit) {
             --numLives;
@@ -187,10 +177,8 @@ public class Spaceship extends MovableObject {
             rotation = 0;
             setPowerUp(new ShieldPowerState());
             powerUpTime = System.currentTimeMillis() - 13000;
-
         }
-
-
     }
+
 
 }

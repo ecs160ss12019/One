@@ -162,14 +162,6 @@ public class Env extends SurfaceView implements Runnable {
             //if(!currAst.isHit)
                 //checkHit(asts, currAst);
         }
-
-      //TODO: Could be wrong, but this seems like it might not be needed
-//        for(Projectile currP : projs) {
-//            if(!currP.isHit)
-//                checkHit(ufos, currP);
-//            if(!currP.isHit)
-//                checkHit(asts, currP);
-//        }
     }
 
     public void checkHit(Vector object, MovableObject thisObject){

@@ -21,13 +21,11 @@ public class PowerUpObject extends MovableObject {
         createPowerUp(powerUpType);
         projectileOwner = 5;
 
-
         this.position = position;
         shapeCoords = new PointF[5];
         genShape();
 
-
-
+        //Make Powerups more rounded
         paint.setDither(true);                    // set the dither to true
         paint.setStrokeJoin(Paint.Join.ROUND);    // set the join to round you want
         paint.setStrokeCap(Paint.Cap.ROUND);      // set the paint cap to round too

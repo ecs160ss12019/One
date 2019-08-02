@@ -227,7 +227,7 @@ class PauseGameState implements GameState {
                 }
                 if (menu.buttons[2].touchBox.contains((int) e.getX(), (int) e.getY())) {
                     //env.restarting = false;
-                    env.currState = new NewGameState();
+                    env.currState = new MainMenuState(env);
                 }
 
 
