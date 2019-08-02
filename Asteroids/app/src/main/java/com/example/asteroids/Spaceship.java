@@ -2,6 +2,10 @@ package com.example.asteroids;
 
 // Martin Petrov
 
+/*
+* This class extends movable object, and deals with handling the input of the joystick
+* */
+
 import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -46,7 +50,6 @@ public class Spaceship extends MovableObject {
         thrust = new PointF(0,0);
         genShape();
 
-        //TODO: set to default when finished debugging
         setPowerUp(new DefaultPowerState());
 
         normalPaint = new Paint();

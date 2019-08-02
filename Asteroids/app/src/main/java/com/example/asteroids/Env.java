@@ -56,7 +56,7 @@ public class Env extends SurfaceView implements Runnable {
 
     //Sound objects
     MusicManager musicManager;
-    boolean MusicMute = true;
+    boolean MusicMute = false;
     SFXManager sfxManager;
     boolean SFXMute = false;
 
@@ -325,12 +325,6 @@ public class Env extends SurfaceView implements Runnable {
                 fps = MILLIS_IN_SECOND / frameTime;
 
         }
-
-
-
-
-
-
     }
 
 }

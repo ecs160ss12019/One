@@ -1,5 +1,11 @@
 package com.example.asteroids;
 
+/*
+* Movable object acts as a superclass for asteroids, ufo and spaceship
+* All of the physics of the game is handled by this class
+* Just call updatePhysics() and specify a force that you want applied to it
+*
+* */
 
 import android.graphics.Matrix;
 import android.graphics.Paint;

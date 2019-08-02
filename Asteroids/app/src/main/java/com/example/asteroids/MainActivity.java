@@ -55,8 +55,6 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         env.resume();
-        //setContentView(R.layout.activity_main);
-
     }
 
     @Override
