@@ -181,11 +181,11 @@ public class UFOManager {
     }
 
     private void updateDifficulty(int score){
-        if(score > 3000 && (currentDifficulty == UFO_Type.YELLOW)){
+        if(score > 1500 && (currentDifficulty == UFO_Type.YELLOW)){
             Log.d("Difficulty: ", "change to RED");
             setCurrentDifficulty(UFO_Type.RED);
         }
-        else if(score > 1000 && (currentDifficulty == UFO_Type.GREEN)){
+        else if(score > 600 && (currentDifficulty == UFO_Type.GREEN)){
             Log.d("Difficulty: ", "change to YELLOW");
             setCurrentDifficulty(UFO_Type.YELLOW);
         }
