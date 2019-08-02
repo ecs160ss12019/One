@@ -21,7 +21,6 @@ the constructor which will always be on top */
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -80,6 +79,7 @@ public class Env extends SurfaceView implements Runnable {
     ProjectileManager projectileManager;
     UFOManager ufoManager;
     PowerUpManager powerUpManager;
+    HighScores highScores;
     long time = 0;
     long spaceTime = 2000;
     long lastTime = 0;
@@ -101,11 +101,17 @@ public class Env extends SurfaceView implements Runnable {
     public Env(Context context, Point res) {
         super(context);
 
+        // Get the resolution and create blocksize
+        resolution = new Point();
+        resolution = res;
+        blockSize = new PointF((float) resolution.x / 100, (float) resolution.y / 100);
+
         musicManager = new MusicManager(context, MusicMute);
         gameFont = Typeface.createFromAsset(context.getAssets(), "fonts/ARCADECLASSIC.TTF");
         //Pass the resolution to our local variables, and set our fontsize
-        resolution = new Point();
-        resolution = res;
+
+        // Construct High Scores object
+        highScores = new HighScores(blockSize);
 
         //Set the state to new game to reset all variables
         //restarting = false;

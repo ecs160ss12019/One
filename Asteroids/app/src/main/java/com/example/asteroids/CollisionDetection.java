@@ -3,11 +3,6 @@ package com.example.asteroids;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.Region;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Vector;
 
 public class CollisionDetection {
     ///////////////////////////
@@ -41,12 +36,4 @@ public class CollisionDetection {
 
         return !r1.quickReject(r2) && r1.op(r2, Region.Op.INTERSECT);
     }
-
-
-
-
-
-
-
-
 }

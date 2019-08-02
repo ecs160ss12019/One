@@ -25,7 +25,6 @@ package com.example.asteroids;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PointF;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -66,8 +65,6 @@ class EndGameState implements GameState{
     }
     @Override
     public void update(Env env) {
-
-
     }
 }
 
@@ -76,10 +73,10 @@ class MainMenuState implements GameState {
     private Menu menu;
 
     public MainMenuState(Env env) {
-
-        env.blockSize = new PointF((float) env.resolution.x/ 100, (float) env.resolution.y / 100);
         menu = new Menu(env.blockSize, "mainMenu");
 
+        //  int[] arr = {2000, 1000, 500};
+        //  env.highScores.addScoreList(arr);
 
         env.surfaceHolder = env.getHolder();
         env.paint = new Paint();
@@ -119,10 +116,13 @@ class MainMenuState implements GameState {
                 env.paint);
         env.paint.setStyle(Paint.Style.STROKE);
         env.paint.setStrokeWidth(2);
-        HighScores highScores = new HighScores(env.blockSize);
-        for (int i = 0; i < highScores.numOfScores; i++) {
-            env.canvas.drawPath(highScores.scoreBoxes[i], env.paint);
-            env.canvas.drawText("I eat ass", env.blockSize.x * 68, env.blockSize.y * 40, env.paint);
+        float xStart = env.blockSize.x * 67;
+        float yStart = env.blockSize.y * 41;
+        float yOffset = env.blockSize.y * (float) 16.667;
+        for (int i = 0; i < env.highScores.numOfScores; i++) {
+            env.canvas.drawPath(env.highScores.scoreBoxes[i], env.paint);
+            env.canvas.drawText(String.valueOf(env.highScores.scoreList[i]), xStart,
+                    yStart + (yOffset * i), env.paint);
         }
 
 
@@ -406,6 +406,8 @@ class PlayingGameState implements GameState {
         env.powerUpManager.update();
         env.musicManager.update();
         if(env.spaceship.numLives == 0) {
+            //env.hud.score
+            env.highScores.addAScore(env.hud.score);
             env.currState = new EndGameState();
         }
 

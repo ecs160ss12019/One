@@ -28,25 +28,34 @@ public class HighScores {
         float xStart = blockSize.x * 65;
         float yStart = blockSize.y * 30;
         float xOffset = blockSize.x * 25;
-        float yOffset = blockSize.y * (float) 16.66;
+        float yOffset = blockSize.y * (float) 16.667;
 
         // generate the rect path objects
         for (int i = 0; i < numOfScores; i++) {
             scoreBoxes[i] = new Path();
-            scoreBoxes[i].addRect(xStart, yStart, xStart + xOffset, yStart + yOffset, Path.Direction.CW);
-            yStart += yOffset;
+            scoreBoxes[i].addRect(xStart, yStart + (yOffset * i), xStart + xOffset,
+                    yStart + (yOffset * (i + 1)), Path.Direction.CW);
         }
 
 
     }
 
     public void addAScore(int score) {
+        boolean added = false;
+        boolean contained = false;
+
         for (int i = 0; i < numOfScores; i++) {
-            if (score > scoreList[i]) {
+            if (scoreList[i] == score)
+                contained = true;
+        }
+
+        for (int i = 0; i < numOfScores; i++) {
+            if (score > scoreList[i] && !added && !contained) {
                 int temp = scoreList[i];
                 scoreList[i] = score;
-                if (i > 0)
-                    scoreList[i - 1] = temp;
+                added = true;
+                if (i < numOfScores - 1)
+                    scoreList[i + 1] = temp;
             }
         }
     }
