@@ -445,6 +445,7 @@ class PlayingGameState implements GameState {
         if(env.spaceship.numLives == 0) {
             //env.hud.score
             env.highScores.addAScore(env.hud.score);
+            env.FIO.writeFile(env.highScores);
             env.currState = new EndGameState(env);
         }
 

@@ -53,11 +53,15 @@ public class Env extends SurfaceView implements Runnable {
     Canvas canvas;
     Paint paint;
     public Paint neonPaint;
+
     //Sound objects
     MusicManager musicManager;
     boolean MusicMute = true;
     SFXManager sfxManager;
     boolean SFXMute = false;
+
+    // FILEIO
+    IO_Util FIO;
 
     //FPS
     long fps;
@@ -112,6 +116,14 @@ public class Env extends SurfaceView implements Runnable {
 
         // Construct High Scores object
         highScores = new HighScores(blockSize);
+
+        // get file io routed
+        FIO = new IO_Util(context);
+        if (FIO.readFile() != null) {
+            highScores = FIO.readFile();
+        } else {
+            Log.d("FIO: ", "file was null");
+        }
 
         //Set the state to new game to reset all variables
         //restarting = false;
