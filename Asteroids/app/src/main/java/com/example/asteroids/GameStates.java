@@ -139,15 +139,16 @@ class MainMenuState implements GameState {
         // Draw the clickable button to enter the game
         env.paint.setStrokeWidth(3);
         for (int i = 0; i < menu.numOfButtons; i++) {
-            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.paint.setColor(Color.argb(255, 255, 0, 0));
             env.paint.setStyle(Paint.Style.STROKE);
             env.canvas.drawPath(menu.buttons[i].shape, env.paint);
-            env.paint.setColor(Color.argb(255, 190, 0, 0));
             env.paint.setStyle(Paint.Style.FILL);
-            env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 20,
-                    menu.buttons[i].pos.y + 350, env.paint);
+            env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + (env.blockSize.x * 1),
+                    menu.buttons[i].pos.y + (env.blockSize.y * 32), env.paint);
         }
 
+
+        // Draw the High score list
         env.paint.setColor(Color.argb(255, 255, 255, 255));
         env.canvas.drawText("High Scores", env.blockSize.x * 63, env.blockSize.y * 25,
                 env.paint);
@@ -164,8 +165,6 @@ class MainMenuState implements GameState {
 
 
 
-
-        // Draw the High score list
         }
 
 
@@ -253,9 +252,11 @@ class PauseGameState implements GameState {
         env.paint.setStyle(Paint.Style.FILL);
 
         for (int i = 0; i < menu.numOfButtons; i++) {
-            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.paint.setStyle(Paint.Style.STROKE);
+            env.paint.setColor(Color.argb(255, 255, 0, 0));
             env.canvas.drawPath(menu.buttons[i].shape, env.paint);
-            env.paint.setColor(Color.argb(255, 0, 0, 0));
+
+            env.paint.setStyle(Paint.Style.FILL);
             env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + (env.blockSize.x * 9),
                     menu.buttons[i].pos.y + (env.blockSize.y * 10), env.paint);
         }
