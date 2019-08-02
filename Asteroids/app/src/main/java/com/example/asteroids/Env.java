@@ -120,7 +120,8 @@ public class Env extends SurfaceView implements Runnable {
         // get file io routed
         FIO = new IO_Util(context);
         if (FIO.readFile() != null) {
-            highScores = FIO.readFile();
+            highScores.scoreList = FIO.readFile();
+            Log.d("FIO: ", "Read Successful");
         } else {
             Log.d("FIO: ", "file was null");
         }

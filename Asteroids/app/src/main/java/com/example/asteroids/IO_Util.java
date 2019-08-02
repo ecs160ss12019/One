@@ -17,35 +17,39 @@ public class IO_Util {
         this.context = context;
     }
 
-    public HighScores readFile() {
+    public int[] readFile() {
         FileInputStream fin;
         ObjectInputStream oin;
+        int[] scoreList = new int[3];
 
         try {
             fin = context.openFileInput(fileName);
             oin = new ObjectInputStream(fin);
-            oin.close();
+            scoreList = (int[]) oin.readObject();
             fin.close();
-            return (HighScores) oin.readObject();
+            oin.close();
+            return (int[]) oin.readObject();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        return scoreList;
     }
 
-    public void writeFile(HighScores scores) {
+    public void writeFile(int[] scoreList) {
         FileOutputStream fout;
         ObjectOutputStream oos;
 
         try {
             fout = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             oos = new ObjectOutputStream(fout);
-            oos.writeObject(scores);
-            Log.d("FIO: ", "Wrote " + context.get);
+            oos.writeObject(scoreList);
+            Log.d("FIO: ", "Write Successful");
+            Log.d("FIO: ", "Wrote " + scoreList[0] + ", " + scoreList[1] + ", " + scoreList[2]);
+            //           fout.close();
             oos.close();
-            fout.close();
         } catch (Exception e) {
+            Log.d("You fucked up", "tes");
             e.printStackTrace();
         }
 
