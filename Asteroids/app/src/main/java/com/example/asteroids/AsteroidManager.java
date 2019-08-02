@@ -20,14 +20,15 @@ public class AsteroidManager {
     private static int resY;
     private static int resX;
     private boolean remove = false;
-
+    private SFXManager sfxManager;
     ///////////////////////////
     //      CONSTRUCTOR
     ///////////////////////////
 
-    public AsteroidManager(PointF blockSize, int difficulty) {
+    public AsteroidManager(PointF blockSize, int difficulty, SFXManager sfxManager) {
         // posX, posY, mass, maxVelocity, minVelocity, drctnVector, shape
         this.blockSize = blockSize;
+        this.sfxManager = sfxManager;
         resY = (int) (100 * blockSize.y);
         resX = (int) (100 * blockSize.x);
         numAsteroids = difficulty * 5;
@@ -48,6 +49,7 @@ public class AsteroidManager {
             if(ast.curTime -ast.startTime < 250)
                 ast.isHit = false;
             if(ast.isHit){
+                sfxManager.playAstExplosion();
                 destroyAsteroid(ast, temp);
             }
             if(ast.reDraw)

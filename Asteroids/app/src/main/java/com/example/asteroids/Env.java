@@ -203,6 +203,7 @@ public class Env extends SurfaceView implements Runnable {
                         //Log.d("score", "Score: " + hud.score);
                 }
                 if(mov.projectileOwner == 5 && thisObject.projectileOwner == 1){
+                    sfxManager.playPowerUpSound();
                     mov.isHit = true;
                     thisObject.isHit = false;
                     if(thisObject.projectileOwner == 5 && mov.projectileOwner == 1)
