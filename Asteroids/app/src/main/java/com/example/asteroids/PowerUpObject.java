@@ -31,7 +31,7 @@ public class PowerUpObject extends MovableObject {
         paint.setDither(true);                    // set the dither to true
         paint.setStrokeJoin(Paint.Join.ROUND);    // set the join to round you want
         paint.setStrokeCap(Paint.Cap.ROUND);      // set the paint cap to round too
-        paint.setPathEffect(new CornerPathEffect(20) );   // set the path effect when they join.
+        paint.setPathEffect(new CornerPathEffect(50) );   // set the path effect when they join.
         paint.setAntiAlias(true);
 
     }

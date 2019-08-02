@@ -26,7 +26,7 @@ public class PowerUpManager {
     }
 
     private boolean checkLastPowerUpTime() {
-        return System.currentTimeMillis() - lastPowerUpTime >= 15000;
+        return System.currentTimeMillis() - lastPowerUpTime >= 20000;
     }
 
     private void genNewPowerUp() {
