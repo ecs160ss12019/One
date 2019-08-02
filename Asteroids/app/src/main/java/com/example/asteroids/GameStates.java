@@ -84,8 +84,9 @@ class MainMenuState implements GameState {
         env.surfaceHolder = env.getHolder();
         env.paint = new Paint();
         env.neonPaint = new Paint();
-        env.fontSize = 4 * env.blockSize.x;
+        env.fontSize = 5 * env.blockSize.x;
         env.paint.setTextSize(env.fontSize);
+        env.paint.setTypeface(env.gameFont);
     }
 
 
@@ -96,27 +97,32 @@ class MainMenuState implements GameState {
 
     public void draw(Env env) {
 
-            //Draws the menu
-            env.canvas.drawColor(Color.argb(255, 0, 0, 0));
-
-            env.paint.setColor(Color.argb(255, 255, 255, 255));
-            env.paint.setStyle(Paint.Style.FILL);
+        //Draws the menu
+        env.canvas.drawColor(Color.argb(255, 0, 0, 0));
+        env.paint.setColor(Color.argb(255, 255, 255, 255));
+        ;
 
         // Draw the clickable button to enter the game
-            for (int i = 0; i < menu.numOfButtons; i++) {
-                env.paint.setColor(Color.argb(255, 255, 255, 255));
-                env.canvas.drawPath(menu.buttons[i].shape, env.paint);
-                env.paint.setColor(Color.argb(255, 190, 0, 0));
-                env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 100,
-                        menu.buttons[i].pos.y + 350, env.paint);
-            }
+        env.paint.setStrokeWidth(3);
+        for (int i = 0; i < menu.numOfButtons; i++) {
+            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.paint.setStyle(Paint.Style.STROKE);
+            env.canvas.drawPath(menu.buttons[i].shape, env.paint);
+            env.paint.setColor(Color.argb(255, 190, 0, 0));
+            env.paint.setStyle(Paint.Style.FILL);
+            env.canvas.drawText(menu.buttons[i].textBox, menu.buttons[i].pos.x + 20,
+                    menu.buttons[i].pos.y + 350, env.paint);
+        }
 
+        env.paint.setColor(Color.argb(255, 255, 255, 255));
+        env.canvas.drawText("High Scores", env.blockSize.x * 63, env.blockSize.y * 25,
+                env.paint);
         env.paint.setStyle(Paint.Style.STROKE);
         env.paint.setStrokeWidth(2);
         HighScores highScores = new HighScores(env.blockSize);
         for (int i = 0; i < highScores.numOfScores; i++) {
-            env.paint.setColor(Color.argb(255, 255, 255, 255));
             env.canvas.drawPath(highScores.scoreBoxes[i], env.paint);
+            env.canvas.drawText("I eat ass", env.blockSize.x * 68, env.blockSize.y * 40, env.paint);
         }
 
 

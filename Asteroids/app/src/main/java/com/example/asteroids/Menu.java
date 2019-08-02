@@ -22,7 +22,7 @@ public class Menu {
             buttonPos = new Point((int) (blockSize.x * 10), (int) (blockSize.y * 20));
             xSize = 40;
             ySize = 60;
-            textField = "Enter the Arena";
+            textField = "Enter  the  Arena";
             buttons[0] = new Button(buttonPos, xSize, ySize, blockSize, textField);
 
         } else if (menuSelect == "pauseMenu") {

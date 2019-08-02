@@ -7,6 +7,10 @@ public class HighScores {
     protected int numOfScores;
     protected int[] scoreList;
     protected Path[] scoreBoxes;
+    protected float xStart;
+    protected float yStart;
+    protected float xOffset;
+    protected float yOffset;
 
     public HighScores(PointF blockSize) {
         this.numOfScores = 3;
@@ -22,9 +26,9 @@ public class HighScores {
         // create rects that have positions on screen to aid in drawing
         //      scores in the correct locations
         float xStart = blockSize.x * 65;
-        float yStart = blockSize.y * 20;
+        float yStart = blockSize.y * 30;
         float xOffset = blockSize.x * 25;
-        float yOffset = blockSize.y * 20;
+        float yOffset = blockSize.y * (float) 16.66;
 
         // generate the rect path objects
         for (int i = 0; i < numOfScores; i++) {
