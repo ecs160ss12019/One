@@ -111,6 +111,17 @@ class MainMenuState implements GameState {
                         menu.buttons[i].pos.y + 350, env.paint);
             }
 
+        env.paint.setStyle(Paint.Style.STROKE);
+        env.paint.setStrokeWidth(2);
+        HighScores highScores = new HighScores(env.blockSize);
+        for (int i = 0; i < highScores.numOfScores; i++) {
+            env.paint.setColor(Color.argb(255, 255, 255, 255));
+            env.canvas.drawPath(highScores.scoreBoxes[i], env.paint);
+        }
+
+
+
+
         // Draw the High score list
         }
 
