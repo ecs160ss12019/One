@@ -58,7 +58,7 @@ public class Env extends SurfaceView implements Runnable {
     MusicManager musicManager;
     boolean MusicMute = true;
     SFXManager sfxManager;
-    boolean SFXMute = true;
+    boolean SFXMute = false;
 
     //FPS
     long fps;
