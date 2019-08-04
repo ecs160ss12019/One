@@ -37,3 +37,5 @@ Glow Effect:
 Packt Book:
 *Learning Java by Building Android Games*
 
+Explosion Sprite:
+<https://opengameart.org/content/explosion>
